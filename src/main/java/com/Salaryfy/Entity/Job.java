@@ -57,6 +57,8 @@ public class Job {
     @Column(name = "Date")
     private LocalDate date;
 
+
+
     @Column(name = "StartingSalary", length = 45)
     private String startingSalary;
 
