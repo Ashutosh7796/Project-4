@@ -11,13 +11,16 @@ public class SalaryfyApplication {
 
 		System.err.println("PROJECT- 5");
 
-		System.err.println("  *****    *******  *******       *****   *******    *****    ******   *******" );
-		System.err.println(" *     *   *      *    *         *           *      *     *   *     *     *   " );
-		System.err.println("*       *  *      *    *         *           *     *       *  *     *     *   " );
-		System.err.println("*       *  *******     *          *****      *     *       *  ******      *   " );
-		System.err.println("*********  *           *               *     *     *********  *   *       *   " );
-		System.err.println("*       *  *           *               *     *     *       *  *    *      *   " );
-		System.err.println("*       *  *        *******       *****      *     *       *  *     *     *   " );
+h
+		System.err.println("   .^.     .=====.   [========]   ..====]  [========]    .^.    .=====.   [========] " );
+		System.err.println(" //   \\\\   ||     \\\\     ||      //            ||      //   \\\\  ||     \\\\     || " );
+		System.err.println("||     ||  ||     //     ||      \\\\            ||     ||     || ||     //     ||     " );
+		System.err.println("||     ||  ||====''      ||        '===.       ||     ||     || ||====''      ||     " );
+		System.err.println("||=====||  ||            ||             \\\\     ||     ||=====|| ||\\\\          ||     " );
+		System.err.println("||     ||  ||            ||             //     ||     ||     || ||  \\\\        ||     " );
+		System.err.println("!!     !!  !!        [========]  [=====''      !!     !!     !! ||    \\\\      !!     " );
+		System.err.println("                                                                                JAVA    ");
+
 	}
 	}
 
