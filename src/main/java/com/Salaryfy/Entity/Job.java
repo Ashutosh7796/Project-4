@@ -60,8 +60,12 @@ public class Job {
     @Column(name = "StartingSalary", length = 45)
     private String startingSalary;
 
+    @Column(name = "jobFairSetNo")
+    private Integer jobFairSetNo;
+
     @Column(name = "Status")
     private Boolean status;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_userId", nullable = false)
