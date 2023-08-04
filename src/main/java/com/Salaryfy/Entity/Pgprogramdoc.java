@@ -12,7 +12,7 @@ public class Pgprogramdoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PgProgramDocId", nullable = false)
-    private Integer id;
+    private Integer PgProgramDocId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PgProgram_PgProgramId", nullable = false)

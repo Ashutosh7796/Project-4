@@ -12,7 +12,7 @@ public class Mark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "marksId", nullable = false)
-    private Integer id;
+    private Integer marksId;
 
     @Column(name = "`user_id`")
     private Integer userId;

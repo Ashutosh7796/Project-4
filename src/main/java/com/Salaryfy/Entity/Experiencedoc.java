@@ -12,7 +12,7 @@ public class Experiencedoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ExperienceDocId", nullable = false)
-    private Integer id;
+    private Integer ExperienceDocId;
 
     @Column(name = "CareerBreak")
     private Boolean careerBreak;

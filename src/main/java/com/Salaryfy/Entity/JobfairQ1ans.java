@@ -12,7 +12,7 @@ public class JobfairQ1ans {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "JobFairQ1Id", nullable = false)
-    private Integer id;
+    private Integer JobFairQ1Id;
 
     @Column(name = "Question", length = 45)
     private String question;

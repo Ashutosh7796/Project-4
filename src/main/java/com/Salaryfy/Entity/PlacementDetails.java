@@ -11,8 +11,8 @@ import lombok.Setter;
 public class PlacementDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BookingId", nullable = false)
-    private Integer id;
+    @Column(name = "PlacementDetailsId", nullable = false)
+    private Integer PlacementDetailsId;
 
     @Column(name = "Status", length = 45)
     private String status;

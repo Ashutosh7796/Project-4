@@ -12,7 +12,7 @@ public class ExamSol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "examId", nullable = false)
-    private Integer id;
+    private Integer examId;
 
     @Column(name = "Question", length = 250)
     private String question;

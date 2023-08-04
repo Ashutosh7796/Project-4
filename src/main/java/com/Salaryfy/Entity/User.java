@@ -16,7 +16,7 @@ public class User {
 
     @Id
     @Column(name = "user_id", nullable = false)
-    private Integer id;
+    private Integer user_id;
 
     @Column(name = "FullName", length = 250)
     private String fullName;
