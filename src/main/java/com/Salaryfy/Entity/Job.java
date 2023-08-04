@@ -60,6 +60,7 @@ public class Job {
     @Column(name = "StartingSalary", length = 45)
     private String startingSalary;
 
+
     @Column(name = "jobFairSetNo")
     private Integer jobFairSetNo;
 
