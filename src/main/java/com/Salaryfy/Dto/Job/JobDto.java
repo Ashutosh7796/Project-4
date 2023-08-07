@@ -1,4 +1,4 @@
-package com.Salaryfy.Dto.job;
+package com.Salaryfy.Dto.Job;
 
 import jakarta.persistence.Entity;
 
