@@ -1,7 +1,7 @@
 package com.Salaryfy.Exception;
 
-import com.spring.jwt.utils.BaseResponseDTO;
-import com.spring.jwt.utils.HelperUtils;
+import com.Salaryfy.utils.BaseResponseDTO;
+import com.Salaryfy.utils.HelperUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
