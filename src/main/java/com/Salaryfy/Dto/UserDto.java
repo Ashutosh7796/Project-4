@@ -15,12 +15,11 @@ public class UserDTO {
 
     private String password;
 
-    private String mobile_no;
+    private Integer mobile_no;
 
     private String role;
 
     private String fullName;
-
 
     private LocalTime time;
 
