@@ -40,8 +40,10 @@ public class UserDetailsServiceCustom implements UserDetailsService {
         }
 
         return new UserDetailsCustom(
-                user.getFullName(),
+                user.getEmail(),
                 user.getPassword(),
+               user.getFullName(),
+                user.getUser_id(),
                 user.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getName()))
                         .collect(Collectors.toList())
         );
