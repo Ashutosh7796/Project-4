@@ -16,6 +16,7 @@ import java.util.Set;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Integer user_id;
 
@@ -31,7 +32,7 @@ public class User {
     @Column(name = "Otp")
     private Integer otp;
 
-    @Column(name = "password", length = 45)
+    @Column(name = "password", length = 250)
     private String password;
 
     @Column(name = "Time")
