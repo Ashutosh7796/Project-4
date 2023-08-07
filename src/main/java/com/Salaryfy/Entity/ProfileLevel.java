@@ -12,7 +12,7 @@ public class ProfileLevel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ProfileId", nullable = false)
-    private Integer id;
+    private Integer ProfileId;
 
     @Column(name = "highestLevelOfEdu", length = 250)
     private String highestLevelOfEdu;

@@ -12,7 +12,7 @@ public class Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "planId", nullable = false)
-    private Integer id;
+    private Integer planId;
 
     @Column(name = "userType", length = 45)
     private String userType;

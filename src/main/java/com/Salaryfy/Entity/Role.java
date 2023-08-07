@@ -14,7 +14,7 @@ import lombok.Setter;
 public class Role {
     @Id
     @Column(name = "role_id", nullable = false)
-    private Integer id;
+    private Integer role_id;
 
     @Column(name = "Role", nullable = false, length = 45)
     private String role;

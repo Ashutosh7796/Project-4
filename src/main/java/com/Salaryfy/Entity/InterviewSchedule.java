@@ -16,7 +16,7 @@ public class InterviewSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "InterviewScheduleId", nullable = false)
-    private Integer id;
+    private Integer InterviewScheduleId;
 
     @Column(name = "location", length = 45)
     private String location;

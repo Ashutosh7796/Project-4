@@ -14,7 +14,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "paymentId", nullable = false)
-    private Integer id;
+    private Integer paymentId;
 
     @Column(name = "paymentTanId", length = 250)
     private String paymentTanId;

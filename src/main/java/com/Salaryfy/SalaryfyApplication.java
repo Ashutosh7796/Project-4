@@ -11,15 +11,15 @@ public class SalaryfyApplication {
 
 		System.err.println("PROJECT- 5");
 
-h
-		System.err.println("   .^.     .=====.   [========]   ..====]  [========]    .^.    .=====.   [========] " );
+
+		System.err.println("   .^.     [=====.   [========]   ..====]  [========]    .^.    [=====.   [========] " );
 		System.err.println(" //   \\\\   ||     \\\\     ||      //            ||      //   \\\\  ||     \\\\     || " );
 		System.err.println("||     ||  ||     //     ||      \\\\            ||     ||     || ||     //     ||     " );
 		System.err.println("||     ||  ||====''      ||        '===.       ||     ||     || ||====''      ||     " );
 		System.err.println("||=====||  ||            ||             \\\\     ||     ||=====|| ||\\\\          ||     " );
 		System.err.println("||     ||  ||            ||             //     ||     ||     || ||  \\\\        ||     " );
 		System.err.println("!!     !!  !!        [========]  [=====''      !!     !!     !! ||    \\\\      !!     " );
-		System.err.println("                                                                                JAVA    ");
+		System.err.println("                                                                                       ");
 
 	}
 	}

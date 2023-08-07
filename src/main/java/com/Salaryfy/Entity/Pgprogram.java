@@ -18,7 +18,7 @@ public class Pgprogram {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PgProgramId", nullable = false)
-    private Integer id;
+    private Integer PgProgramId;
 
     @Column(name = "pgProgramName", length = 250)
     private String pgProgramName;
