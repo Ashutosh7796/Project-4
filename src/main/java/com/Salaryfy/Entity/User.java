@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class User {
     private String password;
 
     @Column(name = "Time")
-    private LocalDate time;
+    private LocalTime time;
 
     @Column(name = "profilePhoto", length = 250)
     private String profilePhoto;
