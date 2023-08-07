@@ -1,5 +1,6 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.Job.JobDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,4 +80,21 @@ public class Job {
             inverseJoinColumns = @JoinColumn(name = "InterviewScheduleId", referencedColumnName = "InterviewScheduleId"))
     private List<InterviewSchedule> interviewSchedule;
 
+    public Job(JobDto jobDto) {
+        this.postName = jobDto.getPostName();
+        this.companyName = jobDto.getCompanyName();
+        this.location = location;
+        this.noOfPosts = noOfPosts;
+        this.interviewStartDate = interviewStartDate;
+        this.interviewEndDate = interviewEndDate;
+        this.essentialRequirements = essentialRequirements;
+        this.incentives = incentives;
+        this.interviewDetails = interviewDetails;
+        this.jobDetails = jobDetails;
+        this.date = date;
+        this.startingSalary = startingSalary;
+        this.jobFairSetNo = jobFairSetNo;
+        this.status = status;
+    }
 }
+

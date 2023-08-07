@@ -1,6 +1,7 @@
 package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.Job.JobDto;
+import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Interfaces.JobService;
 import com.Salaryfy.Repository.JobRepository;
@@ -11,8 +12,6 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 @Service
-@Getter
-@Setter
 @RequiredArgsConstructor
 public class JobServiceImpl implements JobService {
 
@@ -22,8 +21,9 @@ public class JobServiceImpl implements JobService {
     @Override
     public String AddJob(JobDto jobDto) {
 //        User user=userRepository.findById(jobDto.getJobId()).orElseThrow(()->)
-
-        return null;
+        Job job= new Job(jobDto);
+        jobRepository.save(job);
+        return "Job Added";
     }
 
     @Override
