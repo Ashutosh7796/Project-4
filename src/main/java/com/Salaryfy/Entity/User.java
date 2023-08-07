@@ -29,8 +29,6 @@ public class User {
     @Column(name = "email", length = 45)
     private String email;
 
-    @Column(name = "Otp")
-    private Integer otp;
 
     @Column(name = "password", length = 250)
     private String password;
