@@ -41,5 +41,7 @@ public class JobDto {
 
     private Boolean status;
 
+    private Integer User_Id;
+
 
 }

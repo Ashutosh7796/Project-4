@@ -83,18 +83,18 @@ public class Job {
     public Job(JobDto jobDto) {
         this.postName = jobDto.getPostName();
         this.companyName = jobDto.getCompanyName();
-        this.location = location;
-        this.noOfPosts = noOfPosts;
-        this.interviewStartDate = interviewStartDate;
-        this.interviewEndDate = interviewEndDate;
-        this.essentialRequirements = essentialRequirements;
-        this.incentives = incentives;
-        this.interviewDetails = interviewDetails;
-        this.jobDetails = jobDetails;
-        this.date = date;
-        this.startingSalary = startingSalary;
-        this.jobFairSetNo = jobFairSetNo;
-        this.status = status;
+        this.location = jobDto.getLocation();
+        this.noOfPosts = jobDto.getNoOfPosts();
+        this.interviewStartDate = jobDto.getInterviewStartDate();
+        this.interviewEndDate = jobDto.getInterviewEndDate();
+        this.essentialRequirements = jobDto.getEssentialRequirements();
+        this.incentives = jobDto.getIncentives();
+        this.interviewDetails = jobDto.getInterviewDetails();
+        this.jobDetails = jobDto.getJobDetails();
+        this.date = jobDto.getDate();
+        this.startingSalary = jobDto.getStartingSalary();
+        this.jobFairSetNo = jobDto.getJobFairSetNo();
+        this.status = jobDto.getStatus();
     }
 }
 
