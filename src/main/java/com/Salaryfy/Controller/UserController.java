@@ -32,6 +32,7 @@ public class UserController {
         }
     }
 
+
      @PatchMapping ("/updateUserDetails")
     public ResponseEntity<?> updateDetails (@RequestBody UserDTO userDTO){
         try {
@@ -48,4 +49,5 @@ public class UserController {
 
          }
      }
+
 }
