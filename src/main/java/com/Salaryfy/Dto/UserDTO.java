@@ -5,11 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class UserDTO {
 
     private String email;
@@ -35,6 +35,4 @@ public class UserDTO {
     private String Document;
 
     private Integer user_id;
-
-
 }
