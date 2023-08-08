@@ -25,24 +25,25 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 
         UserDetailsCustom userDetailsCustom = getUserDetails(username);
 
-        if(ObjectUtils.isEmpty(userDetailsCustom)){
+
+        if (ObjectUtils.isEmpty(userDetailsCustom)) {
             throw new BaseException(String.valueOf(HttpStatus.BAD_REQUEST.value()), "Invalid username or password!");
         }
 
         return userDetailsCustom;
     }
 
-    private UserDetailsCustom getUserDetails(String username){
+    private UserDetailsCustom getUserDetails(String username) {
         User user = userRepository.findByEmail(username);
 
-        if(ObjectUtils.isEmpty(user)){
+        if (ObjectUtils.isEmpty(user)) {
             throw new BaseException(String.valueOf(HttpStatus.BAD_REQUEST.value()), "Invalid username or password!");
         }
 
         return new UserDetailsCustom(
                 user.getEmail(),
                 user.getPassword(),
-               user.getFullName(),
+                user.getFullName(),
                 user.getUser_id(),
                 user.getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getName()))
                         .collect(Collectors.toList())

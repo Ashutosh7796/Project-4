@@ -7,4 +7,6 @@ import com.Salaryfy.utils.BaseResponseDTO;
 public interface IUser {
 
     public BaseResponseDTO registerAccount (UserDTO userDTO);
+
+    public void updateDetails (UserDTO userDTO);
 }
