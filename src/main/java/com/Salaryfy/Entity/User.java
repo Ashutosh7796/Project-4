@@ -24,7 +24,7 @@ public class User {
     private String fullName;
 
     @Column(name = "MobileNo")
-    private Integer mobileNo;
+    private String mobileNo;
 
     @Column(name = "email", length = 45)
     private String email;
@@ -33,8 +33,9 @@ public class User {
     @Column(name = "password", length = 250)
     private String password;
 
-    @Column(name = "Time")
-    private LocalTime time;
+    @Column(name = "date")
+    private LocalDate Date;
+
 
     @Column(name = "profilePhoto", length = 250)
     private String profilePhoto;

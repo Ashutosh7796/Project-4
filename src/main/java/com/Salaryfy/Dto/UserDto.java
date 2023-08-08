@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
@@ -15,13 +16,13 @@ public class UserDTO {
 
     private String password;
 
-    private Integer mobile_no;
+    private String mobile_no;
 
     private String role;
 
     private String fullName;
 
-    private LocalTime time;
+    private LocalDate date;
 
     private String userProfileType;
 
@@ -32,6 +33,8 @@ public class UserDTO {
     private String paymentValidity;
 
     private String Document;
+
+    private Integer user_id;
 
 
 }
