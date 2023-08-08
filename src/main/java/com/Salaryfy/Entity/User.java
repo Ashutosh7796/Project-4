@@ -1,10 +1,11 @@
 package com.Salaryfy.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+
 @Table(name = "user")
 public class User {
 
@@ -26,6 +28,8 @@ public class User {
     @Column(name = "MobileNo")
     private String mobileNo;
 
+    @Email
+    @NotBlank
     @Column(name = "email", length = 45)
     private String email;
 

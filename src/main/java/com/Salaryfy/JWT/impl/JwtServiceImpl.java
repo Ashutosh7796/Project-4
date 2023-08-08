@@ -69,13 +69,6 @@ public class JwtServiceImpl implements JwtService {
 
         String userProfileId = null;
 
-//        if (roles.contains("DEALER")) {
-//            dealerId = userDetailsCustom.getDealerId();
-//        } else if (roles.contains("USER")) {
-//            userId = userDetailsCustom.getUserId();
-//            userProfileId = userDetailsCustom.getUserProfileId();
-//        }
-
 
         return Jwts
                 .builder()

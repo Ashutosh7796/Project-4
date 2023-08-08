@@ -1,5 +1,6 @@
 package com.Salaryfy.Dto;
 
+
 import com.Salaryfy.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,15 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDTO {
+public class UserGetDto {
 
     private String email;
 
-    private String password;
-
     private String mobile_no;
-
-    private String role;
 
     private String fullName;
 
@@ -39,7 +36,7 @@ public class UserDTO {
 
     private Integer user_id;
 
-    public UserDTO(User user) {
+    public UserGetDto(User user) {
         this.email = user.getEmail();
         this.mobile_no = user.getMobileNo();
         this.fullName = user.getFullName();
@@ -51,3 +48,4 @@ public class UserDTO {
         this.Document= user.getDocuments();
     }
 }
+
