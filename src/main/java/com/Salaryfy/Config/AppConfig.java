@@ -73,6 +73,7 @@ public class AppConfig {
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/sendEmail/**").permitAll()
                 .requestMatchers("/verifyOpt/**").permitAll()
+                .requestMatchers("/job/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)
