@@ -71,6 +71,8 @@ public class AppConfig {
                 .formLogin().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/user/**").permitAll()
+                .requestMatchers("/sendEmail/**").permitAll()
+                .requestMatchers("/verifyOpt/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)
