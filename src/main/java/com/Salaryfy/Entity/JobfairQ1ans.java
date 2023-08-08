@@ -1,5 +1,6 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.JobfairQ1ans.JobfairQ1ansDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,12 +19,13 @@ public class JobfairQ1ans {
     private String question;
 
     @Column(name = "Ans")
-    private Boolean ans;
+    private String ans;
 
     @Column(name = "UserId")
     private Integer userId;
 
     @Column(name = "JobId")
     private Integer jobId;
+
 
 }
