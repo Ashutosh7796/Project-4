@@ -1,9 +1,11 @@
 package com.Salaryfy.Services;
 
+import com.Salaryfy.Dto.GetAllUserDTO;
 import com.Salaryfy.Dto.UserDTO;
 import com.Salaryfy.Entity.Role;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.BaseException;
+import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IUser;
@@ -16,10 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -109,5 +108,37 @@ public class UserServiceImpl implements IUser {
             throw new UserNotFoundException("User not found with ID");
         }
 
+    }
+
+    @Override
+    public List<GetAllUserDTO> getAllUsers(int pageNo) {
+        List<User> listOfUsers = userRepository.findAll();
+
+        if((pageNo*10)>listOfUsers.size()-1){
+            throw new PageNotFoundException("page not found");
+
+        }
+        if(listOfUsers.size()<=0){throw new UserNotFoundException("user not found",HttpStatus.NOT_FOUND);}
+
+        List<GetAllUserDTO> listOfUsersDto = new ArrayList<>();
+
+        int pageStart=pageNo*10;
+        int pageEnd=pageStart+10;
+        int diff=(listOfUsers.size()) - pageStart;
+        for(int counter=pageStart,i=1;counter<pageEnd;counter++,i++){
+            if(pageStart>listOfUsers.size()){break;}
+
+
+            GetAllUserDTO userDto = new GetAllUserDTO (listOfUsers.get(counter));
+            userDto.setUser_id(listOfUsers.get(counter).getUser_id());
+            listOfUsersDto.add(userDto);
+
+
+            if(diff == i){
+                break;
+            }
+        }
+
+        return listOfUsersDto;
     }
 }

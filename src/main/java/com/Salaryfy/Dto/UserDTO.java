@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class UserDTO {
 
     private String email;
@@ -34,6 +35,4 @@ public class UserDTO {
     private String Document;
 
     private Integer user_id;
-
-
 }
