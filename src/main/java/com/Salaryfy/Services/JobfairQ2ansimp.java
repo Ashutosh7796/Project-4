@@ -1,11 +1,16 @@
 package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
+import com.Salaryfy.Entity.JobfairQ1ans;
 import com.Salaryfy.Entity.JobfairQ2ans;
 import com.Salaryfy.Interfaces.IJobfairQ2ans;
 import com.Salaryfy.Repository.JobfairQ2ansRepo;
+import org.springframework.asm.Opcodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobfairQ2ansimp implements IJobfairQ2ans {
@@ -24,4 +29,44 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
         jobfairQ2ansRepo.save(jobfairQ2ans);
         return "Data added";
     }
+
+    @Override
+    public JobfairQ2ans getQ2ans(int jobFairQ1Id) {
+
+        Optional<JobfairQ2ans> jobfairQ2ans = jobfairQ2ansRepo.findById(jobFairQ1Id);
+        return jobfairQ2ans.get();
+    }
+
+    @Override
+    public List<JobfairQ2ans> getallQ2ans() {
+        return (List<JobfairQ2ans>)jobfairQ2ansRepo.findAll() ;
+    }
+
+    @Override
+    public String deleteQ2ans(int jobFairQ1Id) {
+        jobfairQ2ansRepo.deleteById(jobFairQ1Id);
+        return "Data Deleted";
+    }
+
+    @Override
+    public String deleteallQ2ans() {
+         jobfairQ2ansRepo.deleteAll();
+         return "All data deleted";
+    }
+
+    @Override
+    public String updateQ2ans(int jobFairQ2Id) {
+        Optional<JobfairQ2ans> optionalQ2Answer = jobfairQ2ansRepo.findById(jobFairQ2Id);
+        if (optionalQ2Answer.isPresent()) {
+            optionalQ2Answer.get().setAns("newAnswer");
+            jobfairQ2ansRepo.save(optionalQ2Answer.get());
+
+            return "updated";
+        } else {
+            throw new IllegalArgumentException("Q2 Answer not found with id: " + jobFairQ2Id);
+
+        }
+    }
+
+
 }

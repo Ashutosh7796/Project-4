@@ -4,7 +4,7 @@ package com.Salaryfy.Config;
 import com.Salaryfy.Config.filter.CustomAuthenticationProvider;
 import com.Salaryfy.Config.filter.JwtTokenAuthenticationFilter;
 import com.Salaryfy.Config.filter.JwtUsernamePasswordAuthenticationFilter;
-//import com.Salaryfy.Exception.CustomAccessDeniedHandler;
+import com.Salaryfy.Exception.CustomAccessDeniedHandler;
 import com.Salaryfy.Exception.CustomAccessDeniedHandler;
 import com.Salaryfy.JWT.JwtConfig;
 import com.Salaryfy.JWT.JwtService;

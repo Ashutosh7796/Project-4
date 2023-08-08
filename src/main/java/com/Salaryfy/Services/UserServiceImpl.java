@@ -1,6 +1,6 @@
 package com.Salaryfy.Services;
 
-import com.Salaryfy.Dto.UserDTO;
+import com.Salaryfy.Dto.UserDto;
 import com.Salaryfy.Entity.Role;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.BaseException;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements IUser {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public BaseResponseDTO registerAccount(UserDTO userDTO) {
+    public BaseResponseDTO registerAccount(UserDto userDTO) {
         BaseResponseDTO response = new BaseResponseDTO();
 
         validateAccount(userDTO);
@@ -53,7 +53,7 @@ public class UserServiceImpl implements IUser {
         return response;
     }
 
-    private User insertUser(UserDTO userDTO) {
+    private User insertUser(UserDto userDTO) {
         User user = new User();
         user.setFullName(userDTO.getFullName());
         user.setEmail(userDTO.getEmail());
@@ -72,7 +72,7 @@ public class UserServiceImpl implements IUser {
         return user;
     }
 
-    private void validateAccount(UserDTO userDTO) {
+    private void validateAccount(UserDto userDTO) {
         // validate null data
         if (ObjectUtils.isEmpty(userDTO)) {
             throw new BaseException(String.valueOf(HttpStatus.BAD_REQUEST.value()), "Data must not be empty");

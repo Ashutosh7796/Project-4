@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class JobfairQ1ansDto {
 
+    public Integer JobfairQ1Id;
     public String question;
     public String ans;
     public Integer userId;

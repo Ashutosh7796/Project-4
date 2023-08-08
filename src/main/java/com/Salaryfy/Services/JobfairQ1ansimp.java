@@ -45,10 +45,41 @@ public class JobfairQ1ansimp implements IJobfairQ1ans {
         return (List<com.Salaryfy.Entity.JobfairQ1ans>) jobfairQ1ansRepo.findAll();
     }
 
+    @Override
+    public String deleteQ1ans(int jobFairQ1Id) {
+        jobfairQ1ansRepo.deleteById(jobFairQ1Id);
+        return "deleted";
+    }
+
 
     @Override
-    public String deleteQ1ans(int userId) {
-        jobfairQ1ansRepo.deleteById(userId);
-        return "Deleted";
+    public String deleteallQ1ans() {
+        jobfairQ1ansRepo.deleteAll();
+        return "All data deleted";
+    }
+
+    @Override
+    public String updateQ1ans(int jobFairQ1Id) {
+
+        Optional<JobfairQ1ans> optionalQ1Answer = jobfairQ1ansRepo.findById(jobFairQ1Id);
+        if (optionalQ1Answer.isPresent()) {
+            optionalQ1Answer.get().setAns("newAnswer");
+            jobfairQ1ansRepo.save(optionalQ1Answer.get());
+
+            return "updated";
+        } else {
+            throw new IllegalArgumentException("Q1 Answer not found with id: " + jobFairQ1Id);
+
+        }
+
     }
 }
+
+
+
+
+
+
+
+
+

@@ -33,15 +33,24 @@ public class JobfairQ1ans {
          return iJobfairQ1ans.getallQ1ans();
     }
 
-
-    public String deleteQ1ans(@RequestParam int JobFairQ1Id)
+    @DeleteMapping("/deleteallQ1ans")
+    public String deleteallQ1ans()
     {
-            return iJobfairQ1ans.deleteQ1ans(JobFairQ1Id);
+        return iJobfairQ1ans.deleteallQ1ans();
     }
 
+    @DeleteMapping("/deleteQ1ans")
+    public String deleteQ1ans(@RequestParam int jobFairQ1Id)
+    {
+        return iJobfairQ1ans.deleteQ1ans(jobFairQ1Id);
+    }
 
+    @PutMapping("/updateQ1ans")
+    public String updateQ1ans(@RequestParam int jobFairQ1Id)
+    {
 
-
+        return iJobfairQ1ans.updateQ1ans(jobFairQ1Id);
+    }
 
 
 }

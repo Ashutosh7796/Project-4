@@ -1,6 +1,7 @@
 package com.Salaryfy.Controller;
 
-import com.Salaryfy.Dto.UserDTO;
+import com.Salaryfy.Dto.UserDto;
+import com.Salaryfy.Dto.UserDto;
 import com.Salaryfy.Exception.BaseException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
 import com.Salaryfy.Interfaces.IUser;
@@ -21,7 +22,7 @@ public class UserController {
     private final IUser userRepository;
 
     @PostMapping ("/register")
-    public ResponseEntity<BaseResponseDTO> registerUser (@RequestBody UserDTO userDTO) {
+    public ResponseEntity<BaseResponseDTO> registerUser (@RequestBody UserDto userDTO) {
         try {
             BaseResponseDTO response = userRepository.registerAccount(userDTO);
             return ResponseEntity.status(HttpStatus.OK).body(new BaseResponseDTO("Successful", response.getMessage()));
