@@ -16,12 +16,18 @@ public class UserDetailsCustom implements UserDetails {
 
     private String password;
 
-    private String userId;
-    public String getUserId() {
+    private String fullName;
+
+    private  int userId;
+
+    public int getUserId() {
         return userId;
     }
 
+
     private List<GrantedAuthority> authorities;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -37,6 +43,11 @@ public class UserDetailsCustom implements UserDetails {
     public String getUsername() {
         return username;
     }
+
+    public String getFullName() {
+        return fullName;
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {

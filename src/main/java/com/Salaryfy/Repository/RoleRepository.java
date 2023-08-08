@@ -1,11 +1,11 @@
 package com.Salaryfy.Repository;
 
-import com.Salaryfy.Entity.User;
+import com.Salaryfy.Entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-    User findByEmail(String email);
+    Role findByName(String name);
 }

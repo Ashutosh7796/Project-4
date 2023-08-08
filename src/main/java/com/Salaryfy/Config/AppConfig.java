@@ -1,7 +1,7 @@
 package com.Salaryfy.Config;
 
-import com.Salaryfy.Config.filter.CustomAuthenticationProvider;
 
+import com.Salaryfy.Config.filter.CustomAuthenticationProvider;
 import com.Salaryfy.Config.filter.JwtTokenAuthenticationFilter;
 import com.Salaryfy.Config.filter.JwtUsernamePasswordAuthenticationFilter;
 //import com.Salaryfy.Exception.CustomAccessDeniedHandler;
@@ -9,7 +9,6 @@ import com.Salaryfy.Exception.CustomAccessDeniedHandler;
 import com.Salaryfy.JWT.JwtConfig;
 import com.Salaryfy.JWT.JwtService;
 import com.Salaryfy.Security.UserDetailsServiceCustom;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +22,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -51,13 +45,11 @@ public class AppConfig {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
-
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public UserDetailsService userDetailsService(){
-
         return new UserDetailsServiceCustom();
     }
 
@@ -75,22 +67,11 @@ public class AppConfig {
         AuthenticationManager manager = builder.build();
 
         http
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
+                .cors().disable()
                 .csrf().disable()
                 .formLogin().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/account/**").permitAll()
-                .requestMatchers("/cars/**").permitAll()
-                .requestMatchers("/booking/**").hasAnyAuthority("USER", "ADMIN","DEALER")
-                .requestMatchers("/userProfilePhoto/**").permitAll()
-                .requestMatchers("/photo/**").permitAll()
-                .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                .requestMatchers("/dealerDocument/**").hasAnyAuthority("ADMIN", "DEALER")
-                .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
-                .requestMatchers("/dealer/**").hasAnyAuthority("DEALER", "ADMIN")
-                .requestMatchers("/car/**").hasAnyAuthority("DEALER", "ADMIN")
-
+                .requestMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)
@@ -108,27 +89,4 @@ public class AppConfig {
         ;
         return http.build();
     }
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        return new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
-                config.setAllowedMethods(Collections.singletonList("*"));
-                config.setAllowCredentials(true);
-                config.setAllowedHeaders(Collections.singletonList("*"));
-                config.setExposedHeaders(Arrays.asList("Authorization"));
-                config.setMaxAge(3600L);
-                return config;
-            }
-        };
-    }
-
-
 }
-
-
-
-
-
