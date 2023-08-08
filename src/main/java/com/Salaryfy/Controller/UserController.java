@@ -1,17 +1,16 @@
 package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.UserDTO;
+import com.Salaryfy.Dto.UserupdateDTO;
 import com.Salaryfy.Exception.BaseException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
+import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IUser;
 import com.Salaryfy.utils.BaseResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -33,5 +32,22 @@ public class UserController {
         }
     }
 
+
+     @PatchMapping ("/updateUserDetails")
+    public ResponseEntity<?> updateDetails (@RequestBody UserDTO userDTO){
+        try {
+            userRepository.updateDetails(userDTO);
+           UserupdateDTO userupdateDTO= new UserupdateDTO("success");
+           userupdateDTO.setMessage("User Details Updated");
+
+           return ResponseEntity.status(HttpStatus.OK).body(userupdateDTO);
+        }catch(UserNotFoundException e) {
+            UserupdateDTO userupdateDTO = new UserupdateDTO("Unsuccess");
+            userupdateDTO.setException(String.valueOf(e));
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userupdateDTO);
+
+         }
+     }
 
 }

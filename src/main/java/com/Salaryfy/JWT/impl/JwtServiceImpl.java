@@ -80,8 +80,8 @@ public class JwtServiceImpl implements JwtService {
         return Jwts
                 .builder()
                 .setSubject(userDetailsCustom.getUsername())
-                .claim("dealerId", dealerId)
-                .claim("userId", userId)
+                .claim("userId", userDetailsCustom.getUserId())
+                .claim("fullName", userDetailsCustom.getFullName())
                 .claim("authorities", userDetailsCustom.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .claim("roles", roles)
                 .claim("isEnable", userDetailsCustom.isEnabled())

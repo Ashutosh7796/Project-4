@@ -5,6 +5,7 @@ import com.Salaryfy.Entity.Role;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.BaseException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
+import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IUser;
 import com.Salaryfy.Repository.RoleRepository;
 import com.Salaryfy.Repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -59,7 +61,7 @@ public class UserServiceImpl implements IUser {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setMobileNo(userDTO.getMobile_no());
-        user.setTime(userDTO.getTime());
+        user.setDate(userDTO.getDate());
         user.setUserProfileType(userDTO.getUserProfileType());
         user.setProfilePhoto(userDTO.getProfilePhoto());
         user.setSubType(userDTO.getSubType());
@@ -89,5 +91,23 @@ public class UserServiceImpl implements IUser {
         if (!roles.contains(userDTO.getRole())) {
             throw new BaseException(String.valueOf(HttpStatus.BAD_REQUEST.value()), "Invalid role");
         }
+    }
+
+    @Override
+    public void updateDetails(UserDTO userDTO) {
+        Optional<User> userUpdateOptional = userRepository.findById(userDTO.getUser_id());
+        if (userUpdateOptional.isPresent()) {
+            User user = userUpdateOptional.get();
+            user.setEmail(userDTO.getEmail());
+            user.setMobileNo(userDTO.getMobile_no());
+            user.setFullName(userDTO.getFullName());
+            user.setProfilePhoto(userDTO.getProfilePhoto());
+            user.setSubType(userDTO.getSubType());
+            user.setUserProfileType(userDTO.getUserProfileType());
+            userRepository.save(user);
+        } else {
+            throw new UserNotFoundException("User not found with ID");
+        }
+
     }
 }
