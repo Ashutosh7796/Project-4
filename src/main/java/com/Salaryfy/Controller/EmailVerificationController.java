@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +28,6 @@ public class EmailVerificationController {
 
         String sendOtp = "http://169.254.63.118:5173/reset-password?token=" + otp;
 
-        // emailVerificationService.forgotPass(email, sendOtp);
 
         return "okk";
     }
