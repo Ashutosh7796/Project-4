@@ -3,6 +3,7 @@ package com.Salaryfy.Controller;
 import com.Salaryfy.Dto.GetAllUserDTO;
 import com.Salaryfy.Dto.ResponseAllUsersDto;
 import com.Salaryfy.Dto.UserDTO;
+import com.Salaryfy.Dto.UserResponseDto;
 import com.Salaryfy.Dto.UserupdateDTO;
 import com.Salaryfy.Exception.BaseException;
 import com.Salaryfy.Exception.PageNotFoundException;
@@ -73,5 +74,24 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
         }
     }
+
+     @GetMapping("/getAllUsersWithStatus")
+     public ResponseEntity<UserResponseDto> findByStatus(@RequestParam String status, @RequestParam int pageNo){
+
+        try {
+            List<UserDTO> user = userService.findByStatus(status, pageNo);
+            UserResponseDto userResponseDto= new UserResponseDto("Successful");
+            userResponseDto.setUsers(user);
+            return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
+        }catch (UserNotFoundException e){
+            UserResponseDto userResponseDto= new UserResponseDto("Unsuccessful");
+            userResponseDto.setException(String.valueOf(e));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userResponseDto);
+        }catch (PageNotFoundException e){
+            UserResponseDto userResponseDto= new UserResponseDto("Unsuccessful");
+            userResponseDto.setException(String.valueOf(e));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userResponseDto);
+        }
+     }
 
 }
