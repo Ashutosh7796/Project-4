@@ -25,12 +25,11 @@ public class UserController {
 
     private final IUser userService;
 
-    @PostMapping ("/register")
-    public ResponseEntity<BaseResponseDTO> registerUser (@RequestBody UserDTO userDTO) {
+    @PostMapping("/register")
+    public ResponseEntity<BaseResponseDTO> registerUser(@RequestBody UserDTO userDTO) {
         try {
             BaseResponseDTO response = userService.registerAccount(userDTO);
             return ResponseEntity.status(HttpStatus.OK).body(new BaseResponseDTO("Successful", response.getMessage()));
-
         } catch (UserAlreadyExistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDTO("unsuccessful", "User Already Exists"));
         } catch (BaseException c) {
@@ -39,59 +38,59 @@ public class UserController {
     }
 
 
-     @PatchMapping ("/updateUserDetails")
-    public ResponseEntity<?> updateDetails (@RequestBody UserDTO userDTO){
+    @PatchMapping("/updateUserDetails")
+    public ResponseEntity<?> updateDetails(@RequestBody UserDTO userDTO) {
         try {
             userService.updateDetails(userDTO);
-           UserupdateDTO userupdateDTO= new UserupdateDTO("success");
-           userupdateDTO.setMessage("User Details Updated");
+            UserupdateDTO userupdateDTO = new UserupdateDTO("success");
+            userupdateDTO.setMessage("User Details Updated");
 
-           return ResponseEntity.status(HttpStatus.OK).body(userupdateDTO);
-        }catch(UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.OK).body(userupdateDTO);
+        } catch (UserNotFoundException e) {
             UserupdateDTO userupdateDTO = new UserupdateDTO("Unsuccess");
             userupdateDTO.setException(String.valueOf(e));
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userupdateDTO);
 
-         }
-     }
+        }
+    }
+
     @GetMapping("/getAllUsers")
-    public ResponseEntity<ResponseAllUsersDto> getAllUser(@RequestParam int pageNo){
+    public ResponseEntity<ResponseAllUsersDto> getAllUser(@RequestParam int pageNo) {
 
         try {
-            List<GetAllUserDTO> list= userService.getAllUsers(pageNo);
+            List<GetAllUserDTO> list = userService.getAllUsers(pageNo);
             ResponseAllUsersDto responseAllUsersDto = new ResponseAllUsersDto("success");
             responseAllUsersDto.setList(list);
             return ResponseEntity.status(HttpStatus.OK).body(responseAllUsersDto);
-        } catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             ResponseAllUsersDto responseAllCarDto = new ResponseAllUsersDto("unsuccess");
             responseAllCarDto.setException("car not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
-        }
-        catch (PageNotFoundException exception){
+        } catch (PageNotFoundException exception) {
             ResponseAllUsersDto responseAllCarDto = new ResponseAllUsersDto("unsuccess");
             responseAllCarDto.setException("page not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
         }
     }
 
-     @GetMapping("/getAllUsersWithStatus")
-     public ResponseEntity<UserResponseDto> findByStatus(@RequestParam String status, @RequestParam int pageNo){
+    @GetMapping("/getAllUsersWithStatus")
+    public ResponseEntity<UserResponseDto> findByStatus(@RequestParam String status, @RequestParam int pageNo) {
 
         try {
             List<UserDTO> user = userService.findByStatus(status, pageNo);
-            UserResponseDto userResponseDto= new UserResponseDto("Successful");
+            UserResponseDto userResponseDto = new UserResponseDto("Successful");
             userResponseDto.setUsers(user);
             return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
-        }catch (UserNotFoundException e){
-            UserResponseDto userResponseDto= new UserResponseDto("Unsuccessful");
+        } catch (UserNotFoundException e) {
+            UserResponseDto userResponseDto = new UserResponseDto("Unsuccessful");
             userResponseDto.setException(String.valueOf(e));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userResponseDto);
-        }catch (PageNotFoundException e){
-            UserResponseDto userResponseDto= new UserResponseDto("Unsuccessful");
+        } catch (PageNotFoundException e) {
+            UserResponseDto userResponseDto = new UserResponseDto("Unsuccessful");
             userResponseDto.setException(String.valueOf(e));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userResponseDto);
         }
-     }
+    }
 
 }
