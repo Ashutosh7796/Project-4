@@ -1,8 +1,12 @@
 package com.Salaryfy.Controller;
 
+import com.Salaryfy.Dto.GetAllUserDTO;
+import com.Salaryfy.Dto.ResponseAllUsersDto;
 import com.Salaryfy.Dto.UserDTO;
+import com.Salaryfy.Dto.UserResponseDto;
 import com.Salaryfy.Dto.UserupdateDTO;
 import com.Salaryfy.Exception.BaseException;
+import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IUser;
@@ -12,17 +16,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final IUser userRepository;
+    private final IUser userService;
 
     @PostMapping ("/register")
     public ResponseEntity<BaseResponseDTO> registerUser (@RequestBody UserDTO userDTO) {
         try {
-            BaseResponseDTO response = userRepository.registerAccount(userDTO);
+            BaseResponseDTO response = userService.registerAccount(userDTO);
             return ResponseEntity.status(HttpStatus.OK).body(new BaseResponseDTO("Successful", response.getMessage()));
 
         } catch (UserAlreadyExistException e) {
@@ -36,7 +42,7 @@ public class UserController {
      @PatchMapping ("/updateUserDetails")
     public ResponseEntity<?> updateDetails (@RequestBody UserDTO userDTO){
         try {
-            userRepository.updateDetails(userDTO);
+            userService.updateDetails(userDTO);
            UserupdateDTO userupdateDTO= new UserupdateDTO("success");
            userupdateDTO.setMessage("User Details Updated");
 
@@ -48,6 +54,44 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userupdateDTO);
 
          }
+     }
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<ResponseAllUsersDto> getAllUser(@RequestParam int pageNo){
+
+        try {
+            List<GetAllUserDTO> list= userService.getAllUsers(pageNo);
+            ResponseAllUsersDto responseAllUsersDto = new ResponseAllUsersDto("success");
+            responseAllUsersDto.setList(list);
+            return ResponseEntity.status(HttpStatus.OK).body(responseAllUsersDto);
+        } catch (UserNotFoundException e){
+            ResponseAllUsersDto responseAllCarDto = new ResponseAllUsersDto("unsuccess");
+            responseAllCarDto.setException("car not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
+        }
+        catch (PageNotFoundException exception){
+            ResponseAllUsersDto responseAllCarDto = new ResponseAllUsersDto("unsuccess");
+            responseAllCarDto.setException("page not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
+        }
+    }
+
+     @GetMapping("/getAllUsersWithStatus")
+     public ResponseEntity<UserResponseDto> findByStatus(@RequestParam String status, @RequestParam int pageNo){
+
+        try {
+            List<UserDTO> user = userService.findByStatus(status, pageNo);
+            UserResponseDto userResponseDto= new UserResponseDto("Successful");
+            userResponseDto.setUsers(user);
+            return ResponseEntity.status(HttpStatus.OK).body(userResponseDto);
+        }catch (UserNotFoundException e){
+            UserResponseDto userResponseDto= new UserResponseDto("Unsuccessful");
+            userResponseDto.setException(String.valueOf(e));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userResponseDto);
+        }catch (PageNotFoundException e){
+            UserResponseDto userResponseDto= new UserResponseDto("Unsuccessful");
+            userResponseDto.setException(String.valueOf(e));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userResponseDto);
+        }
      }
 
 }
