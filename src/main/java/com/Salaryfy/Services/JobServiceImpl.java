@@ -58,6 +58,58 @@ public class JobServiceImpl implements JobService {
         return "Job Updated"+JobId;
     }
 
+    @Override
+    public String updateJobFields(JobDto jobDto, Integer JobId) {
+        Job job = jobRepository.findById(JobId).orElseThrow(() -> new JobNotFoundException("Job not found", HttpStatus.NOT_FOUND));
+
+        if (jobDto.getPostName() != null) {
+            job.setPostName(jobDto.getPostName());
+        }
+        if (jobDto.getCompanyName() != null) {
+            job.setCompanyName(jobDto.getCompanyName());
+        }
+        if (jobDto.getLocation() != null) {
+            job.setLocation(jobDto.getLocation());
+        }
+        if (jobDto.getNoOfPosts() != null) {
+            job.setNoOfPosts(jobDto.getNoOfPosts());
+        }
+        if (jobDto.getInterviewStartDate() != null) {
+            job.setInterviewStartDate(jobDto.getInterviewStartDate());
+        }
+        if (jobDto.getInterviewEndDate() != null) {
+            job.setInterviewEndDate(jobDto.getInterviewEndDate());
+        }
+        if (jobDto.getEssentialRequirements() != null) {
+            job.setEssentialRequirements(jobDto.getEssentialRequirements());
+        }
+        if (jobDto.getIncentives() != null) {
+            job.setIncentives(jobDto.getIncentives());
+        }
+        if (jobDto.getInterviewDetails() != null) {
+            job.setInterviewDetails(jobDto.getInterviewDetails());
+        }
+        if (jobDto.getJobDetails() != null) {
+            job.setJobDetails(jobDto.getJobDetails());
+        }
+        if (jobDto.getDate() != null) {
+            job.setDate(jobDto.getDate());
+        }
+        if (jobDto.getStartingSalary() != null) {
+            job.setStartingSalary(jobDto.getStartingSalary());
+        }
+        if (jobDto.getJobFairSetNo() != null) {
+            job.setJobFairSetNo(jobDto.getJobFairSetNo());
+        }
+        if (jobDto.getStatus() != null) {
+            job.setStatus(jobDto.getStatus());
+        }
+
+        jobRepository.save(job);
+
+        return "Job fields updated successfully";
+    }
+
 
     @Override
     public List<JobDto> getAlljobsWithPages(int PageNo) {
