@@ -1,32 +1,30 @@
 package com.Salaryfy.Controller;
 
-import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
-import com.Salaryfy.Dto.JobfairQ2ans.ResponseJobFairQ2Dto;
+import com.Salaryfy.Dto.JobfairQ1ans.JobfairQ1ansDto;
+import com.Salaryfy.Dto.JobfairQ1ans.ResponseJobFairQ1Dto;
 import com.Salaryfy.Dto.ProfileLevelDto.ResponseProfileLevelDto;
 import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
-import com.Salaryfy.Interfaces.IJobfairQ2ans;
+import com.Salaryfy.Interfaces.IJobfairQ1ans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/jobFairQueAns")
-public class JobfairQ2ans {
+@RequestMapping("/jobFairOption")
+public class JobFairQueOneController {
 
     @Autowired
-    private IJobfairQ2ans iJobfairQ2ans;
+    private IJobfairQ1ans iJobfairQ1ans;
 
-    @PostMapping("/addQ2ans")
-    public ResponseEntity<?> addQ2ans(@RequestBody JobfairQ2ansDto jobfairQ2ansDto)
+    @PostMapping("/save")
+    public ResponseEntity<?> addQ1ans(@RequestBody JobfairQ1ansDto jobfairQ1ansDto)
     {
         try {
             System.out.println();
             ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("success");
-            responseProfileLevelDto.setResponse(iJobfairQ2ans.addQ2ans(jobfairQ2ansDto));
+            responseProfileLevelDto.setResponse(iJobfairQ1ans.addQ1ans(jobfairQ1ansDto));
             return ResponseEntity.status(HttpStatus.OK).body(responseProfileLevelDto);
 
         }catch (UserNotFoundException userNotFoundException){
@@ -40,36 +38,33 @@ public class JobfairQ2ans {
         }
 
     }
-    @GetMapping("/getQ2ans")
-    public ResponseEntity<?> getQ2ans(@RequestParam Integer JobFairQ1AnsId)
-    {
 
+    @GetMapping("/getQ1ans")
+    public ResponseEntity<?> getQ1ans(@RequestParam Integer JobFairQ1Id)
+    {
         try {
             System.out.println();
-            ResponseJobFairQ2Dto responseProfileLevelDto = new ResponseJobFairQ2Dto("success");
-            responseProfileLevelDto.setResponse(iJobfairQ2ans.getQ2ans(JobFairQ1AnsId));
+            ResponseJobFairQ1Dto responseProfileLevelDto = new ResponseJobFairQ1Dto("success");
+            responseProfileLevelDto.setResponse(iJobfairQ1ans.getQ1ans(JobFairQ1Id));
             return ResponseEntity.status(HttpStatus.OK).body(responseProfileLevelDto);
 
         }catch (JobNotFoundException userNotFoundException){
-            ResponseJobFairQ2Dto responseJobFairQ1Dto = new ResponseJobFairQ2Dto("unsuccess");
+            ResponseJobFairQ1Dto responseJobFairQ1Dto = new ResponseJobFairQ1Dto("unsuccess");
             responseJobFairQ1Dto.setException(String.valueOf(userNotFoundException));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobFairQ1Dto);
         }
 
-    }
-    @GetMapping("/getallQ2ans")
-    public List<com.Salaryfy.Entity.JobfairQ2ans> getallQ2ans()
-    {
 
-        return iJobfairQ2ans.getallQ2ans();
     }
-    @DeleteMapping("/deleteQ2ans")
-    public ResponseEntity<?> deleteQ2ans(@RequestParam Integer JobFairQ1AnsId)
+
+
+    @DeleteMapping("/deleteQ1ans")
+    public ResponseEntity<?> deleteQ1ans(@RequestParam Integer jobFairQ1Id)
     {
         try {
             System.out.println();
             ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("success");
-            responseProfileLevelDto.setResponse(iJobfairQ2ans.deleteQ2ans(JobFairQ1AnsId));
+            responseProfileLevelDto.setResponse(iJobfairQ1ans.deleteQ1ans(jobFairQ1Id));
             return ResponseEntity.status(HttpStatus.OK).body(responseProfileLevelDto);
 
         }catch (JobNotFoundException userNotFoundException){
@@ -79,13 +74,13 @@ public class JobfairQ2ans {
         }
 
     }
-    @DeleteMapping("/deleteallQ2ans")
-    public String deleteallQ2ans()
-    {
-        iJobfairQ2ans.deleteallQ2ans();
 
-        return "All data deleted";
-    }
+//    @GetMapping("/getall")
+//    public ResponseEntity<?> getallQ1ans(Integer pageNo)
+//    {
+//        return (ResponseEntity<?>) iJobfairQ1ans.getallQ1ans(pageNo);
+//    }
+//
 
 
 }
