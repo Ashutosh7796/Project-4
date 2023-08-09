@@ -3,6 +3,7 @@ package com.Salaryfy.Controller;
 import com.Salaryfy.Dto.JobfairQ1ans.JobfairQ1ansDto;
 import com.Salaryfy.Interfaces.IJobfairQ1ans;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,11 @@ public class JobfairQ1ans {
         return iJobfairQ1ans.deleteQ1ans(jobFairQ1Id);
     }
 
+    @GetMapping("/getall")
+    public ResponseEntity<?> getallQ1ans(Integer pageNo)
+    {
+        return (ResponseEntity<?>) iJobfairQ1ans.getallQ1ans(pageNo);
+    }
 
 
 

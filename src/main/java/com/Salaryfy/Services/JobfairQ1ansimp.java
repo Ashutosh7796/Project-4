@@ -2,6 +2,7 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.JobfairQ1ans.JobfairQ1ansDto;
 import com.Salaryfy.Entity.JobfairQ1ans;
+import com.Salaryfy.Entity.JobfairQ2ans;
 import com.Salaryfy.Interfaces.IJobfairQ1ans;
 import com.Salaryfy.Repository.JobfairQ1ansRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,12 @@ public class JobfairQ1ansimp implements IJobfairQ1ans {
         return "deleted";
     }
 
+    @Override
+    public List<JobfairQ1ans> getallQ1ans(Integer pageNo) {
 
 
-
+        return jobfairQ1ansRepo.findAll();
+    }
 
 
 }
