@@ -1,7 +1,10 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.Job.JobDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -13,6 +16,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "jobs")
 public class Job {
     @Id
@@ -78,5 +83,22 @@ public class Job {
     @JoinTable(name = "user_interview", joinColumns = @JoinColumn(name = "JobId", referencedColumnName = "JobId"),
             inverseJoinColumns = @JoinColumn(name = "InterviewScheduleId", referencedColumnName = "InterviewScheduleId"))
     private List<InterviewSchedule> interviewSchedule;
+
+    public Job(JobDto jobDto) {
+        this.postName = jobDto.getPostName();
+        this.companyName = jobDto.getCompanyName();
+        this.location = jobDto.getLocation();
+        this.noOfPosts = jobDto.getNoOfPosts();
+        this.interviewStartDate = jobDto.getInterviewStartDate();
+        this.interviewEndDate = jobDto.getInterviewEndDate();
+        this.essentialRequirements = jobDto.getEssentialRequirements();
+        this.incentives = jobDto.getIncentives();
+        this.interviewDetails = jobDto.getInterviewDetails();
+        this.jobDetails = jobDto.getJobDetails();
+        this.date = jobDto.getDate();
+        this.startingSalary = jobDto.getStartingSalary();
+        this.jobFairSetNo = jobDto.getJobFairSetNo();
+        this.status = jobDto.getStatus();
+    }
 
 }
