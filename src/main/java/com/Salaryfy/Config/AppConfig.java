@@ -71,6 +71,7 @@ public class AppConfig {
                 .formLogin().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/user/**").permitAll()
+                .requestMatchers("/profileLevel/**").permitAll()
                 .requestMatchers("/sendEmail/**").permitAll()
                 .requestMatchers("/verifyOpt/**").permitAll()
                 .requestMatchers("/job/**").permitAll()

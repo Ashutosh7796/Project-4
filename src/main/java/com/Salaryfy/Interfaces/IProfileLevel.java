@@ -7,7 +7,7 @@ public interface IProfileLevel {
 
     public String getAllProfileLevelDetails(Integer pageNo);
 
-    public String getProfileLevelDetails(Integer profileId);
+    public ProfileLevelDto getProfileLevelDetails(Integer profileId);
 
     public String deleteProfileById(Integer profileId);
 

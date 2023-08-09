@@ -30,6 +30,10 @@ public class ProfileLevel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_userId", nullable = false)
     private User userUser;
+
+    public ProfileLevel() {
+    }
+
     public ProfileLevel(ProfileLevelDto profileLevelDto) {
         this.highestLevelOfEdu = profileLevelDto.getHighestLevelOfEdu();
         this.board = profileLevelDto.getBoard();

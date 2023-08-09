@@ -1,6 +1,10 @@
 package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.ProfileLevelDto.ProfileLevelDto;
+import com.Salaryfy.Dto.ProfileLevelDto.ResponseProfileLevelDto;
+import com.Salaryfy.Dto.ProfileLevelDto.ResponseSingleProfilelevelDto;
+import com.Salaryfy.Exception.ProfileLevelIdNotFoundException;
+import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IProfileLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +18,16 @@ public class ProfileLevelController {
     private IProfileLevel iProfileLevel;
     @PostMapping("/save")
     public ResponseEntity<?> postProfileLevelData(@RequestBody ProfileLevelDto profileLevelDto){
-        return ResponseEntity.status(HttpStatus.OK).body(iProfileLevel.saveProfileLevelData(profileLevelDto));
+        try {
+            ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("success");
+            responseProfileLevelDto.setResponse(iProfileLevel.saveProfileLevelData(profileLevelDto));
+            return ResponseEntity.status(HttpStatus.OK).body(responseProfileLevelDto);
+
+        }catch (UserNotFoundException userNotFoundException){
+            ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("unsuccess");
+            responseProfileLevelDto.setException(String.valueOf(userNotFoundException));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseProfileLevelDto);
+        }
     }
     @GetMapping("/getAllProfileLevelDetails")
     public ResponseEntity<?> getAllProfileLevelDetails(@RequestBody Integer pageNo){
@@ -23,12 +36,30 @@ public class ProfileLevelController {
     }
     @GetMapping("/getProfileLevelDetails")
     public ResponseEntity<?> getProfileLevelDetails(@RequestParam Integer profileId){
-        return ResponseEntity.status(HttpStatus.OK).body(iProfileLevel.getProfileLevelDetails(profileId));
+        try {
+            ResponseSingleProfilelevelDto responseProfileLevelDto = new ResponseSingleProfilelevelDto("success");
+            responseProfileLevelDto.setResponse(iProfileLevel.getProfileLevelDetails(profileId));
+            return ResponseEntity.status(HttpStatus.OK).body(responseProfileLevelDto);
+
+        }catch (ProfileLevelIdNotFoundException profileLevelIdNotFoundException){
+            ResponseSingleProfilelevelDto responseSingleProfilelevelDto = new ResponseSingleProfilelevelDto("unsuccess");
+            responseSingleProfilelevelDto.setException(String.valueOf(profileLevelIdNotFoundException));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseSingleProfilelevelDto);
+        }
+
 
     }
     @DeleteMapping("/deleteProfileLevel")
     public ResponseEntity<?> deleteProfileById(@RequestParam Integer profileId){
-        return ResponseEntity.status(HttpStatus.OK).body(iProfileLevel.deleteProfileById(profileId));
+        try {
+            ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("success");
+            responseProfileLevelDto.setResponse(iProfileLevel.deleteProfileById(profileId));
+            return ResponseEntity.status(HttpStatus.OK).body(responseProfileLevelDto);
 
+        }catch (ProfileLevelIdNotFoundException profileLevelIdNotFoundException){
+            ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("unsuccess");
+            responseProfileLevelDto.setException(String.valueOf(profileLevelIdNotFoundException));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseProfileLevelDto);
+        }
     }
 }
