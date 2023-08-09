@@ -9,8 +9,9 @@ public interface JobService {
 
     public String EditJob(JobDto jobDto,Integer JobId);
 
-
     public List<JobDto> getAlljobsWithPages(int PageNo);
 
     public JobDto findById(Integer JobId);
+
+    public List<JobDto> getJobsByStatusWithPages(int PageNo, Boolean status);
 }

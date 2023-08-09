@@ -1,4 +1,5 @@
 package com.Salaryfy.Controller;
+
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
 import com.Salaryfy.Dto.Job.ResponseSingleJobDto;
@@ -21,38 +22,31 @@ public class JobController {
 
     private final JobService jobService;
 
-    @PostMapping(value ="/add")
-    public ResponseEntity<ResponceDto> jobadded(@RequestBody JobDto jobDto){
-        try
-        {
+    @PostMapping(value = "/add")
+    public ResponseEntity<ResponceDto> jobadded(@RequestBody JobDto jobDto) {
+        try {
             String result = jobService.AddJob(jobDto);
-            return (ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("success",result)));
-        }
-        catch (JobNotFoundException jobNotFoundException)
-        {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess","job Not found"));
+            return (ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("success", result)));
+        } catch (JobNotFoundException jobNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", "job Not found"));
 
         }
     }
 
     @GetMapping("/getAllJobs")
-    public ResponseEntity<ResponseGetAllJobDto> getAlljobs(@RequestParam int pageNo){
+    public ResponseEntity<ResponseGetAllJobDto> getAlljobs(@RequestParam int pageNo) {
 
-        try
-        {
+        try {
             List<JobDto> listOfJob = jobService.getAlljobsWithPages(pageNo);
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
             responseGetAllJobDto.setList(listOfJob);
             return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
-        }
-        catch (JobNotFoundException jobNotFoundException)
-        {
+        } catch (JobNotFoundException jobNotFoundException) {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
             responseGetAllJobDto.setException("job not found");
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
-        }
-        catch (PageNotFoundException pageNotFoundException){
+        } catch (PageNotFoundException pageNotFoundException) {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
             responseGetAllJobDto.setException("Page not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
@@ -60,20 +54,47 @@ public class JobController {
     }
 
     @GetMapping("/getJob")
-    public ResponseEntity<ResponseSingleJobDto> FindJobById(@RequestParam int JobId)
-    {
-        try
-        {
+    public ResponseEntity<ResponseSingleJobDto> FindJobById(@RequestParam int JobId) {
+        try {
             ResponseSingleJobDto responseSingleJobDto = new ResponseSingleJobDto("success");
             JobDto job = jobService.findById(JobId);
             responseSingleJobDto.setObject(job);
             return ResponseEntity.status(HttpStatus.OK).body(responseSingleJobDto);
-        }
-        catch (JobNotFoundException jobNotFoundException)
-        {
+        } catch (JobNotFoundException jobNotFoundException) {
             ResponseSingleJobDto responseSingleJobDto = new ResponseSingleJobDto("unsuccess");
             responseSingleJobDto.setException("Job not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseSingleJobDto);
+        }
+    }
+
+    @GetMapping("/getJobByStatus")
+    public ResponseEntity<ResponseGetAllJobDto> getJobsByStatusWithPages(@RequestParam int pageNo, boolean status) {
+
+        try {
+            List<JobDto> listOfJobsByStatus = jobService.getJobsByStatusWithPages(pageNo, status);
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
+            responseGetAllJobDto.setList(listOfJobsByStatus);
+            return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
+        } catch (JobNotFoundException jobNotFoundException) {
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
+            responseGetAllJobDto.setException("job not found");
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
+        } catch (PageNotFoundException pageNotFoundException) {
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
+            responseGetAllJobDto.setException("Page not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
+        }
+    }
+
+    @PutMapping("/edit/{JobId}")
+    public ResponseEntity<ResponceDto> jobEdit(@RequestBody JobDto jobDto, @PathVariable Integer JobId) {
+        try {
+            String result = jobService.EditJob(jobDto, JobId);
+            return (ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("success", result)));
+        } catch (JobNotFoundException jobNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", "job Not found"));
+
         }
     }
 }
