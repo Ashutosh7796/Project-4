@@ -78,7 +78,6 @@ public class JobController {
         } catch (JobNotFoundException jobNotFoundException) {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
             responseGetAllJobDto.setException("job not found");
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         } catch (PageNotFoundException pageNotFoundException) {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
@@ -97,4 +96,14 @@ public class JobController {
 
         }
     }
+    @PatchMapping("/update/{JobId}")
+    public ResponseEntity<ResponceDto> updateJobFields(@RequestBody JobDto jobDto, @PathVariable Integer JobId) {
+        try {
+            String result = jobService.updateJobFields(jobDto, JobId);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("success", result));
+        } catch (JobNotFoundException jobNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", "Job not found"));
+        }
+    }
+
 }
