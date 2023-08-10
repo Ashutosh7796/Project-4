@@ -74,6 +74,7 @@ public class AppConfig {
                 .requestMatchers("/sendEmail/**").permitAll()
                 .requestMatchers("/verifyOpt/**").permitAll()
                 .requestMatchers("/job/**").permitAll()
+                .requestMatchers("/jobs/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)
