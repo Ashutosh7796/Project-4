@@ -38,8 +38,13 @@ public class UserController {
     }
 
 
+
+     @PatchMapping ("/updateUserDetails")
+     public ResponseEntity<?> updateDetails (@RequestBody UserDTO userDTO){
+
     @PatchMapping("/updateUserDetails")
     public ResponseEntity<?> updateDetails(@RequestBody UserDTO userDTO) {
+
         try {
             userService.updateDetails(userDTO);
             UserupdateDTO userupdateDTO = new UserupdateDTO("success");
@@ -92,5 +97,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userResponseDto);
         }
     }
+
 
 }

@@ -71,10 +71,14 @@ public class AppConfig {
                 .formLogin().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/user/**").permitAll()
+
+                .requestMatchers("/Interview/**").permitAll()
+
                 .requestMatchers("/jobFairOption/**").permitAll()
                 .requestMatchers("/JobFair/**").permitAll()
 
                 .requestMatchers("/profileLevel/**").permitAll()
+
                 .requestMatchers("/sendEmail/**").permitAll()
                 .requestMatchers("/verifyOpt/**").permitAll()
                 .requestMatchers("/job/**").permitAll()
