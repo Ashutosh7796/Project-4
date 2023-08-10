@@ -1,16 +1,21 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.Job.InterviewScheduleDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "interviewSchedule")
 public class InterviewSchedule {
     @Id
@@ -28,7 +33,7 @@ public class InterviewSchedule {
     private LocalTime time;
 
     @Column(name = "Date")
-    private Instant date;
+    private LocalDate date;
 
     @Column(name = "UserId")
     private Integer userId;
@@ -36,6 +41,13 @@ public class InterviewSchedule {
     @Column(name = "Status", length = 45)
     private String status;
 
+    public InterviewSchedule(InterviewScheduleDto interviewScheduleDto) {
+        this.location = interviewScheduleDto.getLocation();
+        this.interviewDate = interviewScheduleDto.getInterviewDate();
+        this.time = interviewScheduleDto.getTime();
+        this.userId=interviewScheduleDto.getUserId();
+        this.date=interviewScheduleDto.getDate();
+        this.status = interviewScheduleDto.getStatus();
 
-
+    }
 }

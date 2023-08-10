@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class JobDto {
 
     private Integer JobId;
+
     private String postName;
 
     private String companyName;
@@ -59,5 +60,6 @@ public class JobDto {
         this.startingSalary = job.getStartingSalary();
         this.jobFairSetNo = job.getJobFairSetNo();
         this.status = job.getStatus();
+
     }
 }

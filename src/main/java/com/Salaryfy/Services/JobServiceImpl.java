@@ -40,9 +40,6 @@ public class JobServiceImpl implements JobService {
         return null;
     }
 
-
-
-
     @Override
     public List<JobDto> getAlljobsWithPages(int PageNo) {
         List<Job> listOfJob =jobRepository.findAll();
