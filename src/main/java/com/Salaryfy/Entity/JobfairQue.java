@@ -1,5 +1,6 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +24,12 @@ public class JobfairQue{
     @Column(name = "SetNo", length = 45)
     private String setNo;
 
+    public JobfairQue() {
+    }
+
+    public JobfairQue(JobFairQueDto jobFairQueDto){
+        this.question = jobFairQueDto.getQuestion();
+        this.questionType = jobFairQueDto.getQuestionType();
+        this.setNo = jobFairQueDto.getSetNo();
+    }
 }
