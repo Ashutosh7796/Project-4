@@ -1,9 +1,6 @@
 package com.Salaryfy.Dto.Job;
 
 import com.Salaryfy.Entity.Job;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
 import lombok.*;
 
 import java.time.LocalDate;

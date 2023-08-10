@@ -1,5 +1,6 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.ProfileLevelDto.ProfileLevelDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,4 +31,13 @@ public class ProfileLevel {
     @JoinColumn(name = "user_userId", nullable = false)
     private User userUser;
 
+    public ProfileLevel() {
+    }
+
+    public ProfileLevel(ProfileLevelDto profileLevelDto) {
+        this.highestLevelOfEdu = profileLevelDto.getHighestLevelOfEdu();
+        this.board = profileLevelDto.getBoard();
+        this.stream = profileLevelDto.getStream();
+        this.percentage = profileLevelDto.getPercentage();
+    }
 }
