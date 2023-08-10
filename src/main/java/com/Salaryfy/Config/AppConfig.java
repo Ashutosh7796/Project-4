@@ -72,6 +72,7 @@ public class AppConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/jobFairOption/**").permitAll()
+                .requestMatchers("/JobFair/**").permitAll()
 
                 .requestMatchers("/profileLevel/**").permitAll()
                 .requestMatchers("/sendEmail/**").permitAll()
