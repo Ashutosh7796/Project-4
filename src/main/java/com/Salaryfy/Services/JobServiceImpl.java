@@ -58,6 +58,7 @@ public class JobServiceImpl implements JobService {
         return "Job Updated"+JobId;
     }
 
+
     @Override
     public String updateJobFields(JobDto jobDto, Integer JobId) {
         Job job = jobRepository.findById(JobId).orElseThrow(() -> new JobNotFoundException("Job not found", HttpStatus.NOT_FOUND));
