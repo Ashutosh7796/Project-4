@@ -1,0 +1,23 @@
+package com.Salaryfy.Interfaces;
+
+import com.Salaryfy.Dto.Job.InterviewScheduleDto;
+import com.Salaryfy.Dto.UserDTO;
+import com.Salaryfy.Entity.InterviewSchedule;
+
+import java.util.List;
+
+public interface InterviewScheduleService {
+
+    InterviewSchedule scheduleInterview(InterviewScheduleDto interviewScheduleDto);
+
+//    void deleteInterviewScheduleById(Integer interviewScheduleId);
+
+    InterviewScheduleDto getinterviewSchedule (int id);
+
+    List <InterviewScheduleDto> findAllInterviews(int pageNo);
+
+    List <InterviewScheduleDto> findInterviewByUSerId (Integer userId, int pageNo);
+    List<InterviewScheduleDto> findInterviewsByStatus(String status, int pageNo);
+
+
+}

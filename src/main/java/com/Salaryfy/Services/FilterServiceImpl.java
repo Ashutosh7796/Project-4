@@ -28,12 +28,12 @@ public class FilterServiceImpl implements FilterService {
     @Autowired
     private JobRepository jobRepository;
     @Override
-    public List<JobDto> searchByFilter(FilterDto filterDto) {
+    public List<JobDto> searchByFilter(FilterDto filterDto, int PageNo) {
         Specification<Job> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             if (filterDto.getLocation() != null && !filterDto.getLocation().isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("location"), filterDto.getLocation()));
+                predicates.add(root.get("location").in(filterDto.getLocation()));
             }
             if (filterDto.getPostName() != null && !filterDto.getPostName().isEmpty()) {
                 predicates.add(criteriaBuilder.equal(root.get("postName"), filterDto.getPostName()));
@@ -42,45 +42,26 @@ public class FilterServiceImpl implements FilterService {
                 predicates.add(criteriaBuilder.equal(root.get("companyName"), filterDto.getCompanyName()));
             }
 
-//            Predicate statusPredicate = criteriaBuilder.or(
-//                    criteriaBuilder.equal(root.get("status"), Status.ACTIVE));
-
-//             Predicate statusPredicate = criteriaBuilder.or(
-//                    criteriaBuilder.equal(root.get("status").get("status"), Status.ACTIVE.getStatus()));
-//            predicates.add(statusPredicate);
-
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
 
-//        Pageable pageable = PageRequest.of(PageNo -0, 10);
-//        Page<Job> carPage = jobRepository.findAll(spec, pageable);
-//        if(carPage.isEmpty()){
-//            throw new PageNotFoundException("Page Not found");
-//        }
-//        List<JobDto> listOfJobDtos =new ArrayList<>();
-//
-//        for (int counter=0;counter<carPage.getContent().size();counter++){
-//
-//            JobDto jobDto = new JobDto(carPage.getContent().get(counter));
-//            jobDto.setJobId(carPage.getContent().get(counter).getJobId());
-//            listOfJobDtos.add(jobDto);
-//        }
-//
-//        return listOfJobDtos;
-//    }
-        List<Job> jobs = jobRepository.findAll(spec);
+        Pageable pageable = PageRequest.of(PageNo - 0, 10);
+        Page<Job> carPage = jobRepository.findAll(spec, pageable);
+        if (carPage.isEmpty()) {
+            throw new PageNotFoundException("Page Not found");
+        }
         List<JobDto> listOfJobDtos = new ArrayList<>();
 
-        for (Job job : jobs) {
-            JobDto jobDto = new JobDto(job);
-            jobDto.setJobId(job.getJobId());
+        for (int counter = 0; counter < carPage.getContent().size(); counter++) {
+            JobDto jobDto = new JobDto(carPage.getContent().get(counter));
+            jobDto.setJobId(carPage.getContent().get(counter).getJobId());
             listOfJobDtos.add(jobDto);
         }
 
         return listOfJobDtos;
     }
+    }
 
-}
 
 
 

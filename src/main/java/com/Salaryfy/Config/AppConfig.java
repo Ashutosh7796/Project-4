@@ -73,7 +73,7 @@ public class AppConfig {
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/jobFairOption/**").permitAll()
                 .requestMatchers("/JobFair/**").permitAll()
-
+                .requestMatchers("/Interview/**").permitAll()
                 .requestMatchers("/profileLevel/**").permitAll()
                 .requestMatchers("/sendEmail/**").permitAll()
                 .requestMatchers("/verifyOpt/**").permitAll()

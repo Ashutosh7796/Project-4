@@ -98,19 +98,28 @@ public class UserServiceImpl implements IUser {
 
     @Override
     public void updateDetails(UserDTO userDTO) {
-        Optional<User> userUpdateOptional = userRepository.findById(userDTO.getUser_id());
-        if (userUpdateOptional.isPresent()) {
-            User user = userUpdateOptional.get();
-            user.setEmail(userDTO.getEmail());
+       User user = userRepository.findById(userDTO.getUser_id()).orElseThrow(()-> new UserNotFoundException("User Not Found", HttpStatus.NOT_FOUND));
+            if (userDTO.getEmail() != null){
+                user.setEmail(userDTO.getEmail());
+            }
+          if (userDTO.getPaymentValidity() != null) {
+            user.setPaymentValidity(userDTO.getPaymentValidity());
+            }
+        if (userDTO.getMobile_no() != null) {
             user.setMobileNo(userDTO.getMobile_no());
-            user.setFullName(userDTO.getFullName());
-            user.setProfilePhoto(userDTO.getProfilePhoto());
-            user.setSubType(userDTO.getSubType());
-            user.setUserProfileType(userDTO.getUserProfileType());
-            userRepository.save(user);
-        } else {
-            throw new UserNotFoundException("User not found with ID");
         }
+        if (userDTO.getFullName() != null) {
+            user.setFullName(userDTO.getFullName());
+        }
+        if (userDTO.getProfilePhoto() != null) {
+            user.setProfilePhoto(userDTO.getProfilePhoto()); }
+        if (userDTO.getSubType() != null) {
+            user.setSubType(userDTO.getSubType());
+        }
+        if (userDTO.getUserProfileType() != null) {
+            user.setUserProfileType(userDTO.getUserProfileType());
+        }
+            userRepository.save(user);
 
     }
 
