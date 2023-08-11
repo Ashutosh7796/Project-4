@@ -7,8 +7,12 @@ import java.util.List;
 @Data
 public class ResponseJobFairQueDto {
     private String status;
+    private Integer totalItems;
     private List<JobfairQue> response;
+    private Integer totalPages;
+    private Integer currentPage;
     private String exception;
+
 
     public ResponseJobFairQueDto(String status) {
         this.status = status;

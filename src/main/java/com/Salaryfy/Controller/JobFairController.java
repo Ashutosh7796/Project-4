@@ -50,8 +50,7 @@ public class JobFairController {
     public ResponseEntity<?> getAllJobFairDetails(@RequestParam Integer pageNo){
         try{
             ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("success");
-            responseJobFairQ1Dto.setResponse(iJobFairQue.getAllJobFairDetails(pageNo));
-            return ResponseEntity.status(HttpStatus.OK).body(responseJobFairQ1Dto);
+            return ResponseEntity.status(HttpStatus.OK).body(iJobFairQue.getAllJobFairDetails(pageNo,responseJobFairQ1Dto));
         }catch (SetNoNotFoundException setNoNotFoundException){
             ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("unsuccess");
             responseJobFairQ1Dto.setException(String.valueOf(setNoNotFoundException));
