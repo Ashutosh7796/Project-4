@@ -3,8 +3,10 @@ package com.Salaryfy.Controller;
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
+import com.Salaryfy.Dto.SearchSuggestionDTO;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.FilterService;
+import com.Salaryfy.Interfaces.SuggestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/jobs")
 public class FilterController {
-    @Autowired
+     @Autowired
     private final FilterService filterService;
 
     @GetMapping("/mainFilter/{PageNo}")
@@ -40,4 +42,9 @@ public class FilterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
+    @GetMapping("/suggest")
+    public List<SearchSuggestionDTO> getSuggestions(@RequestParam String query) {
+        return filterService.getSuggestions(query);
+    }
+
 }

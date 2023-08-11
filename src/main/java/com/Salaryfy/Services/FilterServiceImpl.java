@@ -3,13 +3,16 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
+import com.Salaryfy.Dto.SearchSuggestionDTO;
 import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.Status;
 import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.FilterService;
+import com.Salaryfy.Interfaces.SuggestionService;
 import com.Salaryfy.Repository.JobRepository;
 import jakarta.persistence.criteria.Predicate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,15 +21,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @Service
+@RequiredArgsConstructor
 public class FilterServiceImpl implements FilterService {
-    @Autowired
-    private JobRepository jobRepository;
+
+    private final JobRepository jobRepository;
+
     @Override
     public List<JobDto> searchByFilter(FilterDto filterDto, int PageNo) {
         Specification<Job> spec = (root, query, criteriaBuilder) -> {
@@ -59,6 +65,46 @@ public class FilterServiceImpl implements FilterService {
         }
 
         return listOfJobDtos;
+    }
+
+
+    @Override
+    public List<SearchSuggestionDTO> getSuggestions(String query) {
+        List<SearchSuggestionDTO> suggestions = new ArrayList<>();
+
+        Specification<Job> spec = (root, queryBuilder, criteriaBuilder) ->
+                criteriaBuilder.or(
+                        criteriaBuilder.like(criteriaBuilder.lower(root.get("location")), query.toLowerCase() + "%"),
+                        criteriaBuilder.like(criteriaBuilder.lower(root.get("companyName")), query.toLowerCase() + "%"),
+                        criteriaBuilder.like(criteriaBuilder.lower(root.get("postName")), query.toLowerCase() + "%")
+                );
+
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Job> jobPage = jobRepository.findAll(spec, pageable);
+
+        Set<String> uniqueSuggestions = new HashSet<>();
+
+        for (Job job : jobPage.getContent()) {
+            uniqueSuggestions.add(job.getLocation());
+            uniqueSuggestions.add(job.getCompanyName());
+            uniqueSuggestions.add(job.getPostName());
+        }
+
+        suggestions.clear();
+
+        if (uniqueSuggestions.size() == 1) {
+            SearchSuggestionDTO suggestionDTO = new SearchSuggestionDTO();
+            suggestionDTO.setSuggestion(uniqueSuggestions.iterator().next());
+            suggestions.add(suggestionDTO);
+        } else {
+            for (String suggestion : uniqueSuggestions) {
+                SearchSuggestionDTO suggestionDTO = new SearchSuggestionDTO();
+                suggestionDTO.setSuggestion(suggestion);
+                suggestions.add(suggestionDTO);
+            }
+        }
+
+        return suggestions;
     }
     }
 
