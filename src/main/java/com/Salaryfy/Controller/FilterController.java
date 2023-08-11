@@ -20,16 +20,17 @@ public class FilterController {
     @Autowired
     private final FilterService filterService;
 
-    @GetMapping("/mainFilter")
+    @GetMapping("/mainFilter/{PageNo}")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilter(
             @RequestParam(required = false) String companyName,
             @RequestParam(required = false) String postName,
-            @RequestParam(required = false) String location) {
+            @RequestParam(required = false) List<String> location,
+            @PathVariable int PageNo) {
 
         FilterDto filterDto = new FilterDto(companyName, postName, location);
 
         try {
-            List<JobDto> listOfJob = filterService.searchByFilter(filterDto);
+            List<JobDto> listOfJob = filterService.searchByFilter(filterDto, PageNo);
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
             responseGetAllJobDto.setList(listOfJob);
             return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
