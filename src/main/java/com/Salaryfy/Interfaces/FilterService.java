@@ -6,5 +6,5 @@ import com.Salaryfy.Dto.Job.JobDto;
 import java.util.List;
 
 public interface FilterService {
-    public List<JobDto> searchByFilter(FilterDto filterDto);
+    public List<JobDto> searchByFilter(FilterDto filterDto, int PageNo);
 }
