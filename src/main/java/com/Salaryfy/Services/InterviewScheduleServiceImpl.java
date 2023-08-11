@@ -126,9 +126,6 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
         return listOfInterviewsDto;
 
 
-
-
-
     }
 
     @Override
@@ -151,6 +148,64 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
 
 
     }
+    @Override
+    public List<InterviewScheduleDto> findInterviewsByStatus(String status, int pageNo) {
+        List<InterviewSchedule> interviewsByStatus = interviewScheduleRepository.findByStatus(status);
+
+        if (interviewsByStatus.isEmpty()) {
+            throw new InterviewScheduleNotFoundException("No Scheduled Interview found for status: " + status, HttpStatus.NOT_FOUND);
+        }
+
+        List<InterviewScheduleDto> interviewScheduleDtos = new ArrayList<>();
+
+        for (InterviewSchedule interviewSchedule : interviewsByStatus) {
+            InterviewScheduleDto interviewScheduleDto = new InterviewScheduleDto(interviewSchedule);
+            interviewScheduleDtos.add(interviewScheduleDto);
+        }
+
+
+        if((pageNo*10)>interviewsByStatus.size()-1){
+            throw new PageNotFoundException("page not found");
+
+        }
+        if(interviewsByStatus.size()<=0){throw new InterviewScheduleNotFoundException("Interview Schedule not found", HttpStatus.NOT_FOUND);
+        }
+
+        List<InterviewScheduleDto> listOfInterviewsDto = new ArrayList<>();
+
+        int pageStart=pageNo*10;
+        int pageEnd=pageStart+10;
+        int diff=(interviewsByStatus.size()) - pageStart;
+        List<Job> job = jobRepository.findAll();
+        for(int counter=pageStart,i=1;counter<pageEnd;counter++,i++){
+
+            if(pageStart>interviewsByStatus.size()){break;}
+
+
+            InterviewScheduleDto interviewScheduleDto = new InterviewScheduleDto (interviewsByStatus.get(counter));
+            for (int iCounter=0;iCounter<job.size();iCounter++){
+
+                if(job.get(iCounter).getInterviewSchedule().size() > 0){
+                    for (int j=0;j<job.get(iCounter).getInterviewSchedule().size();j++){
+                        if(job.get(iCounter).getInterviewSchedule().get(j).getInterviewScheduleId() == interviewsByStatus.get(counter).getInterviewScheduleId()){
+                            interviewScheduleDto.setJobId(job.get(iCounter).getJobId());
+                            break;
+                        }
+                    }
+                }
+            }
+            interviewScheduleDto.setInterviewScheduleId(interviewsByStatus.get(counter).getInterviewScheduleId());
+            listOfInterviewsDto.add(interviewScheduleDto);
+
+
+            if(diff == i){
+                break;
+            }
+        }
+
+        return interviewScheduleDtos;
+    }
+
 
 //        InterviewSchedule interviewSchedule = interviewScheduleRepository.findById(interviewScheduleId).orElseThrow (()-> new InterviewScheduleNotFoundException("Interview Schedule Not found by id"));
 //

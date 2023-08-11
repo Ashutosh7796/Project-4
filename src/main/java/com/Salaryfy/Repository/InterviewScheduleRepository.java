@@ -10,4 +10,8 @@ import java.util.List;
 public interface InterviewScheduleRepository extends JpaRepository<InterviewSchedule, Integer> {
     List<InterviewSchedule> findByUserId(Integer userId);
 
+    List<InterviewSchedule> findByStatus(String status);
+
+
+
 }
