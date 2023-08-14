@@ -80,6 +80,7 @@ public class AppConfig {
                 .requestMatchers("/job/**").permitAll()
                 .requestMatchers("/jobs/**").permitAll()
                 .requestMatchers("/plan/**").permitAll()
+                .requestMatchers("/pgProgram/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)
