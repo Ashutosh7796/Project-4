@@ -43,17 +43,18 @@ public class PgProgramServiceImpl implements PgProgramService {
     }
 
     @Override
-    public List<PgProgramDto> getAllPg(PgProgramDto pgProgramDto) {
+    public List<PgProgramDto> getAllPg() {
         List<Pgprogram> listOfPgProgram = pgProgramRepository.findAll();
         List<PgProgramDto> listOfPgProgramDto = new ArrayList<>();
 
         for (Pgprogram pgProgram : listOfPgProgram) {
-//            PgProgramDto pgProgramDto = new PgProgramDto();
-            pgProgramDto.setPgProgramId(pgProgram.getPgProgramId());
+            PgProgramDto pgProgramDto = new PgProgramDto(pgProgram); // Use the constructor that takes a Pgprogram entity
             listOfPgProgramDto.add(pgProgramDto);
         }
         return listOfPgProgramDto;
     }
+
+
 
     @Override
     public List<PgProgramDto> getAllPgByStatus(String status) {

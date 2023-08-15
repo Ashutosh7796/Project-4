@@ -1,6 +1,7 @@
 package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.PgProgram.PgProgramDto;
+import com.Salaryfy.Dto.PgProgram.ResponseGetAllPgProgramDto;
 import com.Salaryfy.Dto.PgProgram.ResponseSinglePgProgramDto;
 import com.Salaryfy.Dto.Plan.PlanDto;
 import com.Salaryfy.Dto.Plan.ResponseSinglePlanDto;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pgProgram")
@@ -43,5 +46,20 @@ public class PgProgramController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseSinglePgProgramDto);
         }
     }
+    @GetMapping("/getAllPg")
+    public ResponseEntity<ResponseGetAllPgProgramDto> getAllPg() {
+        try {
+            List<PgProgramDto> listOfPgPrograms = pgProgramService.getAllPg();
+            ResponseGetAllPgProgramDto responseGetAllPgProgramDto = new ResponseGetAllPgProgramDto("success");
+            responseGetAllPgProgramDto.setList(listOfPgPrograms);
+            return ResponseEntity.status(HttpStatus.OK).body(responseGetAllPgProgramDto);
+        } catch (PgProgramNotFoundException pgProgramNotFoundException) {
+            ResponseGetAllPgProgramDto responseGetAllPgProgramDto = new ResponseGetAllPgProgramDto("unsuccess");
+            responseGetAllPgProgramDto.setException("PG program not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllPgProgramDto);
+        }
+    }
+
+
 
 }

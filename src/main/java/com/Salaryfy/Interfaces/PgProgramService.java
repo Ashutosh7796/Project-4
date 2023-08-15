@@ -12,7 +12,7 @@ public interface PgProgramService {
 
     public PgProgramDto findById(Integer PgProgramId);
 
-    public List<PgProgramDto> getAllPg(PgProgramDto pgProgramDto);
+    public List<PgProgramDto> getAllPg();
 
     public List<PgProgramDto> getAllPgByStatus(String status);
 
