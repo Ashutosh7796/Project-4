@@ -76,6 +76,9 @@ public class AppConfig {
 
                 .requestMatchers("/jobFairOption/**").permitAll()
                 .requestMatchers("/JobFair/**").permitAll()
+                .requestMatchers("/jobFairQueAns/**").permitAll()
+                .requestMatchers("/jobFairQueAns/**").permitAll()
+
 
                 .requestMatchers("/profileLevel/**").permitAll()
 

@@ -2,13 +2,16 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
+import com.Salaryfy.Entity.JobfairQ1ans;
 import com.Salaryfy.Entity.JobfairQue;
 import com.Salaryfy.Exception.JobFairQue.JobFairQueNotFoundById;
 import com.Salaryfy.Exception.JobFairQue.JobFairQuenotFoundByQueTypeAndSetNo;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.SetNoNotFoundException;
+import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IJobFairQue;
 import com.Salaryfy.Repository.JobFairQueRepo;
+import com.Salaryfy.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ import java.util.Optional;
 @Service
 public class JobFairQueIMP implements IJobFairQue {
     private final JobFairQueRepo jobFairQueRepo;
+    private final UserRepository userRepo;
 
     @Override
     public String addJobFairQuestion(JobFairQueDto jobFairQueDto) {
@@ -155,4 +159,13 @@ public class JobFairQueIMP implements IJobFairQue {
         return listOfNewJobQue;
 
     }
+
+//    @Override
+//    public JobfairQ1ans getJobFairDetailsByUserId(Integer userId) {
+//        Optional<JobfairQ1ans> jobfairQ1ans = jobFairQueRepo.findByUserId(userId);
+//        if(jobfairQ1ans.isEmpty()){
+//            throw new UserNotFoundException("user not found by id");
+//        }
+//        return jobfairQ1ans.get();
+//    }
 }

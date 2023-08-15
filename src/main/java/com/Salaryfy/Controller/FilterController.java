@@ -3,6 +3,7 @@ package com.Salaryfy.Controller;
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
+import com.Salaryfy.Dto.Job.ResponseJobDto;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.FilterService;
 import lombok.RequiredArgsConstructor;
@@ -39,4 +40,20 @@ public class FilterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
+
+    @GetMapping("/searchBarFilter")
+    public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput, @RequestParam Integer pageNo){
+        try {
+            ResponseJobDto responseJobDto = new ResponseJobDto("success");
+
+             responseJobDto = filterService.searchBarFilter(searchBarInput,pageNo,responseJobDto);
+
+            return ResponseEntity.status(HttpStatus.OK).body(responseJobDto);
+        } catch (PageNotFoundException pageNotFoundException) {
+            ResponseJobDto responseJobDto = new ResponseJobDto("unsuccess");
+            responseJobDto.setException(String.valueOf(pageNotFoundException));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobDto);
+        }
+    }
+
 }

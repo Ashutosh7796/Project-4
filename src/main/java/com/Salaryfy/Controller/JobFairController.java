@@ -3,6 +3,7 @@ package com.Salaryfy.Controller;
 import com.Salaryfy.Dto.JobFairQue.JobFairIdDto;
 import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
+import com.Salaryfy.Dto.JobfairQ1ans.ResponseForJobFairOneUserID;
 import com.Salaryfy.Dto.JobfairQ1ans.ResponseJobFairQ1Dto;
 import com.Salaryfy.Dto.ResponceDto;
 import com.Salaryfy.Entity.JobfairQue;
@@ -10,6 +11,7 @@ import com.Salaryfy.Exception.JobFairQue.JobFairQueNotFoundById;
 import com.Salaryfy.Exception.JobFairQue.JobFairQuenotFoundByQueTypeAndSetNo;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.SetNoNotFoundException;
+import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IJobFairQue;
 import lombok.AllArgsConstructor;
 import org.hibernate.mapping.Set;
@@ -93,4 +95,19 @@ public class JobFairController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobFairQ1Dto);
         }
     }
+
+//    @GetMapping("/getJobFairDetailsByUserId")
+//    public ResponseEntity<?> getJobFairDetailsByUserId(@RequestParam Integer userId){
+//        try {
+//            ResponseForJobFairOneUserID responseJobFairQ1Dto = new ResponseForJobFairOneUserID("success");
+//            responseJobFairQ1Dto.setResponse(iJobFairQue.get(userId));
+//            return ResponseEntity.status(HttpStatus.OK).body(responseJobFairQ1Dto);
+//
+//        }catch (UserNotFoundException userNotFoundException) {
+//
+//            ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("unsuccess");
+//            responseJobFairQ1Dto.setException(String.valueOf(userNotFoundException));
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobFairQ1Dto);
+//        }
+//    }
 }

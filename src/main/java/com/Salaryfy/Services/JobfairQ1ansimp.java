@@ -75,7 +75,14 @@ public class JobfairQ1ansimp implements IJobfairQ1ans {
         return jobfairQ1ansRepo.findAll();
     }
 
-
+    @Override
+    public JobfairQ1ans getJobFairDetailsByUserId(Integer userId) {
+        Optional<JobfairQ1ans> jobfairQ1ans = jobfairQ1ansRepo.findByUserId(userId);
+        if(jobfairQ1ans.isEmpty()){
+            throw new UserNotFoundException("user not found by id");
+        }
+        return jobfairQ1ans.get();
+    }
 }
 
 

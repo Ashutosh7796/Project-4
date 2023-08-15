@@ -2,6 +2,7 @@ package com.Salaryfy.Interfaces;
 
 import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
+import com.Salaryfy.Entity.JobfairQ1ans;
 import com.Salaryfy.Entity.JobfairQue;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface IJobFairQue {
     public List<JobfairQue> getJobFairDetailsBySetNo(String setNo, Integer pageNo);
 
     public List<JobfairQue> getJobFairDetailsBySetNoAndQueType(String setNo,Boolean questionType, Integer pageNo);
+
+//    public JobfairQ1ans getJobFairDetailsByUserId(Integer userId);
 }

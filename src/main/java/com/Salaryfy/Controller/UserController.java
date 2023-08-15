@@ -39,8 +39,7 @@ public class UserController {
 
 
 
-     @PatchMapping ("/updateUserDetails")
-     public ResponseEntity<?> updateDetails (@RequestBody UserDTO userDTO){
+
 
     @PatchMapping("/updateUserDetails")
     public ResponseEntity<?> updateDetails(@RequestBody UserDTO userDTO) {
