@@ -1,12 +1,17 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.Plan.PlanDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "plans")
 public class Plan {
     @Id
@@ -35,4 +40,13 @@ public class Plan {
     @Column(name = "planDays", length = 45)
     private String planDays;
 
+    public Plan(PlanDto planDto) {
+        this.userType = planDto.getUserType();
+        this.service = planDto.getService();
+        this.plan = planDto.getPlan();
+        this.status = planDto.getStatus();
+        this.amount = planDto.getAmount();
+        this.startDate = planDto.getStartDate();
+        this.planDays = planDto.getPlanDays();
+    }
 }

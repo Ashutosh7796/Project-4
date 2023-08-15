@@ -17,5 +17,7 @@ public interface InterviewScheduleService {
     List <InterviewScheduleDto> findAllInterviews(int pageNo);
 
     List <InterviewScheduleDto> findInterviewByUSerId (Integer userId, int pageNo);
+    List<InterviewScheduleDto> findInterviewsByStatus(String status, int pageNo);
+
 
 }

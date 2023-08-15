@@ -3,9 +3,10 @@ package com.Salaryfy.Controller;
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
-import com.Salaryfy.Dto.Job.ResponseJobDto;
+import com.Salaryfy.Dto.SearchSuggestionDTO;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.FilterService;
+import com.Salaryfy.Interfaces.SuggestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,19 +19,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/jobs")
 public class FilterController {
-    @Autowired
+     @Autowired
     private final FilterService filterService;
 
-    @GetMapping("/mainFilter")
+    @GetMapping("/mainFilter/{PageNo}")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilter(
             @RequestParam(required = false) String companyName,
             @RequestParam(required = false) String postName,
-            @RequestParam(required = false) String location) {
+            @RequestParam(required = false) List<String> location,
+            @PathVariable int PageNo) {
 
         FilterDto filterDto = new FilterDto(companyName, postName, location);
 
         try {
-            List<JobDto> listOfJob = filterService.searchByFilter(filterDto);
+            List<JobDto> listOfJob = filterService.searchByFilter(filterDto, PageNo);
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
             responseGetAllJobDto.setList(listOfJob);
             return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
@@ -40,20 +42,9 @@ public class FilterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
-
-    @GetMapping("/searchBarFilter")
-    public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput, @RequestParam Integer pageNo){
-        try {
-            ResponseJobDto responseJobDto = new ResponseJobDto("success");
-
-             responseJobDto = filterService.searchBarFilter(searchBarInput,pageNo,responseJobDto);
-
-            return ResponseEntity.status(HttpStatus.OK).body(responseJobDto);
-        } catch (PageNotFoundException pageNotFoundException) {
-            ResponseJobDto responseJobDto = new ResponseJobDto("unsuccess");
-            responseJobDto.setException(String.valueOf(pageNotFoundException));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobDto);
-        }
+    @GetMapping("/suggest")
+    public List<SearchSuggestionDTO> getSuggestions(@RequestParam String query) {
+        return filterService.getSuggestions(query);
     }
 
 }
