@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query(value = "FROM User WHERE userProfileType= ?1")
     List<User> findByStatus(String status);
+
+
 }

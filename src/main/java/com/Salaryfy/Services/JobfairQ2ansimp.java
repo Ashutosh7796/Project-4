@@ -23,8 +23,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class JobfairQ2ansimp implements IJobfairQ2ans {
 
-    @Autowired
-    private JobfairQ2ansRepo jobfairQ2ansRepo;
+
+    private final JobfairQ2ansRepo jobfairQ2ansRepo;
     private final JobRepository jobRepository;
 
     private final UserRepository userRepository;
@@ -76,7 +76,16 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
          return "All data deleted";
     }
 
+    @Override
+    public JobfairQ2ans getJobFairDetailsByUserId(Integer userId) {
+        Optional<JobfairQ2ans> jobfairQ2ans = jobfairQ2ansRepo.findByUserId(userId);
+        if(jobfairQ2ans.isEmpty()){
+            throw new UserNotFoundException("user not found by id");
+        }
+        return jobfairQ2ans.get();
 
+
+    }
 
 
 }

@@ -1,20 +1,21 @@
-package com.Salaryfy.Dto.JobFairQue;
+package com.Salaryfy.Dto.Job;
 
 import com.Salaryfy.Entity.JobfairQue;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 @Data
-public class ResponseJobFairQueDto {
+public class ResponseJobDto {
     private String status;
     private Integer totalItems;
-    private List<JobfairQue> response;
+    private List<JobDto> response;
     private Integer totalPages;
     private Integer currentPage;
     private String exception;
 
 
-    public ResponseJobFairQueDto(String status) {
+    public ResponseJobDto(String status) {
         this.status = status;
     }
 }
