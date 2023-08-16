@@ -30,7 +30,7 @@ public class ProfileLevelController {
         }
     }
     @GetMapping("/getAllProfileLevelDetails")
-    public ResponseEntity<?> getAllProfileLevelDetails(@RequestBody Integer pageNo){
+    public ResponseEntity<?> getAllProfileLevelDetails(@RequestParam Integer pageNo){
         return ResponseEntity.status(HttpStatus.OK).body(iProfileLevel.getAllProfileLevelDetails(pageNo));
 
     }
