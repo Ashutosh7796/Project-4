@@ -1,6 +1,8 @@
 package com.Salaryfy.Controller;
 
+import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
 import com.Salaryfy.Dto.JobfairQ1ans.JobfairQ1ansDto;
+import com.Salaryfy.Dto.JobfairQ1ans.ResponseForJobFairOneUserID;
 import com.Salaryfy.Dto.JobfairQ1ans.ResponseJobFairQ1Dto;
 import com.Salaryfy.Dto.ProfileLevelDto.ResponseProfileLevelDto;
 import com.Salaryfy.Exception.JobNotFoundException;
@@ -74,7 +76,20 @@ public class JobFairQueOneController {
         }
 
     }
+    @GetMapping("/getJobFairDetailsByUserId")
+    public ResponseEntity<?> getJobFairDetailsByUserId(@RequestParam Integer userId){
+        try {
+            ResponseForJobFairOneUserID responseJobFairQ1Dto = new ResponseForJobFairOneUserID("success");
+            responseJobFairQ1Dto.setResponse(iJobfairQ1ans.getJobFairDetailsByUserId(userId));
+            return ResponseEntity.status(HttpStatus.OK).body(responseJobFairQ1Dto);
 
+        }catch (UserNotFoundException userNotFoundException) {
+
+            ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("unsuccess");
+            responseJobFairQ1Dto.setException(String.valueOf(userNotFoundException));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobFairQ1Dto);
+        }
+    }
 //    @GetMapping("/getall")
 //    public ResponseEntity<?> getallQ1ans(Integer pageNo)
 //    {

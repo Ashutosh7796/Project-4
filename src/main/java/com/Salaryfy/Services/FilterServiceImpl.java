@@ -3,6 +3,7 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
+import com.Salaryfy.Dto.Job.ResponseJobDto;
 import com.Salaryfy.Dto.SearchSuggestionDTO;
 import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.Status;
@@ -106,7 +107,61 @@ public class FilterServiceImpl implements FilterService {
 
         return suggestions;
     }
+
+    @Override
+    public ResponseJobDto searchBarFilter(String searchBarInput, Integer pageNo, ResponseJobDto responseJobDto) {
+
+        List<Job> jobs = jobRepository.searchJobsByKeyword(searchBarInput);
+        System.err.println(jobs.toString());
+
+
+        if (jobs.size() <= 0) {
+            throw new PageNotFoundException("Page not found");
+        }
+
+        if ((pageNo * 10) > jobs.size() - 1) {
+            throw new PageNotFoundException("page not found");
+
+        }
+
+
+//        System.out.println("list of de"+listOfCar.size());
+        List<JobDto> listOfNewJob = new ArrayList<>();
+
+        int pageStart = pageNo * 10;
+        int pageEnd = pageStart + 10;
+        int diff = (jobs.size()) - pageStart;
+        for (int counter = pageStart, i = 1; counter < pageEnd; counter++, i++) {
+            if (pageStart > jobs.size()) {
+                break;
+            }
+            System.out.println("inside for lop line no 139 :"+i);
+
+            JobDto jobDto = new JobDto(jobs.get(counter));
+            jobDto.setUser_Id(jobs.get(counter).getUserUser().getUser_id());
+
+            listOfNewJob.add(jobDto);
+            if (diff == i) {
+                break;
+            }
+        }
+        responseJobDto.setResponse(listOfNewJob);
+        System.err.println("Ho"+responseJobDto.getResponse());
+
+        responseJobDto.setTotalItems(jobs.size());
+        Integer totalPages = listOfNewJob.size() / 10;
+        if (listOfNewJob.size() > totalPages) {
+            totalPages++;
+        }
+        responseJobDto.setTotalPages(totalPages);
+        responseJobDto.setCurrentPage(pageNo);
+
+//        System.out.println(listOfCar);
+        return responseJobDto;
+
+
     }
+}
 
 
 
