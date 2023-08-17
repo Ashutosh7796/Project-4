@@ -2,6 +2,7 @@ package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.PgProgram.PgProgramDto;
 import com.Salaryfy.Dto.PgProgram.ResponseGetAllPgProgramDto;
+import com.Salaryfy.Dto.PgProgram.ResponsePgProgramDto;
 import com.Salaryfy.Dto.PgProgram.ResponseSinglePgProgramDto;
 import com.Salaryfy.Dto.Plan.PlanDto;
 import com.Salaryfy.Dto.Plan.ResponseSinglePlanDto;
@@ -59,6 +60,38 @@ public class PgProgramController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllPgProgramDto);
         }
     }
+
+    @PatchMapping("/update")
+    public ResponseEntity<?> updatePgProgramDetailsById(@RequestParam Integer pgProgramId,@RequestBody PgProgramDto pgProgramDto){
+        try {
+            String result = pgProgramService.updatePgProgramDetailsById(pgProgramId,pgProgramDto);
+            return (ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("success", result)));
+        } catch (PgProgramNotFoundException pgProgramNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", "Program not found Not found"));
+
+        }
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deletePgProgramDetailsById(@RequestParam Integer pgProgramId){
+        try {
+            String result = pgProgramService.deletePgProgramDetailsById(pgProgramId);
+            return (ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("success", result)));
+        } catch (PgProgramNotFoundException pgProgramNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", "Program not found Not found"));
+
+        }
+    }
+    @GetMapping("/getPgProgramByStatus")
+    public ResponseEntity<?> getPgProgramByStatus(@RequestParam String status,@RequestParam Integer pageNo){
+        try {
+            List<PgProgramDto> result = pgProgramService.getAllPgByStatus(status,pageNo);
+            return (ResponseEntity.status(HttpStatus.OK).body(new ResponsePgProgramDto("success", result)));
+        } catch (PgProgramNotFoundException pgProgramNotFoundException) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", "Program not found Not found"));
+
+        }
+    }
+
 
 
 

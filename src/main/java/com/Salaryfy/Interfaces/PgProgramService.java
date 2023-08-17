@@ -8,13 +8,14 @@ public interface PgProgramService {
 
     public String AddPg(PgProgramDto pgProgramDto);
 
-    public String updatePg(PgProgramDto pgProgramDto, Integer PgProgramId);
 
     public PgProgramDto findById(Integer PgProgramId);
 
     public List<PgProgramDto> getAllPg();
 
-    public List<PgProgramDto> getAllPgByStatus(String status);
+    public List<PgProgramDto> getAllPgByStatus(String status,Integer pageNo);
 
+    public String updatePgProgramDetailsById(Integer pgProgramId, PgProgramDto pgProgramDto);
 
+    public String deletePgProgramDetailsById(Integer pgProgramId);
 }
