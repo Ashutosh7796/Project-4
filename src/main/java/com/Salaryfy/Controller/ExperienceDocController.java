@@ -1,8 +1,11 @@
 package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.*;
+import com.Salaryfy.Dto.Job.JobDto;
+import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
 import com.Salaryfy.Entity.Experiencedoc;
 import com.Salaryfy.Exception.FillAllDetailsException;
+import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.ExperienceDocService;
@@ -58,4 +61,24 @@ public class ExperienceDocController {
         }
 
     }
+
+    @GetMapping("/getExperienceDocByCarrierBreak")
+    public ResponseEntity<ResponseAllUsers> getExperienceDocByCarrierBreak(@RequestParam int pageNo, boolean status) {
+
+        try {
+            List<ExperienceDocDto> listOfJobsByStatus = experienceDocService.getExperienceDocByCarrierBreak(pageNo, status);
+            ResponseAllUsers responseAllUsers = new ResponseAllUsers("success");
+            responseAllUsers.setUsers(listOfJobsByStatus);
+            return ResponseEntity.status(HttpStatus.OK).body(responseAllUsers);
+        } catch (UserNotFoundException jobNotFoundException) {
+            ResponseAllUsers responseAllUsers = new ResponseAllUsers("Unsuccessful");
+            responseAllUsers.setException("User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllUsers);
+        } catch (PageNotFoundException pageNotFoundException) {
+            ResponseAllUsers responseAllUsers = new ResponseAllUsers("Unsuccessful");
+            responseAllUsers.setException("Page not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllUsers);
+        }
+    }
+
 }
