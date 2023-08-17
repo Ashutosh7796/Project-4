@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmailVerificationController {
 
-    @Autowired EmailVerificationService emailVerificationService;
+    @Autowired
+    EmailVerificationService emailVerificationService;
 
     @PostMapping("/sendEmail")
     public String CreateOtp(HttpServletRequest request)  {
