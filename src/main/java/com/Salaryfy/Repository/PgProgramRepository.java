@@ -10,4 +10,5 @@ import java.util.List;
 public interface PgProgramRepository extends JpaRepository<Pgprogram, Integer> {
 
     public List<Pgprogram> getPlansByStatus(String status);
+
 }

@@ -16,4 +16,7 @@ public class PgProgramNotFoundException extends RuntimeException {
         this.httpStatus = httpStatus;
     }
 
+    public PgProgramNotFoundException(String message) {
+   super(message);
+    }
 }
