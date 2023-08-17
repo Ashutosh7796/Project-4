@@ -22,6 +22,6 @@ public class SalaryfyApplication {
 		System.err.println("                                                                                       ");
 
 	}
-	}
+}
 
 

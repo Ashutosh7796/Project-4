@@ -15,27 +15,16 @@ public class UserDTO {
 
 
     private String email;
-
     private String password;
-
     private String mobile_no;
-
     private String role;
-
     private String fullName;
-
     private LocalDate date;
-
     private String userProfileType;
-
     private String profilePhoto;
-
     private String subType;
-
     private String paymentValidity;
-
     private String Document;
-
     private Integer user_id;
 
     public UserDTO(User user) {
