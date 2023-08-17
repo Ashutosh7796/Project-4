@@ -25,4 +25,15 @@ public class ExperienceDocDto {
     public ExperienceDocDto(ExperienceDocDto experienceDocDto) {
     }
 
+    public ExperienceDocDto(Experiencedoc experiencedoc) {
+        this.setWorkExperience(experiencedoc.getWorkExperience());
+        this.setHighestLevelOfEdu(experiencedoc.getHighestLevelOfEdu());
+        this.setPreviousDesignation(experiencedoc.getPreviousDesignation());
+        this.setLastDrawnSalary(experiencedoc.getLastDrawnSalary());
+        this.setAvailableToJoin(experiencedoc.getAvailableToJoin());
+        this.setCurrentResidingPlace(experiencedoc.getCurrentResidingPlace());
+        this.setCareerBreak(experiencedoc.getCareerBreak());
+        this.setDurationCareerBreak(experiencedoc.getDurationCareerBreak());
+        this.setLastCompany(experiencedoc.getLastCompany());
+    }
 }

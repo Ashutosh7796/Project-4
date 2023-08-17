@@ -1,9 +1,12 @@
 package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.ExperienceDocDto;
+import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Entity.Experiencedoc;
+import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.FillAllDetailsException;
+import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.ExperienceDocService;
@@ -80,6 +83,33 @@ public class ExperienceDocServiceImpl implements ExperienceDocService {
 
 
         return listOfExperienceDocDto;
+    }
+
+    @Override
+    public List<ExperienceDocDto> getExperienceDocByCarrierBreak(int pageNo, boolean status) {
+        List<Experiencedoc> listOfExperienceDoc = experienceDocRepo.findByCareerBreak(status);
+        if ((pageNo * 10) > listOfExperienceDoc.size() - 1) {
+            throw new PageNotFoundException("page not found");
+        }
+        if (listOfExperienceDoc.size() <= 0) {
+            throw new UserNotFoundException("User not found", HttpStatus.NOT_FOUND);
+        }
+        List<ExperienceDocDto> listExperienceDocDto = new ArrayList<>();
+        int pageStart = pageNo * 10;
+        int pageEnd = pageStart + 10;
+        int diff = (listOfExperienceDoc.size()) - pageStart;
+        for (int counter = pageStart, i = 1; counter < pageEnd; counter++, i++) {
+            if (pageStart > listOfExperienceDoc.size()) {
+                break;
+            }
+            ExperienceDocDto experienceDocDto = new ExperienceDocDto(listOfExperienceDoc.get(counter));
+            experienceDocDto.setUserUser(listOfExperienceDoc.get(counter).getExperienceDocId());
+            listExperienceDocDto.add(experienceDocDto);
+            if (diff == i) {
+                break;
+            }
+        }
+        return listExperienceDocDto;
     }
 
 }
