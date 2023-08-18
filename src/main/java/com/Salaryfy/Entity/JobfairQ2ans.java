@@ -25,5 +25,7 @@ public class JobfairQ2ans {
 
     @Column(name = "JobId")
     private Integer jobId;
+    @Column(name = "QuestionType")
+    private String questionType;
 
 }

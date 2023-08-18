@@ -81,6 +81,10 @@ public class JobServiceImpl implements JobService {
         if (jobDto.getInterviewStartDate() != null) {
             job.setInterviewStartDate(jobDto.getInterviewStartDate());
         }
+        if(jobDto.getJobType()!=null){
+            job.setJobType(jobDto.getJobType());
+
+        }
         if (jobDto.getInterviewEndDate() != null) {
             job.setInterviewEndDate(jobDto.getInterviewEndDate());
         }

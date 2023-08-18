@@ -5,10 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -25,7 +22,8 @@ public class Job {
 
     @Column(name = "PostName", length = 100)
     private String postName;
-
+    @Column(name = "jobType")
+    private String jobType;
 
     @Column(name = "CompanyName", length = 250)
     private String companyName;
@@ -83,7 +81,7 @@ public class Job {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_interview", joinColumns = @JoinColumn(name = "JobId", referencedColumnName = "JobId"),
             inverseJoinColumns = @JoinColumn(name = "InterviewScheduleId", referencedColumnName = "InterviewScheduleId"))
-    private List<InterviewSchedule> interviewSchedule;
+    private List<InterviewSchedule> interviewSchedule = new ArrayList<>();
 
     public Job(JobDto jobDto,String logo) {
         this.postName = jobDto.getPostName();
@@ -98,6 +96,7 @@ public class Job {
         this.interviewDetails = jobDto.getInterviewDetails();
         this.jobDetails = jobDto.getJobDetails();
         this.date = jobDto.getDate();
+        this.jobType = jobDto.getJobType();
         this.startingSalary = jobDto.getStartingSalary();
         this.jobFairSetNo = jobDto.getJobFairSetNo();
         this.status = jobDto.getStatus();
