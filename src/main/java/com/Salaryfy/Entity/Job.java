@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -82,7 +79,7 @@ public class Job {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_interview", joinColumns = @JoinColumn(name = "JobId", referencedColumnName = "JobId"),
             inverseJoinColumns = @JoinColumn(name = "InterviewScheduleId", referencedColumnName = "InterviewScheduleId"))
-    private List<InterviewSchedule> interviewSchedule;
+    private List<InterviewSchedule> interviewSchedule = new ArrayList<>();
 
     public Job(JobDto jobDto) {
         this.postName = jobDto.getPostName();

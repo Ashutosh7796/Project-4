@@ -34,7 +34,7 @@ public class FilterServiceImpl implements FilterService {
     private final JobRepository jobRepository;
 
     @Override
-    public List<JobDto> searchByFilter(FilterDto filterDto, int PageNo) {
+    public List<JobDto> searchByFilter(FilterDto filterDto) {
         Specification<Job> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -50,21 +50,31 @@ public class FilterServiceImpl implements FilterService {
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
+//
+//        Pageable pageable = PageRequest.of(PageNo - 0, 10);
+//        Page<Job> carPage = jobRepository.findAll(spec, pageable);
+//        if (carPage.isEmpty()) {
+//            throw new PageNotFoundException("Page Not found");
+//        }
+//        List<JobDto> listOfJobDtos = new ArrayList<>();
 
-        Pageable pageable = PageRequest.of(PageNo - 0, 10);
-        Page<Job> carPage = jobRepository.findAll(spec, pageable);
-        if (carPage.isEmpty()) {
-            throw new PageNotFoundException("Page Not found");
-        }
+//        for (int counter = 0; counter < carPage.getContent().size(); counter++) {
+//            JobDto jobDto = new JobDto(carPage.getContent().get(counter));
+//            jobDto.setJobId(carPage.getContent().get(counter).getJobId());
+//            listOfJobDtos.add(jobDto);
+//        }
+
+        List<Job> filteredJobs = jobRepository.findAll(spec);
+
         List<JobDto> listOfJobDtos = new ArrayList<>();
-
-        for (int counter = 0; counter < carPage.getContent().size(); counter++) {
-            JobDto jobDto = new JobDto(carPage.getContent().get(counter));
-            jobDto.setJobId(carPage.getContent().get(counter).getJobId());
+        for (Job job : filteredJobs) {
+            JobDto jobDto = new JobDto(job);
             listOfJobDtos.add(jobDto);
         }
 
         return listOfJobDtos;
+
+
     }
 
 

@@ -1,7 +1,6 @@
 package com.Salaryfy.Interfaces;
 
 import com.Salaryfy.Dto.Job.InterviewScheduleDto;
-import com.Salaryfy.Dto.UserDTO;
 import com.Salaryfy.Entity.InterviewSchedule;
 
 import java.util.List;
