@@ -17,7 +17,7 @@ public class JobfairQ1ans {
     @Column(name = "Question", length = 45)
     private String question;
 
-    
+
     @Column(name = "Ans")
     private Boolean ans;
 
