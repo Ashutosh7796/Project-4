@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -130,24 +131,46 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
 
     @Override
     public List<InterviewScheduleDto> findInterviewByUSerId(Integer userId, int pageNo) {
+
+        Optional<User> user = Optional.ofNullable(userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not found ", HttpStatus.NOT_FOUND)));
         List<InterviewSchedule> interviewsByUserId = interviewScheduleRepository.findByUserId(userId);
 
         if (interviewsByUserId.isEmpty()) {
             throw new InterviewScheduleNotFoundException("No Scheduled Interview found for user", HttpStatus.NOT_FOUND);
         }
 
-        List<InterviewScheduleDto> interviewScheduleDtos = new ArrayList<>();
 
-        for (InterviewSchedule interviewSchedule : interviewsByUserId) {
-            InterviewScheduleDto interviewScheduleDto = new InterviewScheduleDto(interviewSchedule);
-            interviewScheduleDto.setUserId(userId);
-            interviewScheduleDtos.add(interviewScheduleDto);
+        int pageSize = 10;
+        int totalRecords = interviewsByUserId.size();
+        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+
+        if (pageNo < 0 || pageNo >= totalPages) {
+            throw new PageNotFoundException("Page not found");
         }
 
-        return interviewScheduleDtos;
 
+        int pageStart = pageNo * pageSize;
+        int pageEnd = Math.min(pageStart + pageSize, totalRecords);
 
+        return interviewsByUserId.stream()
+                .skip(pageStart)
+                .limit(pageSize)
+                .map(inter -> {
+                    InterviewScheduleDto interviewScheduleDtos = new InterviewScheduleDto(inter);
+                    interviewScheduleDtos.setUserId(userId);
+
+                    List<Job> myjobs = inter.getJobs();
+
+                    if (!myjobs.isEmpty()) {
+                        Integer jobId = myjobs.get(0).getJobId();
+                        interviewScheduleDtos.setJobId(jobId);
+                    }
+
+                    return interviewScheduleDtos;
+                })
+                .collect(Collectors.toList());
     }
+
     @Override
     public List<InterviewScheduleDto> findInterviewsByStatus(String status, int pageNo) {
         List<InterviewSchedule> interviewsByStatus = interviewScheduleRepository.findByStatus(status);

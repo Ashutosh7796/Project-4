@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -41,6 +42,8 @@ public class InterviewSchedule {
     @Column(name = "Status", length = 45)
     private String status;
 
+    @ManyToMany(mappedBy = "interviewSchedule", fetch = FetchType.EAGER)
+    private List<Job> jobs = new ArrayList<>();
     public InterviewSchedule(InterviewScheduleDto interviewScheduleDto) {
         this.location = interviewScheduleDto.getLocation();
         this.interviewDate = interviewScheduleDto.getInterviewDate();

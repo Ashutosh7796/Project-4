@@ -30,8 +30,6 @@ public class InterviewScheduleDto {
     private Integer jobId;
 
 
-    private List<Job> associatedJobs;
-
     private String status;
 
     public InterviewScheduleDto(InterviewSchedule interviewSchedule) {
@@ -42,7 +40,6 @@ public class InterviewScheduleDto {
         this.userId = interviewSchedule.getUserId();
         this.status = interviewSchedule.getStatus();
         this.InterviewScheduleId = interviewSchedule.getInterviewScheduleId();
-        this.associatedJobs = associatedJobs;
 
     }
 }

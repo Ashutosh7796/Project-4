@@ -1,5 +1,6 @@
 package com.Salaryfy.Dto.Job;
 
+import com.Salaryfy.Entity.Experiencedoc;
 import com.Salaryfy.Entity.Job;
 import lombok.*;
 
@@ -58,5 +59,8 @@ public class JobDto {
         this.jobFairSetNo = job.getJobFairSetNo();
         this.status = job.getStatus();
 
+    }
+
+    public JobDto(Experiencedoc experiencedoc) {
     }
 }

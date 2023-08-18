@@ -1,5 +1,6 @@
 package com.Salaryfy.Controller;
 
+import com.Salaryfy.Exception.EmptyFiledException;
 import com.Salaryfy.Exception.InvalidOtpException;
 import com.Salaryfy.Interfaces.EmailVerificationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,23 +15,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmailVerificationController {
 
-    @Autowired EmailVerificationService emailVerificationService;
+    @Autowired
+    EmailVerificationService emailVerificationService;
 
     @PostMapping("/sendEmail")
-    public String CreateOtp(HttpServletRequest request)  {
+    public ResponseEntity<?> createOtp(HttpServletRequest request) {
+        try {
+            String email = request.getParameter("email");
 
-        String email = request.getParameter("email");
-        String otp = RandomStringUtils.randomNumeric(4);
+            if (email == null || email.isEmpty()) {
+                throw new EmptyFiledException("Email is empty");
+            }
 
-        emailVerificationService.saveEmail(email,otp);
+            String otp = RandomStringUtils.randomNumeric(4);
+            emailVerificationService.saveEmail(email, otp);
+            emailVerificationService.sendEmail(otp, email);
 
-        emailVerificationService.sendEmail(otp, email);
+            String sendOtp = "http://169.254.63.118:5173/reset-password?token=" + otp;
 
-        String sendOtp = "http://169.254.63.118:5173/reset-password?token=" + otp;
-
-
-        return "okk";
+            return ResponseEntity.status(HttpStatus.OK).body("Email sent");
+        } catch (EmptyFiledException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("email field is empty");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong");
+        }
     }
+
 
     @PostMapping("/verifyOpt")
     public ResponseEntity<?> VerifyOtp(@RequestParam String otp, @RequestParam String email){
