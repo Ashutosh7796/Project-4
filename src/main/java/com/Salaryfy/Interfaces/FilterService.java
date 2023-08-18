@@ -8,7 +8,7 @@ import com.Salaryfy.Dto.SearchSuggestionDTO;
 import java.util.List;
 
 public interface FilterService {
-    public List<JobDto> searchByFilter(FilterDto filterDto, int PageNo);
+    public List<JobDto> searchByFilter(FilterDto filterDto);
 
     List<SearchSuggestionDTO> getSuggestions(String query);
 
