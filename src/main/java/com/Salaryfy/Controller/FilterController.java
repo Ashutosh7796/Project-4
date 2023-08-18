@@ -48,17 +48,16 @@ public class FilterController {
         return filterService.getSuggestions(query);
     }
     @GetMapping("/searchBarFilter")
-    public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput, @RequestParam Integer pageNo){
+    public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput){
         try {
-            ResponseJobDto responseJobDto = new ResponseJobDto("success");
-
-            responseJobDto = filterService.searchBarFilter(searchBarInput,pageNo,responseJobDto);
-
-            return ResponseEntity.status(HttpStatus.OK).body(responseJobDto);
+            List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput);
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
+            responseGetAllJobDto.setList(listOfJob);
+            return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
         } catch (PageNotFoundException pageNotFoundException) {
-            ResponseJobDto responseJobDto = new ResponseJobDto("unsuccess");
-            responseJobDto.setException(String.valueOf(pageNotFoundException));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobDto);
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
+            responseGetAllJobDto.setException(String.valueOf(pageNotFoundException));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
 
