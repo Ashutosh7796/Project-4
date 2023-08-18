@@ -19,6 +19,8 @@ public class JobDto {
 
     private String location;
 
+    private String logo;
+
     private Integer noOfPosts;
 
     private LocalDate interviewStartDate;
@@ -52,6 +54,7 @@ public class JobDto {
         this.interviewEndDate = job.getInterviewEndDate();
         this.essentialRequirements = job.getEssentialRequirements();
         this.incentives = job.getIncentives();
+        this.logo=job.getLogo();
         this.interviewDetails = job.getInterviewDetails();
         this.jobDetails = job.getJobDetails();
         this.date = job.getDate();
