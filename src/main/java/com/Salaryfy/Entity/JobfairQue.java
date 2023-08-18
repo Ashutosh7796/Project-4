@@ -19,7 +19,7 @@ public class JobfairQue{
     private String question;
 
     @Column(name = "QuestionType")
-    private Boolean questionType;
+    private String questionType;
 
     @Column(name = "SetNo", length = 45)
     private String setNo;

@@ -11,6 +11,7 @@
 	<groupId>com.Salaryfy</groupId>
 	<artifactId>Salaryfy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>Salaryfy</name>
 	<description>Salaryfy project</description>
 	<properties>
@@ -46,11 +47,11 @@
 		</dependency>
 
 
-		<!--		<dependency>-->
-		<!--			<groupId>org.springframework.boot</groupId>-->
-		<!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
-		<!--			<scope>provided</scope>-->
-		<!--		</dependency>-->
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+					<scope>provided</scope>
+				</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

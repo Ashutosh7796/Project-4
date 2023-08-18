@@ -8,7 +8,7 @@ public class JobFairQueDto {
 
     public String question;
 
-    public Boolean questionType;
+    public String questionType;
 
     public String setNo;
 }
