@@ -12,5 +12,5 @@ public interface FilterService {
 
     List<SearchSuggestionDTO> getSuggestions(String query);
 
-    public ResponseJobDto searchBarFilter(String searchBarInput, Integer pageNo, ResponseJobDto responseJobDto);
+    public List<JobDto> searchBarFilter(String searchBarInput) ;
 }

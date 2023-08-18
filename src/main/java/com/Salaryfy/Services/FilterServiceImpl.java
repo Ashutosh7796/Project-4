@@ -51,7 +51,6 @@ public class FilterServiceImpl implements FilterService {
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
-
         Pageable pageable = PageRequest.of(PageNo - 0, 10);
         Page<Job> carPage = jobRepository.findAll(spec, pageable);
         if (carPage.isEmpty()) {
@@ -109,7 +108,7 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    public ResponseJobDto searchBarFilter(String searchBarInput, Integer pageNo, ResponseJobDto responseJobDto) {
+    public List<JobDto> searchBarFilter(String searchBarInput) {
 
         List<Job> jobs = jobRepository.searchJobsByKeyword(searchBarInput);
         System.err.println(jobs.toString());
@@ -119,45 +118,50 @@ public class FilterServiceImpl implements FilterService {
             throw new PageNotFoundException("Page not found");
         }
 
-        if ((pageNo * 10) > jobs.size() - 1) {
-            throw new PageNotFoundException("page not found");
-
-        }
-
-
-//        System.out.println("list of de"+listOfCar.size());
+        /////with out pagination code /////
         List<JobDto> listOfNewJob = new ArrayList<>();
 
-        int pageStart = pageNo * 10;
-        int pageEnd = pageStart + 10;
-        int diff = (jobs.size()) - pageStart;
-        for (int counter = pageStart, i = 1; counter < pageEnd; counter++, i++) {
-            if (pageStart > jobs.size()) {
-                break;
-            }
-            System.out.println("inside for lop line no 139 :"+i);
-
+        for (int counter =0; counter<jobs.size(); counter++){
             JobDto jobDto = new JobDto(jobs.get(counter));
             jobDto.setUser_Id(jobs.get(counter).getUserUser().getUser_id());
 
             listOfNewJob.add(jobDto);
-            if (diff == i) {
-                break;
-            }
         }
-        responseJobDto.setResponse(listOfNewJob);
-        System.err.println("Ho"+responseJobDto.getResponse());
-
-        responseJobDto.setTotalItems(jobs.size());
-        Integer totalPages = listOfNewJob.size() / 10;
-        if (listOfNewJob.size() > totalPages) {
-            totalPages++;
-        }
-        responseJobDto.setTotalPages(totalPages);
-        responseJobDto.setCurrentPage(pageNo);
-
-//        System.out.println(listOfCar);
-        return responseJobDto;
+        return listOfNewJob;
+        /////pagination code /////
+//        System.out.println("list of de"+listOfCar.size());
+//        List<JobDto> listOfNewJob = new ArrayList<>();
+//
+//        int pageStart = pageNo * 10;
+//        int pageEnd = pageStart + 10;
+//        int diff = (jobs.size()) - pageStart;
+//        for (int counter = pageStart, i = 1; counter < pageEnd; counter++, i++) {
+//            if (pageStart > jobs.size()) {
+//                break;
+//            }
+////            System.out.println("inside for lop line no 139 :"+i);
+//
+//            JobDto jobDto = new JobDto(jobs.get(counter));
+//            jobDto.setUser_Id(jobs.get(counter).getUserUser().getUser_id());
+//
+//            listOfNewJob.add(jobDto);
+//            if (diff == i) {
+//                break;
+//            }
+//        }
+//        responseJobDto.setResponse(listOfNewJob);
+////        System.err.println("Ho"+responseJobDto.getResponse());
+//
+//        responseJobDto.setTotalItems(jobs.size());
+//        Integer totalPages = listOfNewJob.size() / 10;
+//        if (listOfNewJob.size() > totalPages) {
+//            totalPages++;
+//        }
+//        responseJobDto.setTotalPages(totalPages);
+//        responseJobDto.setCurrentPage(pageNo);
+//
+////        System.out.println(listOfCar);
+//        return responseJobDto;
 
 
     }
