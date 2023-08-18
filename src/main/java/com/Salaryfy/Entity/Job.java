@@ -22,7 +22,8 @@ public class Job {
 
     @Column(name = "PostName", length = 100)
     private String postName;
-
+    @Column(name = "jobType")
+    private String jobType;
 
     @Column(name = "CompanyName", length = 250)
     private String companyName;
@@ -91,6 +92,7 @@ public class Job {
         this.interviewDetails = jobDto.getInterviewDetails();
         this.jobDetails = jobDto.getJobDetails();
         this.date = jobDto.getDate();
+        this.jobType = jobDto.getJobType();
         this.startingSalary = jobDto.getStartingSalary();
         this.jobFairSetNo = jobDto.getJobFairSetNo();
         this.status = jobDto.getStatus();
