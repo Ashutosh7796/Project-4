@@ -11,16 +11,16 @@ public class FilterDto {
 
     private String companyName;
 
-    private String postName;
+    private String jobType;
 
     private List<String> location;
 
 
 
-    public FilterDto(String companyName, String postName, List<String> location ) {
+    public FilterDto(String companyName, String jobType, List<String> location ) {
         this.location = location;
 
-        this.postName = postName;
+        this.jobType = jobType;
 
         this.companyName = companyName;
     }
