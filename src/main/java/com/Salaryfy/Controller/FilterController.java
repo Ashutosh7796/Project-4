@@ -26,11 +26,11 @@ public class FilterController {
     @GetMapping("/mainFilter")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilter(
             @RequestParam(required = false) String companyName,
-            @RequestParam(required = false) String postName,
+            @RequestParam(required = false) String jobType,
             @RequestParam(required = false) List<String> location
             ) {
 
-        FilterDto filterDto = new FilterDto(companyName, postName, location);
+        FilterDto filterDto = new FilterDto(companyName, jobType, location);
 
         try {
             List<JobDto> listOfJob = filterService.searchByFilter(filterDto);
