@@ -1,6 +1,7 @@
 package com.Salaryfy.Services;
 
 import com.Salaryfy.Entity.EmailVerification;
+import com.Salaryfy.Exception.EmptyFiledException;
 import com.Salaryfy.Exception.InvalidOtpException;
 import com.Salaryfy.Interfaces.EmailVerificationService;
 import com.Salaryfy.Repository.EmailVerificationRepo;
@@ -43,11 +44,14 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
     @Override
     public void saveEmail(String email, String otp) {
 
-        EmailVerification emailVerification= new EmailVerification();
-        emailVerification.setEmail(email);
-        emailVerification.setOtp(otp);
-        emailVerificationRepo.save(emailVerification);
-
+        if (email != null){
+            EmailVerification emailVerification= new EmailVerification();
+            emailVerification.setEmail(email);
+            emailVerification.setOtp(otp);
+            emailVerificationRepo.save(emailVerification);
+        }else {
+            throw new EmptyFiledException("Fill the field");
+        }
     }
 
     @Override
@@ -64,54 +68,58 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
     private void sendEmail(String message, String subject, String to, String from, String sendOtp) {
 
-        // SMTP server for Gmail
-        String host = "smtp.gmail.com";
+        if (to !=null) {
+            // SMTP server for Gmail
+            String host = "smtp.gmail.com";
 
-        // Getting the system properties
-        Properties properties = System.getProperties();
+            // Getting the system properties
+            Properties properties = System.getProperties();
 
-        System.out.println(properties);
+            System.out.println(properties);
 
-        // Setting important information to the properties object
-        properties.put("mail.smtp.host", host);
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
+            // Setting important information to the properties object
+            properties.put("mail.smtp.host", host);
+            properties.put("mail.smtp.port", "465");
+            properties.put("mail.smtp.ssl.enable", "true");
+            properties.put("mail.smtp.auth", "true");
 
-        // Creating a session with the properties and an authenticator
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                // Return the email address and password for authentication
-                return new PasswordAuthentication("b.aniket1414@gmail.com", "egmqlowlfodymfzw");
+            // Creating a session with the properties and an authenticator
+            Session session = Session.getInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    // Return the email address and password for authentication
+                    return new PasswordAuthentication("b.aniket1414@gmail.com", "egmqlowlfodymfzw");
+                }
+
+            });
+
+            // Composing the email content
+            String content = "OTP to verify Email   " + sendOtp;
+
+            // Creating a MimeMessage object for the session
+            MimeMessage m = new MimeMessage(session);
+
+            try {
+                // Setting the sender of the email
+                m.setFrom(from);
+
+                // Adding the recipient to the message
+                m.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+                // Adding the subject to the message
+                m.setSubject(subject);
+
+                // Adding the content to the message
+                m.setText(content);
+
+                // Sending the message
+                Transport.send(m);
+
+            } catch (MessagingException e) {
+                e.printStackTrace();
             }
-
-        });
-
-        // Composing the email content
-        String content = "OTP to verify Email   " + sendOtp;
-
-        // Creating a MimeMessage object for the session
-        MimeMessage m = new MimeMessage(session);
-
-        try {
-            // Setting the sender of the email
-            m.setFrom(from);
-
-            // Adding the recipient to the message
-            m.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-            // Adding the subject to the message
-            m.setSubject(subject);
-
-            // Adding the content to the message
-            m.setText(content);
-
-            // Sending the message
-            Transport.send(m);
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        }else {
+            throw new EmptyFiledException("fill the field");
         }
 
 

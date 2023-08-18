@@ -1,5 +1,6 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.ExperienceDocDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,4 +46,19 @@ public class Experiencedoc {
     @JoinColumn(name = "user_userId", nullable = false)
     private User userUser;
 
+    public Experiencedoc(ExperienceDocDto experienceDocDto,User user) {
+        this.availableToJoin=experienceDocDto.getAvailableToJoin();
+        this.careerBreak=experienceDocDto.getCareerBreak();
+        this.currentResidingPlace=experienceDocDto.getCurrentResidingPlace();
+        this.highestLevelOfEdu=experienceDocDto.getHighestLevelOfEdu();
+        this.userUser=user;
+        this.durationCareerBreak=experienceDocDto.getDurationCareerBreak();
+        this.lastCompany=experienceDocDto.getLastCompany();
+        this.lastDrawnSalary=experienceDocDto.getLastDrawnSalary();
+        this.previousDesignation=experienceDocDto.getPreviousDesignation();
+        this.workExperience=experienceDocDto.getWorkExperience();
+    }
+
+    public Experiencedoc() {
+    }
 }

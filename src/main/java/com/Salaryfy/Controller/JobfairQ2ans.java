@@ -1,6 +1,9 @@
 package com.Salaryfy.Controller;
 
+import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
+import com.Salaryfy.Dto.JobfairQ1ans.ResponseForJobFairOneUserID;
 import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
+import com.Salaryfy.Dto.JobfairQ2ans.ResponseForJobFairTwoUserId;
 import com.Salaryfy.Dto.JobfairQ2ans.ResponseJobFairQ2Dto;
 import com.Salaryfy.Dto.ProfileLevelDto.ResponseProfileLevelDto;
 import com.Salaryfy.Exception.JobNotFoundException;
@@ -86,6 +89,19 @@ public class JobfairQ2ans {
 
         return "All data deleted";
     }
+    @GetMapping("/getJobFairDetailsByUserId")
+    public ResponseEntity<?> getJobFairDetailsByUserId(@RequestParam Integer userId){
+        try {
+            ResponseForJobFairTwoUserId responseForJobFairTwoUserId = new ResponseForJobFairTwoUserId("success");
+            responseForJobFairTwoUserId.setResponse(iJobfairQ2ans.getJobFairDetailsByUserId(userId));
+            return ResponseEntity.status(HttpStatus.OK).body(responseForJobFairTwoUserId);
 
+        }catch (UserNotFoundException userNotFoundException) {
+
+            ResponseForJobFairTwoUserId responseForJobFairTwoUserId = new ResponseForJobFairTwoUserId("unsuccess");
+            responseForJobFairTwoUserId.setException(String.valueOf(userNotFoundException));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseForJobFairTwoUserId);
+        }
+    }
 
 }

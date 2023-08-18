@@ -12,8 +12,7 @@ public interface IJobfairQ1ans {
     public String deleteQ1ans(Integer jobFairQ1Id);
     public List<JobfairQ1ans> getallQ1ans(Integer pageNo);
 
-
-
+    public JobfairQ1ans getJobFairDetailsByUserId(Integer userId);
 
 
 }
