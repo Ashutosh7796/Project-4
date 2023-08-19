@@ -22,7 +22,8 @@ public class Job {
 
     @Column(name = "PostName", length = 100)
     private String postName;
-
+    @Column(name = "jobType")
+    private String jobType;
 
     @Column(name = "CompanyName", length = 250)
     private String companyName;
@@ -66,6 +67,9 @@ public class Job {
     @Column(name = "Status")
     private Boolean status;
 
+    @Column(name = "logo")
+    private String logo;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_userId", nullable = false)
@@ -79,7 +83,7 @@ public class Job {
             inverseJoinColumns = @JoinColumn(name = "InterviewScheduleId", referencedColumnName = "InterviewScheduleId"))
     private List<InterviewSchedule> interviewSchedule = new ArrayList<>();
 
-    public Job(JobDto jobDto) {
+    public Job(JobDto jobDto,String logo) {
         this.postName = jobDto.getPostName();
         this.companyName = jobDto.getCompanyName();
         this.location = jobDto.getLocation();
@@ -88,9 +92,11 @@ public class Job {
         this.interviewEndDate = jobDto.getInterviewEndDate();
         this.essentialRequirements = jobDto.getEssentialRequirements();
         this.incentives = jobDto.getIncentives();
+        this.logo=logo;
         this.interviewDetails = jobDto.getInterviewDetails();
         this.jobDetails = jobDto.getJobDetails();
         this.date = jobDto.getDate();
+        this.jobType = jobDto.getJobType();
         this.startingSalary = jobDto.getStartingSalary();
         this.jobFairSetNo = jobDto.getJobFairSetNo();
         this.status = jobDto.getStatus();

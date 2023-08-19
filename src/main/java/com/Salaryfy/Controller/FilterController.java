@@ -26,11 +26,11 @@ public class FilterController {
     @GetMapping("/mainFilter")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilter(
             @RequestParam(required = false) String companyName,
-            @RequestParam(required = false) String postName,
+            @RequestParam(required = false) String jobType,
             @RequestParam(required = false) List<String> location
             ) {
 
-        FilterDto filterDto = new FilterDto(companyName, postName, location);
+        FilterDto filterDto = new FilterDto(companyName, jobType, location);
 
         try {
             List<JobDto> listOfJob = filterService.searchByFilter(filterDto);
@@ -48,17 +48,16 @@ public class FilterController {
         return filterService.getSuggestions(query);
     }
     @GetMapping("/searchBarFilter")
-    public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput, @RequestParam Integer pageNo){
+    public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput){
         try {
-            ResponseJobDto responseJobDto = new ResponseJobDto("success");
-
-            responseJobDto = filterService.searchBarFilter(searchBarInput,pageNo,responseJobDto);
-
-            return ResponseEntity.status(HttpStatus.OK).body(responseJobDto);
+            List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput);
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
+            responseGetAllJobDto.setList(listOfJob);
+            return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
         } catch (PageNotFoundException pageNotFoundException) {
-            ResponseJobDto responseJobDto = new ResponseJobDto("unsuccess");
-            responseJobDto.setException(String.valueOf(pageNotFoundException));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobDto);
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
+            responseGetAllJobDto.setException(String.valueOf(pageNotFoundException));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
 

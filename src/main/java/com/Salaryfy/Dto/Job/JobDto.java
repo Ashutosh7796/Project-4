@@ -14,10 +14,13 @@ public class JobDto {
     private Integer JobId;
 
     private String postName;
+    private String JobType;
 
     private String companyName;
 
     private String location;
+
+    private String logo;
 
     private Integer noOfPosts;
 
@@ -52,9 +55,11 @@ public class JobDto {
         this.interviewEndDate = job.getInterviewEndDate();
         this.essentialRequirements = job.getEssentialRequirements();
         this.incentives = job.getIncentives();
+        this.logo=job.getLogo();
         this.interviewDetails = job.getInterviewDetails();
         this.jobDetails = job.getJobDetails();
         this.date = job.getDate();
+        this.JobType = job.getJobType();
         this.startingSalary = job.getStartingSalary();
         this.jobFairSetNo = job.getJobFairSetNo();
         this.status = job.getStatus();
