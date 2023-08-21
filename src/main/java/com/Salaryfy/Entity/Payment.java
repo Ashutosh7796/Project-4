@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 
 @Getter
@@ -13,20 +14,20 @@ import java.time.Instant;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "paymentId", nullable = false)
-    private Integer paymentId;
+    @Column(name = "payId", nullable = false)
+    private Integer PayId;
 
-    @Column(name = "paymentTanId", length = 250)
-    private String paymentTanId;
+    @Column(name = "receipt", length = 250)
+    private String receipt;
 
     @Column(name = "Status", length = 45)
     private String status;
 
     @Column(name = "date")
-    private Instant date;
+    private Timestamp date;
 
     @Column(name = "amount", length = 45)
-    private String amount;
+    private Integer amount;
 
     @Column(name = "PaymentType", length = 45)
     private String paymentType;
@@ -34,10 +35,15 @@ public class Payment {
     @Column(name = "planName", length = 250)
     private String planName;
 
-    @Column(name = "PlanId")
-    private Integer planId;
+    @Column(name = "orderId")
+    private String orderId;
 
-    @Column(name = "UserId")
-    private Integer userId;
+    @Column(name = "paymentId")
+    private String paymentId;
 
+    @ManyToOne
+    private User user;
+
+    @OneToOne
+    private Plan plan;
 }
