@@ -51,12 +51,12 @@ public class User {
     @OneToMany(mappedBy = "userUser")
     private List<Document> documents = new LinkedList<>();
 
-
     @OneToMany(mappedBy = "userUser")
     private List<Experiencedoc> experienceDocs = new LinkedList<>();
 
     @OneToMany(mappedBy = "userUser")
     private List<Job> jobs = new LinkedList<>();
+
 
     @OneToMany(mappedBy = "userUser")
     private List<ProfileLevel> profileLevels = new LinkedList<>();

@@ -25,8 +25,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -124,6 +126,17 @@ public class AppConfig {
                 return config;
             }
         };
+    }
+    public String[] genIp() {
+        List<String> ips = new ArrayList<String>();
+        ips.add("https://ok-car.vercel.app");
+        ips.add("http://localhost:5173");
+
+        for(int i = 1; i <= 255; i++) {
+            String ipaddr = "http://192.168.1." + i + ":5173";
+            ips.add(ipaddr);
+        }
+        return ips.toArray(new String[0]);
     }
 
 }

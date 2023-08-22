@@ -42,6 +42,7 @@ public class Payment {
     private String paymentId;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToOne

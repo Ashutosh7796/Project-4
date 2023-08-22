@@ -37,7 +37,8 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
     private final InterviewScheduleRepository interviewScheduleRepository;
 
     private final JobRepository jobRepository;
-    @Override
+
+     @Override
     public InterviewSchedule scheduleInterview(InterviewScheduleDto interviewScheduleDto) {
 
         User user = userRepository.findById(interviewScheduleDto.getUserId())

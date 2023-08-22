@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class SalaryfyApplication  {
+public class SalaryfyApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SalaryfyApplication.class, args);
