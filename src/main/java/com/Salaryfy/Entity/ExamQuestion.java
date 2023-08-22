@@ -8,15 +8,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "question")
-public class Question {
+@Table(name = "examQuestion")
+public class ExamQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "questionId", nullable = false)
     private Integer questionId;
 
-    @Column(name = "Question", length = 250)
-    private String Question;
+
+    @Lob
+    @Column(name = "question")
+    private String question;
 
     @Column(name = "Op1", length = 45)
     private String op1;
@@ -39,8 +41,8 @@ public class Question {
     @Column(name = "`Set no`", length = 45)
     private String setNo;
 
-    public Question(QuestionDTO questionDTO) {
-        this.Question=questionDTO.getQuestion();
+    public ExamQuestion(QuestionDTO questionDTO) {
+        this.question=questionDTO.getQuestion();
         this.op1=questionDTO.getOp1();
         this.op2=questionDTO.getOp2();
         this.op3=questionDTO.getOp3();

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class QuestionDTO {
 
-    private String Question;
+    private String question;
     private String op1;
     private String op2;
     private String op3;
