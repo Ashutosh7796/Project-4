@@ -1,7 +1,7 @@
 package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.QuestionDTO;
-import com.Salaryfy.Entity.Question;
+import com.Salaryfy.Entity.ExamQuestion;
 import com.Salaryfy.Exception.SomethingWentWrong;
 import com.Salaryfy.Interfaces.QuestionService;
 import com.Salaryfy.Repository.QuestionRepo;
@@ -17,8 +17,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void postQuestions(QuestionDTO questionDTO) {
 
-        if (questionDTO!= null) {
-            Question question = new Question(questionDTO);
+        if (questionDTO.getQuestion()!= null) {
+            ExamQuestion question = new ExamQuestion(questionDTO);
             questionRepo.save(question);
         }else {
             throw new SomethingWentWrong("Some thing went wrong");
