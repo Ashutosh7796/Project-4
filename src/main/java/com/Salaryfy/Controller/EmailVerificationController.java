@@ -35,7 +35,7 @@ public class EmailVerificationController {
             emailVerificationService.saveEmail(email, otp,localDateTime);
             emailVerificationService.sendEmail(otp, email);
 
-            String sendOtp = "http://169.254.63.118:5173/reset-password?token=" + otp;
+            //String sendOtp = "http://169.254.63.118:5173/reset-password?token=" + otp;
 
             return ResponseEntity.status(HttpStatus.OK).body("Email sent");
         } catch (EmptyFiledException e) {
@@ -55,7 +55,7 @@ public class EmailVerificationController {
         }
     }
 
-    @Scheduled(fixedRate = 18000) // 1 minute in milliseconds
+    @Scheduled(fixedRate = 18000) // 3 minute in milliseconds
     public void cleanupExpiredOTP() {
         emailVerificationService.deleteExpiredOTP();
     }
