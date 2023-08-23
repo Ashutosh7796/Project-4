@@ -88,6 +88,7 @@ public class AppConfig {
                 .requestMatchers("/sendEmail/**").permitAll()
                 .requestMatchers("/company/**").permitAll()
                 .requestMatchers("/experience/**").permitAll()
+                .requestMatchers("/question/**").permitAll()
 
                 .requestMatchers("/jobFairOption/**").permitAll()
                 .requestMatchers("/verifyOpt/**").permitAll()
@@ -129,6 +130,7 @@ public class AppConfig {
     }
     public String[] genIp() {
         List<String> ips = new ArrayList<String>();
+        ips.add("https://ok-car.vercel.app");
         ips.add("http://localhost:5173");
 
         for(int i = 1; i <= 255; i++) {
