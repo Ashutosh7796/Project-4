@@ -36,10 +36,10 @@ public class FilterServiceImpl implements FilterService {
                 predicates.add(root.get("location").in(filterDto.getLocation()));
             }
             if (filterDto.getJobType() != null && !filterDto.getJobType().isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("jobType"), filterDto.getJobType()));
+                predicates.add(root.get("jobType").in(filterDto.getJobType()));
             }
             if (filterDto.getCompanyName() != null && !filterDto.getCompanyName().isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("companyName"), filterDto.getCompanyName()));
+                predicates.add(root.get("companyName").in(filterDto.getCompanyName()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

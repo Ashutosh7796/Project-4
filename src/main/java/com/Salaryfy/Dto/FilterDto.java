@@ -9,15 +9,15 @@ import java.util.List;
 @ToString
 public class FilterDto {
 
-    private String companyName;
+    private List<String> companyName;
 
-    private String jobType;
+    private List<String> jobType;
 
     private List<String> location;
 
 
 
-    public FilterDto(String companyName, String jobType, List<String> location ) {
+    public FilterDto(List<String> companyName, List<String> jobType, List<String> location ) {
         this.location = location;
 
         this.jobType = jobType;
