@@ -1,10 +1,13 @@
 package com.Salaryfy.Services;
 
 import com.Salaryfy.Entity.EmailVerification;
+import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.EmptyFiledException;
 import com.Salaryfy.Exception.InvalidOtpException;
+import com.Salaryfy.Exception.UserAlreadyExistException;
 import com.Salaryfy.Interfaces.EmailVerificationService;
 import com.Salaryfy.Repository.EmailVerificationRepo;
+import com.Salaryfy.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 import org.springframework.stereotype.Service;
@@ -21,26 +24,36 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
     @Autowired EmailVerificationRepo emailVerificationRepo;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public void sendEmail(String otp, String email) {
 
-        // Set the email message content
-        String message = "Hello this is Aniket";
+        User byEmail = userRepository.findByEmail(email);
 
-        // Set the password reset link
-        String sendOtp = otp;
+        if (byEmail== null) {
 
-        // Set the email subject
-        String subject = "Checking: confirmation";
+            // Set the email message content
+            String message = "Hello this is Aniket";
 
-        // Set the sender's email address
-        String from = "b.aniket1414@gmail.com";
+            // Set the password reset link
+            String sendOtp = otp;
 
-        // Set the recipient's email address
-        String to = email;
+            // Set the email subject
+            String subject = "Checking: confirmation";
 
-        // Send the email using the sendEmail() method
-        sendEmail(message, subject, to, from, sendOtp);
+            // Set the sender's email address
+            String from = "b.aniket1414@gmail.com";
+
+            // Set the recipient's email address
+            String to = email;
+
+            // Send the email using the sendEmail() method
+            sendEmail(message, subject, to, from, sendOtp);
+        }else {
+            throw new UserAlreadyExistException("User Already present with this email");
+        }
 
     }
 
