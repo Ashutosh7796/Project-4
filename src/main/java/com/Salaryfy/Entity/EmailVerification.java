@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Entity
@@ -22,8 +20,5 @@ public class EmailVerification {
 
     @Column(name = "otp")
     private String otp;
-
-    @Column(name = "creationTime")
-    private LocalDateTime creationTime;
 
 }

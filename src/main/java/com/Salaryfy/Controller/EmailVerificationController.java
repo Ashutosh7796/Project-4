@@ -8,12 +8,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDateTime;
 
 @RestController
 public class EmailVerificationController {
@@ -31,8 +28,7 @@ public class EmailVerificationController {
             }
 
             String otp = RandomStringUtils.randomNumeric(4);
-            LocalDateTime localDateTime = LocalDateTime.now();
-            emailVerificationService.saveEmail(email, otp,localDateTime);
+            emailVerificationService.saveEmail(email, otp);
             emailVerificationService.sendEmail(otp, email);
 
             String sendOtp = "http://169.254.63.118:5173/reset-password?token=" + otp;
@@ -54,10 +50,4 @@ public class EmailVerificationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid OTP");
         }
     }
-
-    @Scheduled(fixedRate = 18000) // 1 minute in milliseconds
-    public void cleanupExpiredOTP() {
-        emailVerificationService.deleteExpiredOTP();
-    }
-
 }

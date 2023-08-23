@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Properties;
 
 @Service
@@ -44,25 +42,15 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
     }
 
     @Override
-    public void saveEmail(String email, String otp,LocalDateTime localDateTime) {
+    public void saveEmail(String email, String otp) {
 
-        EmailVerification emailVerifications = emailVerificationRepo.findByEmail(email);
-        if (emailVerifications != null){
-           // EmailVerification emailVerification= new EmailVerification();
-            emailVerifications.setEmail(email);
-            emailVerifications.setOtp(otp);
-            emailVerifications.setCreationTime(localDateTime);
-            emailVerificationRepo.save(emailVerifications);
+        if (email != null){
+            EmailVerification emailVerification= new EmailVerification();
+            emailVerification.setEmail(email);
+            emailVerification.setOtp(otp);
+            emailVerificationRepo.save(emailVerification);
         }else {
-            if (email != null) {
-                EmailVerification emailVerification = new EmailVerification();
-                emailVerification.setEmail(email);
-                emailVerification.setOtp(otp);
-                emailVerification.setCreationTime(localDateTime);
-                emailVerificationRepo.save(emailVerification);
-            } else {
-                throw new EmptyFiledException("Fill the field");
-            }
+            throw new EmptyFiledException("Fill the field");
         }
     }
 
@@ -76,13 +64,6 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
         } else {
             throw new InvalidOtpException("Invalid OTP");
         }
-    }
-
-    @Override
-    public void deleteExpiredOTP() {
-        LocalDateTime expirationTime = LocalDateTime.now().minusMinutes(3);
-        List<EmailVerification> expiredOTPList = emailVerificationRepo.findByCreationTimeBefore(expirationTime);
-        emailVerificationRepo.deleteAll(expiredOTPList);
     }
 
     private void sendEmail(String message, String subject, String to, String from, String sendOtp) {

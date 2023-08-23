@@ -88,7 +88,6 @@ public class AppConfig {
                 .requestMatchers("/sendEmail/**").permitAll()
                 .requestMatchers("/company/**").permitAll()
                 .requestMatchers("/experience/**").permitAll()
-                //.requestMatchers("/otp/**").permitAll()
 
                 .requestMatchers("/jobFairOption/**").permitAll()
                 .requestMatchers("/verifyOpt/**").permitAll()
