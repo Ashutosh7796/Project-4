@@ -3,9 +3,12 @@ package com.Salaryfy.Controller;
 import com.Salaryfy.Dto.JobFairQue.JobFairIdDto;
 import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
+import com.Salaryfy.Dto.JobfairQ1ans.ResponseForJobFairOneUserID;
 import com.Salaryfy.Dto.ResponceDto;
+import com.Salaryfy.Dto.ResponseDto;
 import com.Salaryfy.Exception.JobFairQue.JobFairQueNotFoundById;
 import com.Salaryfy.Exception.JobFairQue.JobFairQuenotFoundByQueTypeAndSetNo;
+import com.Salaryfy.Exception.JobFairQuestionDetailsNotFoundByJobId;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.SetNoNotFoundException;
 import com.Salaryfy.Interfaces.IJobFairQue;
@@ -62,7 +65,8 @@ public class JobFairController {
     public ResponseEntity<?> getJobFairDetailsBySetNo(@RequestParam String setNo,@RequestParam Integer pageNo){
         try{
             ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("success");
-            responseJobFairQ1Dto.setResponse(iJobFairQue.getJobFairDetailsBySetNo(setNo,pageNo));
+            responseJobFairQ1Dto.setCurrentPage(pageNo);
+            responseJobFairQ1Dto.setResponse(iJobFairQue.getJobFairDetailsBySetNo(setNo,pageNo,responseJobFairQ1Dto));
             return ResponseEntity.status(HttpStatus.OK).body(responseJobFairQ1Dto);
         }catch (SetNoNotFoundException setNoNotFoundException){
             ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("unsuccess");
@@ -91,18 +95,18 @@ public class JobFairController {
         }
     }
 
-//    @GetMapping("/getJobFairDetailsByUserId")
-//    public ResponseEntity<?> getJobFairDetailsByUserId(@RequestParam Integer userId){
-//        try {
-//            ResponseForJobFairOneUserID responseJobFairQ1Dto = new ResponseForJobFairOneUserID("success");
-//            responseJobFairQ1Dto.setResponse(iJobFairQue.get(userId));
-//            return ResponseEntity.status(HttpStatus.OK).body(responseJobFairQ1Dto);
-//
-//        }catch (UserNotFoundException userNotFoundException) {
-//
-//            ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("unsuccess");
-//            responseJobFairQ1Dto.setException(String.valueOf(userNotFoundException));
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobFairQ1Dto);
-//        }
-//    }
+    @GetMapping("/getJobFairDetailsByJobId")
+    public ResponseEntity<?> getJobFairDetailsByJobId(@RequestParam Integer jobId){
+        try {
+            ResponseDto responseDto = new ResponseDto("success");
+            responseDto.setResponse(iJobFairQue.getJobFairDetailsByJobId(jobId));
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+
+        }catch ( JobFairQuestionDetailsNotFoundByJobId jobFairQuestionDetailsNotFoundByJobId) {
+
+            ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("unsuccess");
+            responseJobFairQ1Dto.setException(String.valueOf(jobFairQuestionDetailsNotFoundByJobId));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseJobFairQ1Dto);
+        }
+    }
 }

@@ -24,6 +24,8 @@ public class JobfairQue{
     @Column(name = "SetNo", length = 45)
     private String setNo;
 
+    @Column(name = "jobId")
+    private Integer jobId;
     public JobfairQue() {
     }
 
@@ -31,5 +33,6 @@ public class JobfairQue{
         this.question = jobFairQueDto.getQuestion();
         this.questionType = jobFairQueDto.getQuestionType();
         this.setNo = jobFairQueDto.getSetNo();
+        this.jobId=jobFairQueDto.getJobId();
     }
 }
