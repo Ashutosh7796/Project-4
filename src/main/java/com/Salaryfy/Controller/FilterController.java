@@ -26,11 +26,10 @@ public class FilterController {
 
     @GetMapping("/mainFilter")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilter(
-            @RequestParam(required = false) String companyName,
-            @RequestParam(required = false) String jobType,
+            @RequestParam(required = false) List<String> companyName,
+            @RequestParam(required = false) List<String> jobType,
             @RequestParam(required = false) List<String> location
-            ) {
-
+    ) {
         FilterDto filterDto = new FilterDto(companyName, jobType, location);
 
         try {
@@ -63,8 +62,8 @@ public class FilterController {
     }
     @GetMapping("/ascendFilter")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilterAndSort(
-            @RequestParam(required = false) String companyName,
-            @RequestParam(required = false) String jobType,
+            @RequestParam(required = false) List<String> companyName,
+            @RequestParam(required = false) List<String> jobType,
             @RequestParam(required = false) List<String> location,
             @RequestParam(required = false, defaultValue = "asc") String sortDirection,
             @RequestParam(required = false, defaultValue = "companyName") String sortField
