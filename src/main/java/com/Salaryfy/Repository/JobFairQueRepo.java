@@ -17,4 +17,6 @@ public interface JobFairQueRepo extends JpaRepository<JobfairQue,Integer> {
     public List<JobfairQue> findBySetNo(String setNo);
     @Query("SELECT jfq FROM JobfairQue jfq WHERE jfq.questionType = :questionType AND jfq.setNo = :setNo")
     public List<JobfairQue> findByQueTypeAndSetNo(@Param("questionType") Boolean questionType,@Param("setNo")String setNo);
+
+    public Optional<JobfairQue> findByJobId(Integer jobId);
 }

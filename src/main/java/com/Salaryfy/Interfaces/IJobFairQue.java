@@ -13,9 +13,11 @@ public interface IJobFairQue {
 
     public JobfairQue getJobFairDetails(Integer jobFairQueId);
 
-    public List<JobfairQue> getJobFairDetailsBySetNo(String setNo, Integer pageNo);
+    public List<JobfairQue> getJobFairDetailsBySetNo(String setNo, Integer pageNo,ResponseJobFairQueDto responseJobFairQ1Dto);
 
     public List<JobfairQue> getJobFairDetailsBySetNoAndQueType(String setNo,Boolean questionType, Integer pageNo);
+
+    public Object getJobFairDetailsByJobId(Integer jobId);
 
 //    public JobfairQ1ans getJobFairDetailsByUserId(Integer userId);
 }

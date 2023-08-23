@@ -11,4 +11,5 @@ public class JobFairQueDto {
     public String questionType;
 
     public String setNo;
+    public Integer jobId;
 }
