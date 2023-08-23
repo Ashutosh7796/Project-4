@@ -2,12 +2,16 @@ package com.Salaryfy.Entity;
 
 import com.Salaryfy.Dto.QuestionDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "examQuestion")
 public class ExamQuestion {
     @Id

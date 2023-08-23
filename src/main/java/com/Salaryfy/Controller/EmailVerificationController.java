@@ -2,6 +2,7 @@ package com.Salaryfy.Controller;
 
 import com.Salaryfy.Exception.EmptyFiledException;
 import com.Salaryfy.Exception.InvalidOtpException;
+import com.Salaryfy.Exception.UserAlreadyExistException;
 import com.Salaryfy.Interfaces.EmailVerificationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -40,6 +41,8 @@ public class EmailVerificationController {
             return ResponseEntity.status(HttpStatus.OK).body("Email sent");
         } catch (EmptyFiledException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("email field is empty");
+        }catch (UserAlreadyExistException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already present with this email");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong");
         }
