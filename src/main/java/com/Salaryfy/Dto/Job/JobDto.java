@@ -65,7 +65,7 @@ public class JobDto {
         this.jobFairSetNo = job.getJobFairSetNo();
         this.status = job.getStatus();
         this.User_Id = job.getUserUser().getUser_id();
-
+        this.JobId =job.getJobId();
 
     }
 
