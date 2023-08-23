@@ -35,7 +35,6 @@ public class EmailVerificationController {
             emailVerificationService.saveEmail(email, otp,localDateTime);
             emailVerificationService.sendEmail(otp, email);
 
-            //String sendOtp = "http://169.254.63.118:5173/reset-password?token=" + otp;
 
             return ResponseEntity.status(HttpStatus.OK).body("Email sent");
         } catch (EmptyFiledException e) {

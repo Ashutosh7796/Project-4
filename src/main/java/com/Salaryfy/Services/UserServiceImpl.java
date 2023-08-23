@@ -2,16 +2,12 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.GetAllUserDTO;
 import com.Salaryfy.Dto.UserDTO;
-import com.Salaryfy.Dto.UserResponseDto;
 import com.Salaryfy.Entity.Role;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.BaseException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
 import com.Salaryfy.Exception.UserNotFoundException;
-
-import com.Salaryfy.Exception.*;
-
 import com.Salaryfy.Interfaces.IUser;
 import com.Salaryfy.Repository.RoleRepository;
 import com.Salaryfy.Repository.UserRepository;

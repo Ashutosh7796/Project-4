@@ -1,16 +1,11 @@
 package com.Salaryfy.Controller;
 
-import com.Salaryfy.Dto.Job.JobDto;
-import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
-import com.Salaryfy.Dto.Job.ResponseSingleJobDto;
 import com.Salaryfy.Dto.Plan.PlanDto;
 import com.Salaryfy.Dto.Plan.ResponseGetAllPlanDto;
 import com.Salaryfy.Dto.Plan.ResponseSinglePlanDto;
 import com.Salaryfy.Dto.ResponceDto;
-import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.PlanNotFoundException;
-import com.Salaryfy.Interfaces.JobService;
 import com.Salaryfy.Interfaces.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

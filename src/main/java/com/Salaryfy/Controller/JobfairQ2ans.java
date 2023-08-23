@@ -1,7 +1,5 @@
 package com.Salaryfy.Controller;
 
-import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
-import com.Salaryfy.Dto.JobfairQ1ans.ResponseForJobFairOneUserID;
 import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
 import com.Salaryfy.Dto.JobfairQ2ans.ResponseForJobFairTwoUserId;
 import com.Salaryfy.Dto.JobfairQ2ans.ResponseJobFairQ2Dto;

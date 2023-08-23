@@ -9,7 +9,6 @@ import com.Salaryfy.Interfaces.IProfileLevel;
 import com.Salaryfy.Repository.ProfileLevelRepo;
 import com.Salaryfy.Repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
