@@ -1,19 +1,12 @@
 package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.*;
-import com.Salaryfy.Dto.Job.JobDto;
-import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
-import com.Salaryfy.Entity.Experiencedoc;
 import com.Salaryfy.Exception.FillAllDetailsException;
-import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.ExperienceDocService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

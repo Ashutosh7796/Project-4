@@ -3,29 +3,22 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
-import com.Salaryfy.Dto.Job.ResponseJobDto;
 import com.Salaryfy.Dto.SearchSuggestionDTO;
 import com.Salaryfy.Entity.Job;
-import com.Salaryfy.Entity.Status;
-import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.FilterService;
-import com.Salaryfy.Interfaces.SuggestionService;
 import com.Salaryfy.Repository.JobRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -43,10 +36,10 @@ public class FilterServiceImpl implements FilterService {
                 predicates.add(root.get("location").in(filterDto.getLocation()));
             }
             if (filterDto.getJobType() != null && !filterDto.getJobType().isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("jobType"), filterDto.getJobType()));
+                predicates.add(root.get("jobType").in(filterDto.getJobType()));
             }
             if (filterDto.getCompanyName() != null && !filterDto.getCompanyName().isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("companyName"), filterDto.getCompanyName()));
+                predicates.add(root.get("companyName").in(filterDto.getCompanyName()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
@@ -77,6 +70,7 @@ public class FilterServiceImpl implements FilterService {
 
 
     }
+
 
 
     @Override
@@ -177,6 +171,48 @@ public class FilterServiceImpl implements FilterService {
 
 
     }
+
+    public List<JobDto> searchByFilterAndSort(FilterDto filterDto, String sortField, String sortDirection) {
+        Specification<Job> spec = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (filterDto.getLocation() != null && !filterDto.getLocation().isEmpty()) {
+                predicates.add(root.get("location").in(filterDto.getLocation()));
+            }
+            if (filterDto.getJobType() != null && !filterDto.getJobType().isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("jobType"), filterDto.getJobType()));
+            }
+            if (filterDto.getCompanyName() != null && !filterDto.getCompanyName().isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("companyName"), filterDto.getCompanyName()));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+
+        List<Job> filteredJobs = jobRepository.findAll(spec);
+
+        List<JobDto> listOfJobDtos = filteredJobs.stream()
+                .map(JobDto::new)
+                .collect(Collectors.toList());
+
+        Comparator<JobDto> comparator = Comparator.comparing(JobDto::getCompanyName);
+        if ("jobType".equals(sortField)) {
+            comparator = Comparator.comparing(JobDto::getJobType);
+        } else if ("location".equals(sortField)) {
+            comparator = Comparator.comparing(JobDto::getLocation);
+        } else if ("interviewStartDate".equals(sortField)) {
+            comparator = Comparator.comparing(JobDto::getInterviewStartDate, Comparator.nullsLast(Comparator.naturalOrder()));
+        }
+
+        if ("desc".equalsIgnoreCase(sortDirection)) {
+            comparator = comparator.reversed();
+        }
+
+        return listOfJobDtos.stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
+    }
+
 }
 
 

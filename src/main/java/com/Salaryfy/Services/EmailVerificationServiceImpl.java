@@ -62,7 +62,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
         EmailVerification emailVerifications = emailVerificationRepo.findByEmail(email);
         if (emailVerifications != null){
-           // EmailVerification emailVerification= new EmailVerification();
+            // EmailVerification emailVerification= new EmailVerification();
             emailVerifications.setEmail(email);
             emailVerifications.setOtp(otp);
             emailVerifications.setCreationTime(localDateTime);

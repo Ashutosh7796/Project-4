@@ -2,7 +2,6 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
 import com.Salaryfy.Entity.Job;
-import com.Salaryfy.Entity.JobfairQ1ans;
 import com.Salaryfy.Entity.JobfairQ2ans;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.JobFairQueOneException;
@@ -13,7 +12,6 @@ import com.Salaryfy.Repository.JobRepository;
 import com.Salaryfy.Repository.JobfairQ2ansRepo;
 import com.Salaryfy.Repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

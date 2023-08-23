@@ -1,12 +1,9 @@
 package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.ExperienceDocDto;
-import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Entity.Experiencedoc;
-import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.FillAllDetailsException;
-import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.ExperienceDocService;
@@ -15,7 +12,6 @@ import com.Salaryfy.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

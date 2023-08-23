@@ -1,10 +1,7 @@
 package com.Salaryfy.Services;
 
-import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.Plan.PlanDto;
-import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.Plan;
-import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.PlanNotFoundException;
 import com.Salaryfy.Interfaces.PlanService;

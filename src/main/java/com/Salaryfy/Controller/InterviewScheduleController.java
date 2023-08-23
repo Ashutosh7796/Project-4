@@ -2,10 +2,8 @@ package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.Job.InterviewScheduleDto;
 import com.Salaryfy.Dto.Job.ResponseAllScheduleInterviews;
-import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
 import com.Salaryfy.Dto.Job.ResponseGetSingleInterview;
 import com.Salaryfy.Dto.ResponceDto;
-import com.Salaryfy.Dto.UserDTO;
 import com.Salaryfy.Entity.InterviewSchedule;
 import com.Salaryfy.Exception.InterviewScheduleNotFoundException;
 import com.Salaryfy.Exception.JobNotFoundException;
