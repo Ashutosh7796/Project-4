@@ -2,13 +2,11 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
-import com.Salaryfy.Entity.JobfairQ1ans;
 import com.Salaryfy.Entity.JobfairQue;
 import com.Salaryfy.Exception.JobFairQue.JobFairQueNotFoundById;
 import com.Salaryfy.Exception.JobFairQue.JobFairQuenotFoundByQueTypeAndSetNo;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.SetNoNotFoundException;
-import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IJobFairQue;
 import com.Salaryfy.Repository.JobFairQueRepo;
 import com.Salaryfy.Repository.UserRepository;

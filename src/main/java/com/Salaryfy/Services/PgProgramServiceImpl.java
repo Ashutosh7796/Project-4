@@ -1,8 +1,6 @@
 package com.Salaryfy.Services;
 
-import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.PgProgram.PgProgramDto;
-import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.Pgprogram;
 import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;

@@ -1,8 +1,6 @@
 package com.Salaryfy.Services;
 
-import com.Salaryfy.Dto.GetAllUserDTO;
 import com.Salaryfy.Dto.Job.InterviewScheduleDto;
-import com.Salaryfy.Dto.UserDTO;
 import com.Salaryfy.Entity.InterviewSchedule;
 import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.User;
@@ -16,13 +14,8 @@ import com.Salaryfy.Repository.JobRepository;
 import com.Salaryfy.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,7 +65,8 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
 
             if(job.get(i).getInterviewSchedule().size() > 0){
                 for (int j=0;j<job.get(i).getInterviewSchedule().size();j++){
-                    if(job.get(i).getInterviewSchedule().get(j).getInterviewScheduleId() == id){interviewScheduleDto.setJobId(job.get(i).getJobId());
+                    if(job.get(i).getInterviewSchedule().get(j).getInterviewScheduleId() == id){
+                        interviewScheduleDto.setJobId(job.get(i).getJobId());
                         break;
                     }
                 }

@@ -6,7 +6,6 @@ import com.Salaryfy.Exception.InvalidOtpException;
 import com.Salaryfy.Interfaces.EmailVerificationService;
 import com.Salaryfy.Repository.EmailVerificationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;

@@ -2,12 +2,10 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.Payment.PaymentDto;
 import com.Salaryfy.Entity.Payment;
-import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.PaymentService;
 import com.Salaryfy.Repository.PaymentRepo;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.impl.client.StandardHttpRequestRetryHandler;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

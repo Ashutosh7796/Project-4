@@ -1,7 +1,6 @@
 package com.Salaryfy.Dto;
 
 import com.Salaryfy.Entity.Experiencedoc;
-import com.Salaryfy.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

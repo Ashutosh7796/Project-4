@@ -9,12 +9,9 @@ import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.JobService;
 import com.Salaryfy.Repository.JobRepository;
 import com.Salaryfy.Repository.UserRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -118,7 +115,6 @@ public class JobServiceImpl implements JobService {
         return "Job fields updated successfully";
     }
 
-
     @Override
     public List<JobDto> getAlljobsWithPages(int PageNo) {
         List<Job> listOfJob = jobRepository.findAll();
@@ -139,6 +135,7 @@ public class JobServiceImpl implements JobService {
             }
             JobDto jobDto = new JobDto(listOfJob.get(counter));
             jobDto.setJobId(listOfJob.get(counter).getJobId());
+
             listOfjobDto.add(jobDto);
             if (diff == i) {
                 break;

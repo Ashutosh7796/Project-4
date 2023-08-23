@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
+@ToString
 @Builder
 public class JobDto {
 
@@ -63,6 +64,8 @@ public class JobDto {
         this.startingSalary = job.getStartingSalary();
         this.jobFairSetNo = job.getJobFairSetNo();
         this.status = job.getStatus();
+        this.User_Id = job.getUserUser().getUser_id();
+
 
     }
 

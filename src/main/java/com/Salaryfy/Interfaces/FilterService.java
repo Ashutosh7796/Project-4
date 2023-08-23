@@ -13,4 +13,7 @@ public interface FilterService {
     List<SearchSuggestionDTO> getSuggestions(String query);
 
     public List<JobDto> searchBarFilter(String searchBarInput) ;
+
+    public List<JobDto> searchByFilterAndSort(FilterDto filterDto, String sortField, String sortDirection);
+
 }
