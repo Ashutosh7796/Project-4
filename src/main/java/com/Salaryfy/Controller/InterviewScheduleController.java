@@ -92,10 +92,10 @@ public class InterviewScheduleController {
     }
 
     @GetMapping("/getInterviewByUserId")
-    public ResponseEntity<?> getInterviewByUserId(@RequestParam Integer userId, @RequestParam int pageNo) {
+    public ResponseEntity<?> getInterviewByUserId(@RequestParam Integer userId) {
         {
             try {
-                List<InterviewScheduleDto> interviewByUSerId = interviewScheduleService.findInterviewByUSerId(userId, pageNo);
+                List<InterviewScheduleDto> interviewByUSerId = interviewScheduleService.findInterviewByUSerId(userId);
                 ResponseAllScheduleInterviews responseAllScheduleInterviews = new ResponseAllScheduleInterviews("Success");
                 responseAllScheduleInterviews.setList(interviewByUSerId);
                 return ResponseEntity.status(HttpStatus.OK).body(responseAllScheduleInterviews);

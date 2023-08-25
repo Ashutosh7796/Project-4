@@ -15,6 +15,7 @@ public class JobDto {
     private Integer JobId;
 
     private String postName;
+
     private String JobType;
 
     private String companyName;
