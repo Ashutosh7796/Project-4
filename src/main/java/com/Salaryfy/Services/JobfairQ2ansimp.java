@@ -39,6 +39,8 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
         jobfairQ2ans.setAns(jobfairQ2ansDto.ans);
         jobfairQ2ans.setJobId(jobfairQ2ansDto.jobId);
         jobfairQ2ans.setUserId(jobfairQ2ansDto.userId);
+        jobfairQ2ans.setQuestionType(jobfairQ2ans.getQuestionType());
+        jobfairQ2ans.setJobFairQuestionId(jobfairQ2ansDto.jobFairQueId); ;
         jobfairQ2ans.setQuestionType(jobfairQ2ans.getQuestion());
 
         jobfairQ2ansRepo.save(jobfairQ2ans);
