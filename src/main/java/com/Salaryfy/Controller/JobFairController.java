@@ -3,6 +3,7 @@ package com.Salaryfy.Controller;
 import com.Salaryfy.Dto.JobFairQue.JobFairIdDto;
 import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
+import com.Salaryfy.Dto.JobFairQue.ResponseOfAllJobFairQue;
 import com.Salaryfy.Dto.JobfairQ1ans.ResponseForJobFairOneUserID;
 import com.Salaryfy.Dto.ResponceDto;
 import com.Salaryfy.Dto.ResponseDto;
@@ -17,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/JobFair")
@@ -26,11 +29,25 @@ public class JobFairController {
     public ResponseEntity<?> addDetails(@RequestBody JobFairQueDto jobFairQueDto){
         try{
             ResponceDto responceDto = new ResponceDto("success",iJobFairQue.addJobFairQuestion(jobFairQueDto));
+
             return ResponseEntity.status(HttpStatus.OK).body(responceDto);
 
         }catch (Exception e){
             ResponceDto responceDto = new ResponceDto("unsuccess","Job Question not added ");
-            return ResponseEntity.status(HttpStatus.OK).body(responceDto);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responceDto);
+        }
+    }
+    @PostMapping("/saveAllJobFairques")
+    public ResponseEntity<?> addAllJobFairques(@RequestBody List<JobFairQueDto> listOfjobFairQueDto){
+        try{
+            System.out.println("1");
+            ResponseOfAllJobFairQue responseOfAllJobFairQue = new ResponseOfAllJobFairQue("success");
+            System.out.println("2");
+            return ResponseEntity.status(HttpStatus.OK).body(iJobFairQue.addAllJobFairQuestion(listOfjobFairQueDto,responseOfAllJobFairQue));
+
+        }catch (Exception e){
+            ResponceDto responceDto = new ResponceDto("unsuccess","Job Question not added");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responceDto);
         }
     }
     @GetMapping("/getJobFairDetailsById")
