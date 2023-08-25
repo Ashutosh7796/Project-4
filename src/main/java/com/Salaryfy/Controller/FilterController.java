@@ -81,5 +81,16 @@ public class FilterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
+    @GetMapping("/searchBarFilterSort")
+    public ResponseEntity<?> searchBarFilter(
+            @RequestParam String searchBarInput,
+            @RequestParam(required = false, defaultValue = "asc") String sortDirection
+    ) {
+        List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput, sortDirection);
 
+        ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
+        responseGetAllJobDto.setList(listOfJob);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
+    }
 }

@@ -172,6 +172,28 @@ public class FilterServiceImpl implements FilterService {
 
     }
 
+    @Override
+    public List<JobDto> searchBarFilter(String searchBarInput, String sortDirection) {
+        List<Job> jobs = jobRepository.searchJobsByKeyword(searchBarInput);
+
+        List<JobDto> listOfNewJob = new ArrayList<>();
+
+        for (Job job : jobs) {
+            JobDto jobDto = new JobDto(job);
+            jobDto.setUser_Id(job.getUserUser().getUser_id());
+            listOfNewJob.add(jobDto);
+        }
+
+        if ("asc".equalsIgnoreCase(sortDirection)) {
+            listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate));
+        } else if ("desc".equalsIgnoreCase(sortDirection)) {
+            listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate).reversed());
+        }
+
+        return listOfNewJob;
+    }
+
+
     public List<JobDto> searchByFilterAndSort(FilterDto filterDto, String sortField, String sortDirection) {
         Specification<Job> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();

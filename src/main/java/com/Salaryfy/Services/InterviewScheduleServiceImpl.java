@@ -125,7 +125,7 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
     }
 
     @Override
-    public List<InterviewScheduleDto> findInterviewByUSerId(Integer userId, int pageNo) {
+    public List<InterviewScheduleDto> findInterviewByUSerId(Integer userId) {
 
         Optional<User> user = Optional.ofNullable(userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User Not found ", HttpStatus.NOT_FOUND)));
         List<InterviewSchedule> interviewsByUserId = interviewScheduleRepository.findByUserId(userId);
@@ -134,22 +134,7 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
             throw new InterviewScheduleNotFoundException("No Scheduled Interview found for user", HttpStatus.NOT_FOUND);
         }
 
-
-        int pageSize = 10;
-        int totalRecords = interviewsByUserId.size();
-        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
-
-        if (pageNo < 0 || pageNo >= totalPages) {
-            throw new PageNotFoundException("Page not found");
-        }
-
-
-        int pageStart = pageNo * pageSize;
-        int pageEnd = Math.min(pageStart + pageSize, totalRecords);
-
         return interviewsByUserId.stream()
-                .skip(pageStart)
-                .limit(pageSize)
                 .map(inter -> {
                     InterviewScheduleDto interviewScheduleDtos = new InterviewScheduleDto(inter);
                     interviewScheduleDtos.setUserId(userId);
