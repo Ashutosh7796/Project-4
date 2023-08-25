@@ -168,12 +168,12 @@ public class JobFairQueIMP implements IJobFairQue {
     }
 
     @Override
-    public List<JobfairQue> getJobFairDetailsByJobId(Integer jobId) {
-        List<JobfairQue> jobfairQue = jobFairQueRepo.findByJobId(jobId);
+    public Object getJobFairDetailsByJobId(Integer jobId) {
+        Optional<JobfairQue> jobfairQue = jobFairQueRepo.findByJobId(jobId);
         if(jobfairQue.isEmpty()){
             throw new JobFairQuestionDetailsNotFoundByJobId("job fair question not found by job id");
         }
-        return jobfairQue;
+        return jobfairQue.get();
     }
 
     @Override
