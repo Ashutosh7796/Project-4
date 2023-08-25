@@ -21,4 +21,5 @@ public interface IUser {
 
     List<UserDTO> findByStatus(String status, int pageNo);
 
+    public UserDTO getUserById(Integer userId);
 }

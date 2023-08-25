@@ -93,6 +93,14 @@ public class UserServiceImpl implements IUser {
     }
 
     @Override
+    public UserDTO getUserById(Integer userId) {
+        Optional<User> user =userRepository.findById(userId);
+        if(user.isEmpty()){throw new UserNotFoundException("user not found by id ");}
+        UserDTO userDTO = new UserDTO(user.get());
+        return userDTO;
+    }
+
+    @Override
     public void updateDetails(UserDTO userDTO) {
        User user = userRepository.findById(userDTO.getUser_id()).orElseThrow(()-> new UserNotFoundException("User Not Found", HttpStatus.NOT_FOUND));
             if (userDTO.getEmail() != null){
