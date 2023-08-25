@@ -5,6 +5,7 @@ import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
 import com.Salaryfy.Entity.JobfairQue;
 import com.Salaryfy.Exception.JobFairQue.JobFairQueNotFoundById;
 import com.Salaryfy.Exception.JobFairQue.JobFairQuenotFoundByQueTypeAndSetNo;
+import com.Salaryfy.Exception.JobFairQuestionDetailsNotFoundByJobId;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.SetNoNotFoundException;
 import com.Salaryfy.Interfaces.IJobFairQue;
@@ -81,7 +82,7 @@ public class JobFairQueIMP implements IJobFairQue {
     }
 
     @Override
-    public List<JobfairQue> getJobFairDetailsBySetNo(String setNo, Integer pageNo) {
+    public List<JobfairQue> getJobFairDetailsBySetNo(String setNo, Integer pageNo,ResponseJobFairQueDto responseJobFairQ1Dto) {
 
         List<JobfairQue> jobfairQueList = jobFairQueRepo.findBySetNo(setNo);
         if (jobfairQueList.size() <= 0) {
@@ -114,6 +115,9 @@ public class JobFairQueIMP implements IJobFairQue {
                 break;
             }
         }
+
+        responseJobFairQ1Dto.setTotalPages((jobfairQueList.size())/10);
+        responseJobFairQ1Dto.setTotalItems(jobfairQueList.size());
 
 //        System.out.println(listOfCar);
         return listOfNewJobQue;
@@ -156,6 +160,15 @@ public class JobFairQueIMP implements IJobFairQue {
 //        System.out.println(listOfCar);
         return listOfNewJobQue;
 
+    }
+
+    @Override
+    public Object getJobFairDetailsByJobId(Integer jobId) {
+        Optional<JobfairQue> jobfairQue = jobFairQueRepo.findByJobId(jobId);
+        if(jobfairQue.isEmpty()){
+            throw new JobFairQuestionDetailsNotFoundByJobId("job fair question not found by job id");
+        }
+        return jobfairQue.get();
     }
 
 //    @Override

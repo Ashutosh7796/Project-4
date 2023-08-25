@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class QuestionDTO {
-
+    private int id;
     private String question;
     private String op1;
     private String op2;

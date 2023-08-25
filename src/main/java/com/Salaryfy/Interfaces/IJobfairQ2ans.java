@@ -14,4 +14,5 @@ public interface IJobfairQ2ans {
     public String deleteQ2ans(int jobFairQ1Id);
     public String deleteallQ2ans();
     public JobfairQ2ans getJobFairDetailsByUserId(Integer userId);
+
 }
