@@ -1,10 +1,7 @@
 package com.Salaryfy.Controller;
 
-import com.Salaryfy.Dto.GetAllUserDTO;
-import com.Salaryfy.Dto.ResponseAllUsersDto;
-import com.Salaryfy.Dto.UserDTO;
-import com.Salaryfy.Dto.UserResponseDto;
-import com.Salaryfy.Dto.UserupdateDTO;
+import com.Salaryfy.Dto.*;
+import com.Salaryfy.Dto.User.RUserSingleDto;
 import com.Salaryfy.Exception.BaseException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
@@ -15,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -45,6 +43,24 @@ public class UserController {
             userupdateDTO.setMessage("User Details Updated");
 
             return ResponseEntity.status(HttpStatus.OK).body(userupdateDTO);
+        } catch (UserNotFoundException e) {
+            UserupdateDTO userupdateDTO = new UserupdateDTO("Unsuccess");
+            userupdateDTO.setException(String.valueOf(e));
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userupdateDTO);
+
+        }
+    }
+
+    @GetMapping("/getById")
+    public ResponseEntity<?> getUserById(@RequestParam Integer userId) {
+        try {
+            RUserSingleDto responseDto = new RUserSingleDto("Success");
+            System.out.println("59");
+            responseDto.setResponse(userService.getUserById(userId));
+            responseDto.getResponse().setPassword("");
+            System.out.println("61");
+            return ResponseEntity.status(HttpStatus.OK).body(responseDto);
         } catch (UserNotFoundException e) {
             UserupdateDTO userupdateDTO = new UserupdateDTO("Unsuccess");
             userupdateDTO.setException(String.valueOf(e));
@@ -91,7 +107,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(userResponseDto);
         }
     }
-
 
 
 }
