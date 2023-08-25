@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/profileLevel")
 public class ProfileLevelController {
@@ -29,6 +31,19 @@ public class ProfileLevelController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseProfileLevelDto);
         }
     }
+//    @PostMapping("/save")
+//    public ResponseEntity<?> postProfileLevelData(@RequestBody List<ProfileLevelDto> listOfProfileLevelDto){
+//        try {
+//            ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("success");
+//            responseProfileLevelDto.setResponse(iProfileLevel.saveAllProfileLevelData(listOfProfileLevelDto));
+//            return ResponseEntity.status(HttpStatus.OK).body(responseProfileLevelDto);
+//
+//        }catch (UserNotFoundException userNotFoundException){
+//            ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("unsuccess");
+//            responseProfileLevelDto.setException(String.valueOf(userNotFoundException));
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseProfileLevelDto);
+//        }
+//    }
     @GetMapping("/getAllProfileLevelDetails")
     public ResponseEntity<?> getAllProfileLevelDetails(@RequestParam Integer pageNo){
         return ResponseEntity.status(HttpStatus.OK).body(iProfileLevel.getAllProfileLevelDetails(pageNo));

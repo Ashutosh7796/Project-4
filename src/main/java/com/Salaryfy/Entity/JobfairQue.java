@@ -4,10 +4,12 @@ import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "jobfairque")
 public class JobfairQue{
     @Id

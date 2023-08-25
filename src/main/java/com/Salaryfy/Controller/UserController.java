@@ -39,6 +39,7 @@ public class UserController {
     public ResponseEntity<?> updateDetails(@RequestBody UserDTO userDTO) {
         try {
             userService.updateDetails(userDTO);
+
             UserupdateDTO userupdateDTO = new UserupdateDTO("success");
             userupdateDTO.setMessage("User Details Updated");
 
@@ -55,7 +56,10 @@ public class UserController {
     @GetMapping("/getById")
     public ResponseEntity<?> getUserById(@RequestParam Integer userId) {
         try {
+
+
             RUserSingleDto responseDto = new RUserSingleDto("Success");
+
             System.out.println("59");
             responseDto.setResponse(userService.getUserById(userId));
             responseDto.getResponse().setPassword("");
