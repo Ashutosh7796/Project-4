@@ -26,27 +26,29 @@ public class ProfileLevelImp implements IProfileLevel {
 
     @Override
     public String saveProfileLevelData(ProfileLevelDto profileLevelDto) {
-//        List<ProfileLevel> listOfProfileLevelDto = profileLevelRepo.findAll();
-//        List<>listOfProfileLevelDto
-//                .stream()
-//                .filter(user->user.getUserUser().getUser_id().equals(profileLevelDto.UserId))
-//                .collect(Collectors.summarizingInt());
-//        User user1 = new User();
+        List<ProfileLevel> listOfProfileLevelDto = profileLevelRepo.findAll();
+        boolean flag = false;
+        for (int counterr = 0; counterr<listOfProfileLevelDto.size();counterr++){
+            if(listOfProfileLevelDto.get(counterr).getUserUser().getUser_id() == profileLevelDto.UserId){
+                Optional<ProfileLevel> profilelevelDetail = profileLevelRepo.findById(listOfProfileLevelDto.get(counterr).getProfileId());
+                if(profileLevelDto.highestLevelOfEdu!= null){
+                    profilelevelDetail.get().setHighestLevelOfEdu(profileLevelDto.highestLevelOfEdu);
+                }
+                if(profileLevelDto.board!= null){
+                    profilelevelDetail.get().setBoard(profileLevelDto.board);}
+                if(profileLevelDto.stream!= null){
+                    profilelevelDetail.get().setStream(profileLevelDto.stream);}
+                if(profileLevelDto.percentage!= null){
+                    profilelevelDetail.get().setPercentage(profileLevelDto.percentage);
+                }
+                profileLevelRepo.save(profilelevelDetail.get());
+                return "profile level detail updated";
 
-//        user1.setUser_id(profileLevelDto.UserId);
-//        Optional<ProfileLevel> profilelevelDetail = profileLevelRepo.findByUserId();
-//        if(profilelevelDetail.isPresent()){
-//
-//            if(profileLevelDto.highestLevelOfEdu!= null){
-//                profilelevelDetail.get().setHighestLevelOfEdu(profileLevelDto.highestLevelOfEdu);
-//            }
-//            if(profileLevelDto.board!= null){
-//                profilelevelDetail.get().setBoard(profileLevelDto.board);}
-//            if(profileLevelDto.stream!= null){
-//                profilelevelDetail.get().setStream(profileLevelDto.stream);}
-//            if(profileLevelDto.percentage!= null){
-//                profilelevelDetail.get().setPercentage(profileLevelDto.percentage);}
-//        }
+            }
+        }
+
+
+
         Optional<User> user= userRepository.findById(profileLevelDto.getUserId());
         if (user.isEmpty()){
             throw new UserNotFoundException("user not found");
