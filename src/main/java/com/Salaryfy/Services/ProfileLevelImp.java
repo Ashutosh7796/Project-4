@@ -107,6 +107,31 @@ public class ProfileLevelImp implements IProfileLevel {
         return "profile level detail updated";
 
     }
+    @Override
+    public ProfileLevelDto getByUserId(Integer userId) {
+
+////        Optional<ProfileLevel> profileLevel = profileLevelRepo.findByUserId(userId);
+
+        Optional<ProfileLevel> profilelevelDetail = null;
+        List<ProfileLevel> listOfProfileLevelDto = profileLevelRepo.findAll();
+        boolean flag = false;
+        for (int counterr = 0; counterr<listOfProfileLevelDto.size();counterr++){
+            if(listOfProfileLevelDto.get(counterr).getUserUser().getUser_id() == userId){
+                profilelevelDetail= profileLevelRepo.findById(listOfProfileLevelDto.get(counterr).getProfileId());
+
+                return new ProfileLevelDto(profilelevelDetail.get());
+
+            }
+        }
+        if(profilelevelDetail.isEmpty()){
+            throw new ProfileLevelIdNotFoundException("profile level details not found by userId ");
+        }
+
+        return new ProfileLevelDto(profilelevelDetail.get());
+
+
+
+    }
 
 
 }
