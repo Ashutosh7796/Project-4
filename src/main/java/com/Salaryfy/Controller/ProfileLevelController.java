@@ -77,4 +77,18 @@ public class ProfileLevelController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseProfileLevelDto);
         }
     }
+//    @PatchMapping("/updateProfileLevel")
+//    public ResponseEntity<?> updateProfileLevelDetails(@RequestBody ProfileLevelDto profileLevelDto,@RequestParam Integer profileLevelId){
+//        try {
+//            ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("success");
+//            responseProfileLevelDto.setResponse(iProfileLevel.updateProfileLevelDetails(profileLevelDto,profileLevelId));
+//            return ResponseEntity.status(HttpStatus.OK).body(responseProfileLevelDto);
+//
+//        }catch (UserNotFoundException userNotFoundException){
+//            ResponseProfileLevelDto responseProfileLevelDto = new ResponseProfileLevelDto("unsuccess");
+//            responseProfileLevelDto.setException(String.valueOf(userNotFoundException));
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseProfileLevelDto);
+//        }
+//
+//    }
 }
