@@ -1,5 +1,6 @@
 package com.Salaryfy.Entity;
 
+import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,17 @@ public class JobfairQ2ans {
     private String questionType;
 
     @Column(name = "JobFairQueId")
-    private Integer jobFairQuestionId;
+    private Integer jobFairQ1Id;
 
+    public JobfairQ2ans() {
+    }
+
+    public JobfairQ2ans(JobfairQ2ansDto jobfairQ2ansDto) {
+        this.question = jobfairQ2ansDto.question;
+        this.ans = jobfairQ2ansDto.ans;
+        this.userId = jobfairQ2ansDto.userId;
+        this.jobId = jobfairQ2ansDto.jobId;
+        this.questionType = jobfairQ2ansDto.questionType;
+        this.jobFairQ1Id = jobfairQ2ansDto.jobFairQ1Id;
+    }
 }

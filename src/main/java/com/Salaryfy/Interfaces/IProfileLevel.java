@@ -11,4 +11,5 @@ public interface IProfileLevel {
 
     public String deleteProfileById(Integer profileId);
 
+    public String updateProfileLevelDetails(ProfileLevelDto profileLevelDto, Integer profileLevelId);
 }

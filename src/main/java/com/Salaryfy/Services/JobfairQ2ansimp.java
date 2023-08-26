@@ -1,8 +1,12 @@
 package com.Salaryfy.Services;
 
+import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
+import com.Salaryfy.Dto.JobFairQue.ResponseOfAllJobFairQue;
 import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
+import com.Salaryfy.Dto.JobfairQ2ans.ResponseOfAllJobFair2Ans;
 import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.JobfairQ2ans;
+import com.Salaryfy.Entity.JobfairQue;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.JobFairQueOneException;
 import com.Salaryfy.Exception.JobNotFoundException;
@@ -14,6 +18,7 @@ import com.Salaryfy.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +45,7 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
         jobfairQ2ans.setJobId(jobfairQ2ansDto.jobId);
         jobfairQ2ans.setUserId(jobfairQ2ansDto.userId);
         jobfairQ2ans.setQuestionType(jobfairQ2ans.getQuestionType());
-        jobfairQ2ans.setJobFairQuestionId(jobfairQ2ansDto.jobFairQueId); ;
+        jobfairQ2ans.setJobFairQ1AnsId(jobfairQ2ansDto.jobFairQ1Id); ;
         jobfairQ2ans.setQuestionType(jobfairQ2ans.getQuestion());
 
         jobfairQ2ansRepo.save(jobfairQ2ans);
@@ -86,6 +91,43 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
         return jobfairQ2ans.get();
 
 
+    }
+    @Override
+    public String addAllJobFairAns(List<JobfairQ2ansDto> listOfjobFairQueDto) {
+        String exceptionJobIds = "invalid id ";
+        boolean flag = false;
+        List<JobfairQ2ans> listOfJobFairQ2 = new ArrayList<>();
+        System.out.println("185");
+
+        for(int counter = 0; counter<listOfjobFairQueDto.size();counter++){
+//            Optional<Job> job = jobRepository.findById(listOfjobFairQueDto.get(counter).getJobId());
+//            if(job.isEmpty()){
+//                System.err.println("*");
+////                exceptionJobIds = exceptionJobIds+": "+listOfjobFairQueDto.get(counter).getJobId();
+//            }
+//            else {
+                System.err.println(counter);
+
+                JobfairQ2ans jobfairQ2ans = new JobfairQ2ans();
+                jobfairQ2ans.setQuestion(listOfjobFairQueDto.get(counter).question);
+                jobfairQ2ans.setAns(listOfjobFairQueDto.get(counter).ans);
+                jobfairQ2ans.setJobId(listOfjobFairQueDto.get(counter).jobId);
+                jobfairQ2ans.setUserId(listOfjobFairQueDto.get(counter).userId);
+                jobfairQ2ans.setQuestionType(jobfairQ2ans.getQuestionType());
+                jobfairQ2ans.setJobFairQ1AnsId(listOfjobFairQueDto.get(counter).jobFairQ1Id);
+            listOfJobFairQ2.add(jobfairQ2ans);
+//            }
+        }
+        System.out.println("194");
+        System.err.println(exceptionJobIds);
+        jobfairQ2ansRepo.saveAll(listOfJobFairQ2);
+        System.out.println("197");
+
+//        if(flag){
+//            responseOfAllJobFairQue.("!!!!! Success but "+exceptionJobIds);
+//        }
+//        responseOfAllJobFairQue.setResponse("job fair question added ");
+        return "job fair question added";
     }
 
 

@@ -1,9 +1,13 @@
 package com.Salaryfy.Controller;
 
+import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
+import com.Salaryfy.Dto.JobFairQue.ResponseOfAllJobFairQue;
 import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
 import com.Salaryfy.Dto.JobfairQ2ans.ResponseForJobFairTwoUserId;
 import com.Salaryfy.Dto.JobfairQ2ans.ResponseJobFairQ2Dto;
+import com.Salaryfy.Dto.JobfairQ2ans.ResponseOfAllJobFair2Ans;
 import com.Salaryfy.Dto.ProfileLevelDto.ResponseProfileLevelDto;
+import com.Salaryfy.Dto.ResponceDto;
 import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IJobfairQ2ans;
@@ -40,6 +44,20 @@ public class JobfairQ2ans {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseProfileLevelDto);
         }
 
+    }
+    @PostMapping("/saveAllJobFairques")
+    public ResponseEntity<?> addAllJobFairques(@RequestBody List<JobfairQ2ansDto> listOfjobFairQueDto){
+        try{
+            System.out.println("1");
+            ResponseOfAllJobFair2Ans responseOfAllJobFair2Ans = new ResponseOfAllJobFair2Ans("success");
+            responseOfAllJobFair2Ans.setResponse(iJobfairQ2ans.addAllJobFairAns(listOfjobFairQueDto));
+            System.out.println("2");
+            return ResponseEntity.status(HttpStatus.OK).body(responseOfAllJobFair2Ans);
+
+        }catch (Exception e){
+            ResponceDto responceDto = new ResponceDto("unsuccess","Job Question not added");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responceDto);
+        }
     }
     @GetMapping("/getQ2ans")
     public ResponseEntity<?> getQ2ans(@RequestParam Integer JobFairQ1AnsId)

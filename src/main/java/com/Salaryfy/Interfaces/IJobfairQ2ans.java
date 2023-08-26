@@ -1,6 +1,9 @@
 package com.Salaryfy.Interfaces;
 
+import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
+import com.Salaryfy.Dto.JobFairQue.ResponseOfAllJobFairQue;
 import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
+import com.Salaryfy.Dto.JobfairQ2ans.ResponseOfAllJobFair2Ans;
 import com.Salaryfy.Entity.JobfairQ1ans;
 import com.Salaryfy.Entity.JobfairQ2ans;
 
@@ -15,4 +18,5 @@ public interface IJobfairQ2ans {
     public String deleteallQ2ans();
     public JobfairQ2ans getJobFairDetailsByUserId(Integer userId);
 
+    public String addAllJobFairAns(List<JobfairQ2ansDto> listOfjobFairQueDto) ;
 }

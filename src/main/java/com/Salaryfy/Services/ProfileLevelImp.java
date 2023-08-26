@@ -11,7 +11,9 @@ import com.Salaryfy.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +26,27 @@ public class ProfileLevelImp implements IProfileLevel {
 
     @Override
     public String saveProfileLevelData(ProfileLevelDto profileLevelDto) {
+//        List<ProfileLevel> listOfProfileLevelDto = profileLevelRepo.findAll();
+//        List<>listOfProfileLevelDto
+//                .stream()
+//                .filter(user->user.getUserUser().getUser_id().equals(profileLevelDto.UserId))
+//                .collect(Collectors.summarizingInt());
+//        User user1 = new User();
+
+//        user1.setUser_id(profileLevelDto.UserId);
+//        Optional<ProfileLevel> profilelevelDetail = profileLevelRepo.findByUserId();
+//        if(profilelevelDetail.isPresent()){
+//
+//            if(profileLevelDto.highestLevelOfEdu!= null){
+//                profilelevelDetail.get().setHighestLevelOfEdu(profileLevelDto.highestLevelOfEdu);
+//            }
+//            if(profileLevelDto.board!= null){
+//                profilelevelDetail.get().setBoard(profileLevelDto.board);}
+//            if(profileLevelDto.stream!= null){
+//                profilelevelDetail.get().setStream(profileLevelDto.stream);}
+//            if(profileLevelDto.percentage!= null){
+//                profilelevelDetail.get().setPercentage(profileLevelDto.percentage);}
+//        }
         Optional<User> user= userRepository.findById(profileLevelDto.getUserId());
         if (user.isEmpty()){
             throw new UserNotFoundException("user not found");
@@ -61,4 +84,27 @@ public class ProfileLevelImp implements IProfileLevel {
         profileLevelRepo.deleteById(profileId);
         return "Profile level deatils deleted successfully";
     }
+
+    @Override
+    public String updateProfileLevelDetails(ProfileLevelDto profileLevelDto, Integer profileLevelId) {
+        Optional<ProfileLevel> profileLevel = profileLevelRepo.findById(profileLevelId);
+        if(profileLevel.isEmpty()){throw new ProfileLevelIdNotFoundException("profile level details not found by id");}
+
+        if(profileLevelDto.highestLevelOfEdu!= null){
+            profileLevel.get().setHighestLevelOfEdu(profileLevelDto.highestLevelOfEdu);
+        }
+        if(profileLevelDto.board!= null){
+            profileLevel.get().setBoard(profileLevelDto.board);}
+        if(profileLevelDto.stream!= null){
+            profileLevel.get().setStream(profileLevelDto.stream);}
+        if(profileLevelDto.percentage!= null){
+            profileLevel.get().setPercentage(profileLevelDto.percentage);}
+
+
+        profileLevelRepo.save(profileLevel.get());
+        return "profile level detail updated";
+
+    }
+
+
 }
