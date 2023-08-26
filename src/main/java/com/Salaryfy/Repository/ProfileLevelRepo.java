@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface ProfileLevelRepo extends JpaRepository<ProfileLevel,Integer> {
+
 //    @Query("SELECT jfq FROM JobfairQue jfq WHERE jfq.questionType = :questionType AND jfq.setNo = :setNo")
 
 //    @Query("SELECT p FROM profile_level p WHERE p.user_userId = :user_userId")
