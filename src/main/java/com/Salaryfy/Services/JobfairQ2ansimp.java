@@ -108,14 +108,9 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
 //            else {
                 System.err.println(counter);
 
-                JobfairQ2ans jobfairQ2ans = new JobfairQ2ans();
-                jobfairQ2ans.setQuestion(listOfjobFairQueDto.get(counter).question);
-                jobfairQ2ans.setAns(listOfjobFairQueDto.get(counter).ans);
-                jobfairQ2ans.setJobId(listOfjobFairQueDto.get(counter).jobId);
-                jobfairQ2ans.setUserId(listOfjobFairQueDto.get(counter).userId);
-                jobfairQ2ans.setQuestionType(jobfairQ2ans.getQuestionType());
-                jobfairQ2ans.setJobFairQ1AnsId(listOfjobFairQueDto.get(counter).jobFairQ1Id);
-            listOfJobFairQ2.add(jobfairQ2ans);
+                JobfairQ2ans jobfairQ2ans = new JobfairQ2ans(listOfjobFairQueDto.get(counter));
+
+                listOfJobFairQ2.add(jobfairQ2ans);
 //            }
         }
         System.out.println("194");
