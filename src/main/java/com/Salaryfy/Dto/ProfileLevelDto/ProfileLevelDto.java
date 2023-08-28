@@ -18,10 +18,8 @@ public class ProfileLevelDto {
 
     public String stream;
 
-
-
-    
     public String percentage;
+
     public Integer UserId;
 
     public ProfileLevelDto() {

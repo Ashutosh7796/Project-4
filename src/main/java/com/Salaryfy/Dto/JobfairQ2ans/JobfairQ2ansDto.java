@@ -7,4 +7,5 @@ public class JobfairQ2ansDto {
     public Integer userId;
     public Integer jobId;
     public String questionType;
+    public Integer jobFairQ1Id;
 }

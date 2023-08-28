@@ -2,6 +2,8 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import com.Salaryfy.Dto.JobFairQue.ResponseJobFairQueDto;
+import com.Salaryfy.Dto.JobFairQue.ResponseOfAllJobFairQue;
+import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.JobfairQue;
 import com.Salaryfy.Exception.JobFairQue.JobFairQueNotFoundById;
 import com.Salaryfy.Exception.JobFairQue.JobFairQuenotFoundByQueTypeAndSetNo;
@@ -10,6 +12,7 @@ import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.SetNoNotFoundException;
 import com.Salaryfy.Interfaces.IJobFairQue;
 import com.Salaryfy.Repository.JobFairQueRepo;
+import com.Salaryfy.Repository.JobRepository;
 import com.Salaryfy.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +20,14 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 @AllArgsConstructor
 @Service
 public class JobFairQueIMP implements IJobFairQue {
     private final JobFairQueRepo jobFairQueRepo;
     private final UserRepository userRepo;
+    private final JobRepository jobRepository;
 
     @Override
     public String addJobFairQuestion(JobFairQueDto jobFairQueDto) {
@@ -163,12 +168,44 @@ public class JobFairQueIMP implements IJobFairQue {
     }
 
     @Override
-    public Object getJobFairDetailsByJobId(Integer jobId) {
-        Optional<JobfairQue> jobfairQue = jobFairQueRepo.findByJobId(jobId);
+    public List<JobfairQue> getJobFairDetailsByJobId(Integer jobId) {
+        List<JobfairQue> jobfairQue = jobFairQueRepo.findByJobId(jobId);
         if(jobfairQue.isEmpty()){
             throw new JobFairQuestionDetailsNotFoundByJobId("job fair question not found by job id");
         }
-        return jobfairQue.get();
+        return jobfairQue;
+    }
+
+    @Override
+    public ResponseOfAllJobFairQue addAllJobFairQuestion(List<JobFairQueDto> listOfjobFairQueDto, ResponseOfAllJobFairQue responseOfAllJobFairQue) {
+        String exceptionJobIds = "invalid id ";
+        boolean flag = false;
+        List<JobfairQue> listOfJobFairQue = new ArrayList<>();
+        System.out.println("185");
+
+        for(int counter = 0; counter<listOfjobFairQueDto.size();counter++){
+            Optional<Job> job = jobRepository.findById(listOfjobFairQueDto.get(counter).getJobId());
+            if(job.isEmpty()){
+                System.err.println("*");
+                exceptionJobIds = exceptionJobIds+": "+listOfjobFairQueDto.get(counter).getJobId();
+            }
+            else {
+                System.err.println(counter);
+                JobfairQue jobfairQue = new JobfairQue(listOfjobFairQueDto.get(counter));
+                listOfJobFairQue.add(jobfairQue);
+
+            }
+        }
+        System.out.println("194");
+        System.err.println(exceptionJobIds);
+        jobFairQueRepo.saveAll(listOfJobFairQue);
+        System.out.println("197");
+
+        if(flag){
+            responseOfAllJobFairQue.setStatus("!!!!! Success but "+exceptionJobIds);
+        }
+        responseOfAllJobFairQue.setResponse("job fair question added ");
+        return responseOfAllJobFairQue;
     }
 
 //    @Override
