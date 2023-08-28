@@ -10,6 +10,7 @@ import com.Salaryfy.Entity.JobfairQue;
 import com.Salaryfy.Entity.User;
 import com.Salaryfy.Exception.JobFairQueOneException;
 import com.Salaryfy.Exception.JobNotFoundException;
+import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IJobfairQ2ans;
 import com.Salaryfy.Repository.JobRepository;
@@ -66,6 +67,14 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
     public List<JobfairQ2ans> getallQ2ans() {
         return (List<JobfairQ2ans>)jobfairQ2ansRepo.findAll() ;
     }
+    @Override
+    public List<JobfairQ2ans> getByUserIdAndJobId(Integer userId, Integer jobId) {
+        List<JobfairQ2ans> jobfairQ2ans = jobfairQ2ansRepo.findByUserIdAndJobId(userId,jobId);
+        if(jobfairQ2ans.isEmpty()){throw new PageNotFoundException( "page not found !! ");}
+
+        return jobfairQ2ans;
+    }
+
 
     @Override
     public String deleteQ2ans(int jobFairQ1Id) {
@@ -124,6 +133,7 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
 //        responseOfAllJobFairQue.setResponse("job fair question added ");
         return "job fair question added";
     }
+
 
 
 }

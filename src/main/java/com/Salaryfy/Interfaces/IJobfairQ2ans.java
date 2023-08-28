@@ -19,4 +19,6 @@ public interface IJobfairQ2ans {
     public JobfairQ2ans getJobFairDetailsByUserId(Integer userId);
 
     public String addAllJobFairAns(List<JobfairQ2ansDto> listOfjobFairQueDto) ;
+
+    public List<JobfairQ2ans> getByUserIdAndJobId(Integer userId, Integer jobId);
 }
