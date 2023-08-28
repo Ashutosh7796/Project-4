@@ -103,13 +103,10 @@ public class InterviewScheduleController {
                 ResponseAllScheduleInterviews responseAllScheduleInterviews = new ResponseAllScheduleInterviews("Unsuccess");
                 responseAllScheduleInterviews.setException("User Not Found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllScheduleInterviews);
-            } catch (PageNotFoundException e) {
-                ResponseAllScheduleInterviews responseAllScheduleInterviews = new ResponseAllScheduleInterviews("Unsuccess");
-                responseAllScheduleInterviews.setException("Page Not Found");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllScheduleInterviews);
+            }
             }
         }
-    }
+
        @GetMapping("/getInterviewsByStatus")
        public ResponseEntity<?> getInterviewsByStatus(@RequestParam String status, @RequestParam int pageNo) {
         try {
