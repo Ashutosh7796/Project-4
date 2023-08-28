@@ -107,10 +107,7 @@ public class FilterController {
 
         try {
             Page<JobDto> jobDtoPage = filterService.suggestJob(filterDto, pageNo, pageSize);
-
-            // Extract content from Page<JobDto> and convert to List<JobDto>
             List<JobDto> listOfJob = jobDtoPage.getContent();
-
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
             responseGetAllJobDto.setList(listOfJob);
             return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
