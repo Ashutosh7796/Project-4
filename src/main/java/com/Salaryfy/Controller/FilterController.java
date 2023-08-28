@@ -98,12 +98,12 @@ public class FilterController {
 
     @GetMapping("/jobSuggest")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilter(
-            @RequestParam(required = false) List<String> jobType,
+            @RequestParam(required = false) List<String> postName,
             @RequestParam(required = false) List<String> location,
             @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "2") int pageSize
     ) {
-        jobSuggest filterDto = new jobSuggest(jobType, location);
+        jobSuggest filterDto = new jobSuggest(postName, location);
 
         try {
             Page<JobDto> jobDtoPage = filterService.suggestJob(filterDto, pageNo, pageSize);

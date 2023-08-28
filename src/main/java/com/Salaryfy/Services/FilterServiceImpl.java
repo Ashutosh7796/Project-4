@@ -244,8 +244,8 @@ public class FilterServiceImpl implements FilterService {
             if (filterDto.getLocation() != null && !filterDto.getLocation().isEmpty()) {
                 predicates.add(root.get("location").in(filterDto.getLocation()));
             }
-            if (filterDto.getJobType() != null && !filterDto.getJobType().isEmpty()) {
-                predicates.add(root.get("jobType").in(filterDto.getJobType()));
+            if (filterDto.getPostName() != null && !filterDto.getPostName().isEmpty()) {
+                predicates.add(root.get("postName").in(filterDto.getPostName()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
