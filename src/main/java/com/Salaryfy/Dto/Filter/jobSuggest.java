@@ -11,16 +11,16 @@ public class jobSuggest {
 
 
 
-    private List<String> jobType;
+    private List<String> postName;
 
     private List<String> location;
 
 
 
-    public jobSuggest( List<String> jobType, List<String> location ) {
+    public jobSuggest( List<String> postName, List<String> location ) {
         this.location = location;
 
-        this.jobType = jobType;
+        this.postName = postName;
 
     }
 }
