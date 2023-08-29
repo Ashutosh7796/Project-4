@@ -15,4 +15,8 @@ public interface JobfairQ2ansRepo extends JpaRepository<JobfairQ2ans,Integer> {
     public Optional<JobfairQ2ans> findByUserId(Integer userId);
     @Query("SELECT p FROM JobfairQ2ans p WHERE p.userId = :userId AND p.jobId =:jobId")
     public List<JobfairQ2ans> findByUserIdAndJobId(@Param("userId") Integer userId, Integer jobId);
+
+    @Query("SELECT p FROM JobfairQ2ans p WHERE p.userId = :userId AND p.jobId =:jobId AND p.JobFairQ1AnsId =:JobFairQ1AnsId")
+    public Optional<JobfairQ2ans> findByUserIdAndJobIdAndJobFairQ1AnsId(@Param("userId") Integer userId,@Param("jobId") Integer jobId,@Param("JobFairQ1AnsId") Integer JobFairQ1AnsId);
+
 }
