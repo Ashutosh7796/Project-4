@@ -132,7 +132,23 @@ public class JobfairQ2ans {
             }
 
 
+    }
+    @PatchMapping("/update")
+    public ResponseEntity<?> UpdateQ2AnsByUserIdAndJobId(@RequestBody List<JobfairQ2ansDto> jobfairQ2ansDto)
+    {
+        try{
+            ResponseOfAllJobFair2Ans responseOfAllJobFair2Ans = new ResponseOfAllJobFair2Ans("success");
+            responseOfAllJobFair2Ans.setResponse(iJobfairQ2ans.UpdateQ2AnsByUserIdAndJobId(jobfairQ2ansDto));
+            return ResponseEntity.status(HttpStatus.OK).body(responseOfAllJobFair2Ans) ;
+
+        }catch (Exception e){
+            ResponseOfAllJobFair2Ans responseOfAllJobFair2Ans = new ResponseOfAllJobFair2Ans("unsuccess");
+            responseOfAllJobFair2Ans.setResponse(String.valueOf("details not updated"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseOfAllJobFair2Ans) ;
         }
+
+
+    }
 
 
 }
