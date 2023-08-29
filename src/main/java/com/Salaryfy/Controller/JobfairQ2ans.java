@@ -2,13 +2,11 @@ package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.JobFairQue.JobFairQueDto;
 import com.Salaryfy.Dto.JobFairQue.ResponseOfAllJobFairQue;
-import com.Salaryfy.Dto.JobfairQ2ans.JobfairQ2ansDto;
-import com.Salaryfy.Dto.JobfairQ2ans.ResponseForJobFairTwoUserId;
-import com.Salaryfy.Dto.JobfairQ2ans.ResponseJobFairQ2Dto;
-import com.Salaryfy.Dto.JobfairQ2ans.ResponseOfAllJobFair2Ans;
+import com.Salaryfy.Dto.JobfairQ2ans.*;
 import com.Salaryfy.Dto.ProfileLevelDto.ResponseProfileLevelDto;
 import com.Salaryfy.Dto.ResponceDto;
 import com.Salaryfy.Exception.JobNotFoundException;
+import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IJobfairQ2ans;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +116,38 @@ public class JobfairQ2ans {
             responseForJobFairTwoUserId.setException(String.valueOf(userNotFoundException));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseForJobFairTwoUserId);
         }
+    }
+    @GetMapping("/getByUserIdAndJobId")
+    public ResponseEntity<?> getAllQ2AnsByUserIdAndJobId(@RequestParam Integer userId,@RequestParam Integer jobId)
+    {
+            try{
+                ResponseAllJobFairQ2 responseAllJobFairQ2 = new ResponseAllJobFairQ2("success");
+                responseAllJobFairQ2.setResponse(iJobfairQ2ans.getByUserIdAndJobId(userId,jobId));
+                return ResponseEntity.status(HttpStatus.OK).body(responseAllJobFairQ2) ;
+
+            }catch (PageNotFoundException pageNotFoundException){
+                ResponseOfAllJobFair2Ans responseOfAllJobFair2Ans = new ResponseOfAllJobFair2Ans("unsuccess");
+                responseOfAllJobFair2Ans.setResponse(String.valueOf(pageNotFoundException));
+                return ResponseEntity.status(HttpStatus.OK).body(responseOfAllJobFair2Ans) ;
+            }
+
+
+    }
+    @PatchMapping("/update")
+    public ResponseEntity<?> UpdateQ2AnsByUserIdAndJobId(@RequestBody List<JobfairQ2ansDto> jobfairQ2ansDto)
+    {
+        try{
+            ResponseOfAllJobFair2Ans responseOfAllJobFair2Ans = new ResponseOfAllJobFair2Ans("success");
+            responseOfAllJobFair2Ans.setResponse(iJobfairQ2ans.UpdateQ2AnsByUserIdAndJobId(jobfairQ2ansDto));
+            return ResponseEntity.status(HttpStatus.OK).body(responseOfAllJobFair2Ans) ;
+
+        }catch (Exception e){
+            ResponseOfAllJobFair2Ans responseOfAllJobFair2Ans = new ResponseOfAllJobFair2Ans("unsuccess");
+            responseOfAllJobFair2Ans.setResponse(String.valueOf("details not updated"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseOfAllJobFair2Ans) ;
+        }
+
+
     }
 
 
