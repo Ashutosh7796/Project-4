@@ -88,40 +88,42 @@ public class JobfairQ2ansimp implements IJobfairQ2ans {
         List<JobfairQ2ans> listOfJobFairQ2AnsNew = new ArrayList<>();
         for (int counter = 0; counter < jobfairQ2ansDto.size(); counter++) {
 
-            List<JobfairQ2ans> jobfairQ2ans = jobfairQ2ansRepo.findByUserIdAndJobId(jobfairQ2ansDto.get(counter).userId, jobfairQ2ansDto.get(counter).jobId);
-
-            if (jobfairQ2ans.size()>=0){
-                failedUpdatedIds = failedUpdatedIds+" userId :"+jobfairQ2ansDto.get(counter).userId+" jobId :"+jobfairQ2ansDto.get(counter).jobId +"  **";
-
+            Optional<JobfairQ2ans> jobfairQ2ans = jobfairQ2ansRepo.findByUserIdAndJobIdAndJobFairQ1AnsId(jobfairQ2ansDto.get(counter).userId, jobfairQ2ansDto.get(counter).jobId, jobfairQ2ansDto.get(counter).getJobFairQ1AnsId());
+            System.err.println("111");
+            if (jobfairQ2ansDto.get(counter).ans != null) {
+                jobfairQ2ans.get().setAns(jobfairQ2ansDto.get(counter).ans);
             }
-            for (int jCounter = 0; jCounter < jobfairQ2ans.size(); jCounter++) {
-                if (jobfairQ2ansDto.get(counter).ans != null) {
-                    jobfairQ2ans.get(jCounter).setAns(jobfairQ2ansDto.get(counter).ans);
-                }
-                if (jobfairQ2ansDto.get(counter).questionType != null) {
-                    jobfairQ2ans.get(jCounter).setQuestionType(jobfairQ2ansDto.get(counter).questionType);
-                }
-
-                if (jobfairQ2ansDto.get(counter).question != null) {
-                    jobfairQ2ans.get(jCounter).setQuestion(jobfairQ2ansDto.get(counter).question);
-                }
-
-                listOfJobFairQ2AnsNew.add(jobfairQ2ans.get(jCounter));
+            if (jobfairQ2ansDto.get(counter).questionType != null) {
+                jobfairQ2ans.get().setQuestionType(jobfairQ2ansDto.get(counter).questionType);
             }
 
-        }
+            if (jobfairQ2ansDto.get(counter).question != null) {
+                jobfairQ2ans.get().setQuestion(jobfairQ2ansDto.get(counter).question);
+            }
+
+            listOfJobFairQ2AnsNew.add(jobfairQ2ans.get());
+
+//                if (jobfairQ2ans.size() >= 0) {
+//                    failedUpdatedIds = failedUpdatedIds + " userId :" + jobfairQ2ansDto.get(counter).userId + " jobId :" + jobfairQ2ansDto.get(counter).jobId + "  **";
+//
+//                }
+//                for (int jCounter = 0; jCounter < jobfairQ2ans.size(); jCounter++) {
+//
+//
+//                }
+            }
+
+
         jobfairQ2ansRepo.saveAll(listOfJobFairQ2AnsNew);
-        System.err.println(failedUpdatedIds.length());
-        if(failedUpdatedIds.length()>0){
-            failedUpdatedIds = "details  updated but :"+failedUpdatedIds+" this id do not exist that's why that id's details are not uploaded";
-
-
-        }
-        else{
+//        System.err.println(failedUpdatedIds.length());
+//        if(failedUpdatedIds.length()>=0){
+//            failedUpdatedIds = "details  updated but :"+failedUpdatedIds+" this id do not exist that's why that id's details are not uploaded";
+//        }
+//        else{
             failedUpdatedIds = "updated all details successfully";
 
 
-        }
+//        }
         return  failedUpdatedIds;
 
 

@@ -1,7 +1,10 @@
 package com.Salaryfy.Dto.JobfairQ2ans;
 
-public class JobfairQ2ansDto {
+import lombok.Data;
 
+@Data
+public class JobfairQ2ansDto {
+    public Integer JobFairQ1AnsId;
     public String question;
     public String ans;
     public Integer userId;
