@@ -48,12 +48,32 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
     }
 
     @Override
+    public List<InterviewScheduleDto> findByUserIdJobId(Integer userId, int jobId) {
+        List<InterviewSchedule> interviewSchedules = interviewScheduleRepository.findByUserIdAndJobId(userId, jobId);
+
+        if (interviewSchedules.isEmpty()) {
+            throw new InterviewScheduleNotFoundException("Not Found Any Scheduled interview for Id", HttpStatus.NOT_FOUND);
+        }
+
+        List<InterviewScheduleDto> interviewScheduleDtos = new ArrayList<>();
+
+        for (InterviewSchedule interviewSchedule : interviewSchedules) {
+            InterviewScheduleDto interviewScheduleDto = new InterviewScheduleDto(interviewSchedule);
+            interviewScheduleDtos.add(interviewScheduleDto);
+        }
+
+        return interviewScheduleDtos;
+    }
+
+
+
+    @Override
     public InterviewScheduleDto getinterviewSchedule(int id) {
         Optional<InterviewSchedule> userOptional = interviewScheduleRepository.findById(id);
 
         if(userOptional.isEmpty()) {
 
-            throw new UserNotFoundException("Not Found any Schedule for Id");
+            throw new UserNotFoundException("Not Found Any Scheduled Interview for Id");
         }
         Integer JobId=0;
         List<Job> job = jobRepository.findAll();

@@ -11,6 +11,7 @@ public interface InterviewScheduleService {
 
 //    void deleteInterviewScheduleById(Integer interviewScheduleId);
 
+    List<InterviewScheduleDto> findByUserIdJobId (Integer userId, int jobId);
     InterviewScheduleDto getinterviewSchedule (int id);
 
     List <InterviewScheduleDto> findAllInterviews(int pageNo);
