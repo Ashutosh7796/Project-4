@@ -1,5 +1,6 @@
 package com.Salaryfy.Controller;
 
+import com.Salaryfy.Dto.Filter.jobSuggest;
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
@@ -9,6 +10,7 @@ import com.Salaryfy.Interfaces.FilterService;
 import com.Salaryfy.Interfaces.JobService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -93,4 +95,27 @@ public class FilterController {
 
         return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
     }
+
+    @GetMapping("/jobSuggest")
+    public ResponseEntity<ResponseGetAllJobDto> searchByFilter(
+            @RequestParam(required = false) List<String> postName,
+            @RequestParam(required = false) List<String> location,
+            @RequestParam(value = "pageNo", defaultValue = "0") int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "2") int pageSize
+    ) {
+        jobSuggest filterDto = new jobSuggest(postName, location);
+
+        try {
+            Page<JobDto> jobDtoPage = filterService.suggestJob(filterDto, pageNo, pageSize);
+            List<JobDto> listOfJob = jobDtoPage.getContent();
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
+            responseGetAllJobDto.setList(listOfJob);
+            return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
+        } catch (PageNotFoundException pageNotFoundException) {
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
+            responseGetAllJobDto.setException("page not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
+        }
+    }
+
 }

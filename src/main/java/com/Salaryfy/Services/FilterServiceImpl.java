@@ -1,6 +1,7 @@
 package com.Salaryfy.Services;
 
 
+import com.Salaryfy.Dto.Filter.jobSuggest;
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.SearchSuggestionDTO;
@@ -233,6 +234,30 @@ public class FilterServiceImpl implements FilterService {
         return listOfJobDtos.stream()
                 .sorted(comparator)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<JobDto> suggestJob(jobSuggest filterDto, int pageNo, int pageSize) {
+        Specification<Job> spec = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (filterDto.getLocation() != null && !filterDto.getLocation().isEmpty()) {
+                predicates.add(root.get("location").in(filterDto.getLocation()));
+            }
+            if (filterDto.getPostName() != null && !filterDto.getPostName().isEmpty()) {
+                predicates.add(root.get("postName").in(filterDto.getPostName()));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Job> filteredJobsPage = jobRepository.findAll(spec, pageable);
+
+        Page<JobDto> jobDtoPage = filteredJobsPage.map(JobDto::new);
+
+        return jobDtoPage;
     }
 
 }

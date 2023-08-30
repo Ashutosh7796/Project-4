@@ -103,15 +103,12 @@ public class InterviewScheduleController {
                 ResponseAllScheduleInterviews responseAllScheduleInterviews = new ResponseAllScheduleInterviews("Unsuccess");
                 responseAllScheduleInterviews.setException("User Not Found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllScheduleInterviews);
-            } catch (PageNotFoundException e) {
-                ResponseAllScheduleInterviews responseAllScheduleInterviews = new ResponseAllScheduleInterviews("Unsuccess");
-                responseAllScheduleInterviews.setException("Page Not Found");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllScheduleInterviews);
             }
         }
     }
-       @GetMapping("/getInterviewsByStatus")
-       public ResponseEntity<?> getInterviewsByStatus(@RequestParam String status, @RequestParam int pageNo) {
+
+    @GetMapping("/getInterviewsByStatus")
+    public ResponseEntity<?> getInterviewsByStatus(@RequestParam String status, @RequestParam int pageNo) {
         try {
             List<InterviewScheduleDto> interviewsByStatus = interviewScheduleService.findInterviewsByStatus(status, pageNo);
             ResponseAllScheduleInterviews response = new ResponseAllScheduleInterviews("Success");
@@ -121,7 +118,7 @@ public class InterviewScheduleController {
             ResponseAllScheduleInterviews response = new ResponseAllScheduleInterviews("Unsuccessful");
             response.setException("Interviews not found for status: " + status);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-        }catch (PageNotFoundException e) {
+        } catch (PageNotFoundException e) {
             ResponseAllScheduleInterviews responseAllScheduleInterviews = new ResponseAllScheduleInterviews("Unsuccess");
             responseAllScheduleInterviews.setException("Page Not Found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllScheduleInterviews);
@@ -129,5 +126,18 @@ public class InterviewScheduleController {
     }
 
 
+    @GetMapping("getInterviewByUserIdJobId")
+    public ResponseEntity<?> getIntByUserIdJobId(@RequestParam Integer userId, @RequestParam int jobId) {
+        try {
+            List <InterviewScheduleDto> byUserIdJobId = interviewScheduleService.findByUserIdJobId(userId, jobId);
+            ResponseAllScheduleInterviews responseGetSingleInterview = new ResponseAllScheduleInterviews("Success");
+            responseGetSingleInterview.setList(byUserIdJobId);
+            return ResponseEntity.status(HttpStatus.OK).body(responseGetSingleInterview);
+        } catch (InterviewScheduleNotFoundException e) {
+            ResponseAllScheduleInterviews responseAllScheduleInterviews = new ResponseAllScheduleInterviews("Unsuccess");
+            responseAllScheduleInterviews.setException(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllScheduleInterviews);
+        }
+    }
 }
 
