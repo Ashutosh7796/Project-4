@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,6 +47,25 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
 
         return interviewScheduleRepository.save(interviewSchedule);
     }
+
+    @Override
+    public void deleteInterviewScheduleById(Integer interviewScheduleId) {
+        InterviewSchedule interviewSchedule = interviewScheduleRepository.findById(interviewScheduleId)
+                .orElseThrow(() -> new InterviewScheduleNotFoundException("Interview Schedule Not found by id", HttpStatus.NOT_FOUND));
+
+        List<Job> jobs = interviewSchedule.getJobs();
+        for (Job job : jobs) {
+            job.getInterviewSchedule().remove(interviewSchedule);
+        }
+
+        interviewSchedule.getJobs().clear();
+           for (Job job : jobs) {
+            jobRepository.save(job);
+        }
+
+        interviewScheduleRepository.delete(interviewSchedule);
+    }
+
 
     @Override
     public List<InterviewScheduleDto> findByUserIdJobId(Integer userId, int jobId) {
@@ -241,24 +261,5 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
     }
 
 
-//        InterviewSchedule interviewSchedule = interviewScheduleRepository.findById(interviewScheduleId).orElseThrow (()-> new InterviewScheduleNotFoundException("Interview Schedule Not found by id"));
-//
-//
-//        List<Job> job= jobRepository.findAll();
-//        for(int conter=0;conter<job.size();conter++){
-//            List<InterviewSchedule> list = job.get(conter).getInterviewSchedule();
-//            List<InterviewSchedule> newList = new LinkedList<>();
-//            System.out.println(list.size());
-//            for(int j = 0 ; j<list.size();j++){
-//                if(list.get(j).getInterviewScheduleId() == interviewScheduleId){
-//                    newList.add(list.get(j));
-//                    interviewScheduleRepository.deleteById(list.get(j).getInterviewScheduleId());
-//                }
-//            }
-//
-//        }
-//
-//
-//        interviewScheduleRepository.delete(interviewSchedule);
-//    }
+
 }
