@@ -78,10 +78,11 @@ public class Job {
     @OneToMany(mappedBy = "jobsJob")
     private List<PlacementDetails> bookings = new LinkedList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL, CascadeType.REMOVE })
     @JoinTable(name = "user_interview", joinColumns = @JoinColumn(name = "JobId", referencedColumnName = "JobId"),
             inverseJoinColumns = @JoinColumn(name = "InterviewScheduleId", referencedColumnName = "InterviewScheduleId"))
     private List<InterviewSchedule> interviewSchedule = new ArrayList<>();
+
 
     public Job(JobDto jobDto,String logo) {
         this.postName = jobDto.getPostName();
