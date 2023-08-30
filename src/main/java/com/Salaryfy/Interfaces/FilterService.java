@@ -4,6 +4,7 @@ import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.Job.ResponseJobDto;
 import com.Salaryfy.Dto.SearchSuggestionDTO;
+import com.Salaryfy.Dto.Suggest01Dto;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface FilterService {
     public List<JobDto> searchBarFilter(String searchBarInput, String sortDirection) ;
 
     public List<JobDto> searchByFilterAndSort(FilterDto filterDto, String sortField, String sortDirection);
+
+
 
 }

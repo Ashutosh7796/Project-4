@@ -4,6 +4,7 @@ package com.Salaryfy.Services;
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.SearchSuggestionDTO;
+import com.Salaryfy.Dto.Suggest01Dto;
 import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.FilterService;
@@ -72,7 +73,6 @@ public class FilterServiceImpl implements FilterService {
     }
 
 
-
     @Override
     public List<SearchSuggestionDTO> getSuggestions(String query) {
         List<SearchSuggestionDTO> suggestions = new ArrayList<>();
@@ -127,7 +127,7 @@ public class FilterServiceImpl implements FilterService {
         /////with out pagination code /////
         List<JobDto> listOfNewJob = new ArrayList<>();
 
-        for (int counter =0; counter<jobs.size(); counter++){
+        for (int counter = 0; counter < jobs.size(); counter++) {
             JobDto jobDto = new JobDto(jobs.get(counter));
             jobDto.setUser_Id(jobs.get(counter).getUserUser().getUser_id());
 
@@ -235,7 +235,9 @@ public class FilterServiceImpl implements FilterService {
                 .collect(Collectors.toList());
     }
 
+
 }
+
 
 
 
