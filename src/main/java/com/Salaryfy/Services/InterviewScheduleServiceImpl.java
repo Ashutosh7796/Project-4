@@ -56,9 +56,20 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
         }
 
         List<InterviewScheduleDto> interviewScheduleDtos = new ArrayList<>();
+        List<Integer> jobIds = new ArrayList<>();
 
         for (InterviewSchedule interviewSchedule : interviewSchedules) {
             InterviewScheduleDto interviewScheduleDto = new InterviewScheduleDto(interviewSchedule);
+            interviewScheduleDto.setUserId(userId);
+
+            List<Job> myjobs = interviewSchedule.getJobs();
+
+            if (!myjobs.isEmpty()) {
+                Integer jobIdFromList = myjobs.get(0).getJobId();
+                interviewScheduleDto.setJobId(jobIdFromList);
+                jobIds.add(jobIdFromList);
+            }
+
             interviewScheduleDtos.add(interviewScheduleDto);
         }
 
