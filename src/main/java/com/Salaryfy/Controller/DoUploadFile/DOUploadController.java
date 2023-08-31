@@ -8,12 +8,15 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.Salaryfy.Dto.DocumentDto;
 import com.Salaryfy.Dto.ResponceDto;
+import com.Salaryfy.Dto.ResponseAllDocument;
 import com.Salaryfy.Dto.ResponseDto;
 import com.Salaryfy.Exception.DocumentNotFoundException;
+import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.IDocument;
 import com.Salaryfy.Services.DOService;
 import lombok.AllArgsConstructor;
@@ -130,6 +133,19 @@ public class DOUploadController {
 
         }
 
+    }
+    @GetMapping("/getDocuments")
+    private ResponseEntity<?> getDocumentByUserIdAndDocId(@RequestParam Integer userId,@RequestParam String DocumentType){
+        try{
+            ResponseAllDocument responseAllDocument = new ResponseAllDocument("success");
+            responseAllDocument.setResponse(iDocument.getAllDocument(userId,DocumentType));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllDocument);
+        }catch (PageNotFoundException e){
+            System.err.println(e);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponceDto("unsuccess",String.valueOf(e)));
+
+        }
     }
 }
 
