@@ -42,21 +42,21 @@ public class InterviewScheduleController {
         }
     }
 
-//    @DeleteMapping("/Schedule/{id}")
-//    public ResponseEntity<ResponceDto> deleteInterviewSchedule (@PathVariable int id) {
-//        try{
-//            interviewScheduleService.deleteInterviewScheduleById(id);
-//            return ResponseEntity.ok().body(new ResponceDto("Success", "Interview Schedule deleted successfully"));
-//
-//        } catch (InterviewScheduleNotFoundException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("Unsuccess", e.getMessage()));
-//        }
-//
-//    }
+    @DeleteMapping("/DleteSchedule/{id}")
+    public ResponseEntity<ResponceDto> deleteInterviewSchedule (@PathVariable int id) {
+        try{
+            interviewScheduleService.deleteInterviewScheduleById(id);
+            return ResponseEntity.ok().body(new ResponceDto("Success", "Interview Schedule deleted successfully"));
+
+        } catch (InterviewScheduleNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("Unsuccess", e.getMessage()));
+        }
+
+    }
 
     @GetMapping("/interviewSchedule/{id}")
 
-    public ResponseEntity<?> getinterviewSchedule(@PathVariable int id) {
+    public ResponseEntity<?> getinterviewSchedule(@PathVariable Integer id) {
 
         try {
             ResponseGetSingleInterview responceDto = new ResponseGetSingleInterview("Success");
