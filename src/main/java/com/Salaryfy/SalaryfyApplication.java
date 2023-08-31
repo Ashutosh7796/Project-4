@@ -12,7 +12,7 @@ public class SalaryfyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SalaryfyApplication.class, args);
 
-		System.err.println("PROJECT- 5");
+		System.err.println("PROJECT- 5..");
 
 
 		System.err.println("   .^.     [=====.   [========]   ..====]  [========]    .^.    [=====.   [========] " );

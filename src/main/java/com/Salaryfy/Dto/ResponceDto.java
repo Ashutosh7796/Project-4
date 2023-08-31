@@ -12,5 +12,6 @@ public class ResponceDto {
     public ResponceDto(String status, String message) {
         this.status = status;
         this.message = message;
+
     }
 }
