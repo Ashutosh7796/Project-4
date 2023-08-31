@@ -48,8 +48,8 @@ public class User {
     @Column(name = "Payment_validity", length = 45)
     private String paymentValidity;
 
-    @OneToMany(mappedBy = "userUser")
-    private List<Document> documents = new LinkedList<>();
+//    @OneToMany(mappedBy = "userUser")
+//    private List<Document> documents = new LinkedList<>();
 
     @OneToMany(mappedBy = "userUser")
     private List<Experiencedoc> experienceDocs = new LinkedList<>();

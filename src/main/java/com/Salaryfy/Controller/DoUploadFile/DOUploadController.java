@@ -11,10 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.Salaryfy.Dto.DocumentDto;
-import com.Salaryfy.Dto.ResponceDto;
-import com.Salaryfy.Dto.ResponseAllDocument;
-import com.Salaryfy.Dto.ResponseDto;
+import com.Salaryfy.Dto.*;
 import com.Salaryfy.Exception.DocumentNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.IDocument;
@@ -139,11 +136,25 @@ public class DOUploadController {
         try{
             ResponseAllDocument responseAllDocument = new ResponseAllDocument("success");
             responseAllDocument.setResponse(iDocument.getAllDocument(userId,DocumentType));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllDocument);
-        }catch (PageNotFoundException e){
+            return ResponseEntity.status(HttpStatus.OK).body(responseAllDocument);
+        }catch (DocumentNotFoundException e){
             System.err.println(e);
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponceDto("unsuccess",String.valueOf(e)));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess",String.valueOf(e)));
+
+        }
+    }
+
+    @GetMapping("getByUserId")
+    private ResponseEntity<?> getByUserId(@RequestParam Integer userId){
+        try{
+            ResponseAllDocument responseDocument = new ResponseAllDocument("success");
+            responseDocument.setResponse(iDocument.getByUserId(userId));
+            return ResponseEntity.status(HttpStatus.OK).body(responseDocument);
+        }catch (DocumentNotFoundException e){
+            System.err.println(e);
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess",String.valueOf(e)));
 
         }
     }

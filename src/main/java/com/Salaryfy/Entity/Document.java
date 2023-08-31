@@ -22,9 +22,8 @@ public class Document {
     @Column(name = "Documentlink", length = 250)
     private String documentLink;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_userId", nullable = false)
-    private User userUser;
+    @Column(name = "user_userId", nullable = false)
+    private Integer userId;
 
     public Document() {
     }
@@ -32,5 +31,6 @@ public class Document {
     public Document(DocumentDto documentDto) {
         this.documentType = documentDto.getDocumentType();
         this.documentLink = documentDto.getDocumentLink();
+        this.userId = documentDto.getUserId();
     }
 }

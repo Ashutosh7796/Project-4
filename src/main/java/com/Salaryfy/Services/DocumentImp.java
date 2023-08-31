@@ -3,7 +3,7 @@ package com.Salaryfy.Services;
 import com.Salaryfy.Dto.DocumentDto;
 import com.Salaryfy.Entity.Document;
 import com.Salaryfy.Entity.User;
-import com.Salaryfy.Exception.PageNotFoundException;
+import com.Salaryfy.Exception.DocumentNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IDocument;
 import com.Salaryfy.Repository.DocumentRepo;
@@ -11,6 +11,7 @@ import com.Salaryfy.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,6 @@ public class DocumentImp implements IDocument {
             throw new UserNotFoundException("user not found by id ");
         }
         Document document = new Document(documentDto);
-        document.setUserUser(userDetails.get());
         documentRepo.save(document);
         return "Document uploaded successfully";
 
@@ -36,19 +36,24 @@ public class DocumentImp implements IDocument {
 
     @Override
     public List<Document> getAllDocument(Integer userId, String DocumentType) {
-        List<Document> documentDetails =  documentRepo.findByDocumentType(DocumentType);
+        List<Document> documentDetails =  documentRepo.findByDocumentTypeAndUserID(userId,DocumentType);
         if (documentDetails.isEmpty()){
-            throw new PageNotFoundException("page not found by given id");
-        }
-        for(int counter = 0; counter<documentDetails.size();counter++){
-            System.err.println(counter);
-
-            if (documentDetails.get(counter).getUserUser().getUser_id() != userId){
-                System.err.println(counter);
-                documentDetails.remove(counter);
-            }
+            throw new DocumentNotFoundException("document not found by id");
         }
         return documentDetails;
+
+
+    }
+
+    @Override
+    public List<Document> getByUserId(Integer userId) {
+        List<Document> document = documentRepo.findByUserId(userId);
+        if(document.isEmpty()){
+            throw new DocumentNotFoundException("document not found by user id");
+        }
+        return document;
+
+
 
     }
 }
