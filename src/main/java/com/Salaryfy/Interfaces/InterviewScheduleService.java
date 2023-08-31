@@ -9,7 +9,7 @@ public interface InterviewScheduleService {
 
     InterviewSchedule scheduleInterview(InterviewScheduleDto interviewScheduleDto);
 
-//    void deleteInterviewScheduleById(Integer interviewScheduleId);
+    void deleteInterviewScheduleById(Integer interviewScheduleId);
 
     List<InterviewScheduleDto> findByUserIdJobId (Integer userId, int jobId);
     InterviewScheduleDto getinterviewSchedule (int id);
