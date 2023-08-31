@@ -26,6 +26,9 @@ public class Document {
     @JoinColumn(name = "user_userId", nullable = false)
     private User userUser;
 
+    public Document() {
+    }
+
     public Document(DocumentDto documentDto) {
         this.documentType = documentDto.getDocumentType();
         this.documentLink = documentDto.getDocumentLink();
