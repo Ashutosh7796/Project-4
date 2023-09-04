@@ -19,6 +19,7 @@ public class EduSuggetionController {
     @GetMapping("/get-suggestions")
     public List<EduSuggestDto> getSuggestions(@RequestParam String userInput) {
         return eduSuggest.getSuggestions(userInput);
+
     }
 
 
