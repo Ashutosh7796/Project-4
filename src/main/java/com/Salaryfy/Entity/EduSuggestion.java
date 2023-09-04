@@ -15,8 +15,8 @@ public class EduSuggestion {
     @Column(name = "EduSuggestionId")
     private  Integer EduSuggestionId;
 
-    @Column(name ="Education")
-    private String Education;
+    @Column(name ="education")
+    private String education;
 
     @Lob
     @Column(name = "boardUniversity")
