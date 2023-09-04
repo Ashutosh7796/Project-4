@@ -16,7 +16,7 @@ public interface IJobFairQue {
 
     public List<JobfairQue> getJobFairDetailsBySetNo(String setNo, Integer pageNo,ResponseJobFairQueDto responseJobFairQ1Dto);
 
-    public List<JobfairQue> getJobFairDetailsBySetNoAndQueType(String setNo,Boolean questionType, Integer pageNo);
+    public List<JobfairQue> getJobFairDetailsBySetNoAndQueType(String setNo,String questionType);
 
     public List<JobfairQue> getJobFairDetailsByJobId(Integer jobId);
 

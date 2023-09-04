@@ -62,7 +62,7 @@ public class JobFairQueIMP implements IJobFairQue {
         if(jobfairQueList.size()>totalPages){totalPages++;}
         responseJobFairQ1Dto.setTotalPages(totalPages);
         responseJobFairQ1Dto.setCurrentPage(pageNo);
-//        System.out.println("list of de"+listOfCar.size());
+//        //.out.println("list of de"+listOfCar.size());
         List<JobfairQue> listOfNewJobQue = new ArrayList<>();
 
         int pageStart = pageNo * 10;
@@ -82,7 +82,7 @@ public class JobFairQueIMP implements IJobFairQue {
             }
         }
          responseJobFairQ1Dto.setResponse(listOfNewJobQue);
-//        System.out.println(listOfCar);
+//        //.out.println(listOfCar);
         return responseJobFairQ1Dto;
     }
 
@@ -101,7 +101,7 @@ public class JobFairQueIMP implements IJobFairQue {
             throw new PageNotFoundException("page not found");
 
         }
-//        System.out.println("list of de"+listOfCar.size());
+//        //.out.println("list of de"+listOfCar.size());
         List<JobfairQue> listOfNewJobQue = new ArrayList<>();
 
         int pageStart = pageNo * 10;
@@ -124,13 +124,13 @@ public class JobFairQueIMP implements IJobFairQue {
         responseJobFairQ1Dto.setTotalPages((jobfairQueList.size())/10);
         responseJobFairQ1Dto.setTotalItems(jobfairQueList.size());
 
-//        System.out.println(listOfCar);
+//        //.out.println(listOfCar);
         return listOfNewJobQue;
     }
 
     @Override
-    public List<JobfairQue> getJobFairDetailsBySetNoAndQueType(String setNo, Boolean questionType, Integer pageNo) {
-        List<JobfairQue> jobfairQueList = jobFairQueRepo.findByQueTypeAndSetNo(questionType, setNo);
+    public List<JobfairQue> getJobFairDetailsBySetNoAndQueType(String setNo, String questionType) {
+        List<JobfairQue> jobfairQueList = jobFairQueRepo.findByQueTypeAndSetNo(questionType,setNo);
         if (jobfairQueList.size() <= 0) {
             throw new JobFairQuenotFoundByQueTypeAndSetNo("Job Fair Que not Found By Que Type And Set No");
         }
@@ -138,31 +138,31 @@ public class JobFairQueIMP implements IJobFairQue {
         if (jobfairQueList.size() <= 0) {
             throw new PageNotFoundException("Page not found");
         }
-        if ((pageNo * 10) > jobfairQueList.size() - 1) {
-            throw new PageNotFoundException("page not found");
-
-        }
-//        System.out.println("list of de"+listOfCar.size());
+//        if ((pageNo * 10) > jobfairQueList.size() - 1) {
+//            throw new PageNotFoundException("page not found");
+//
+//        }
+//        //.out.println("list of de"+listOfCar.size());
         List<JobfairQue> listOfNewJobQue = new ArrayList<>();
 
-        int pageStart = pageNo * 10;
-        int pageEnd = pageStart + 10;
-        int diff = (jobfairQueList.size()) - pageStart;
-        for (int counter = pageStart, i = 1; counter < pageEnd; counter++, i++) {
-            if (pageStart > jobfairQueList.size()) {
-                break;
-            }
+//        int pageStart = pageNo * 10;
+//        int pageEnd = pageStart + 10;
+//        int diff = (jobfairQueList.size()) - pageStart;
+        for (int counter = 0, i = 1; counter < jobfairQueList.size(); counter++) {
+//            if (pageStart > jobfairQueList.size()) {
+//                break;
+//            }
 
 
             listOfNewJobQue.add(jobfairQueList.get(counter));
 
-
-            if (diff == i) {
-                break;
-            }
+//
+//            if (diff == i) {
+//                break;
+//            }
         }
 
-//        System.out.println(listOfCar);
+//        //.out.println(listOfCar);
         return listOfNewJobQue;
 
     }
@@ -181,25 +181,20 @@ public class JobFairQueIMP implements IJobFairQue {
         String exceptionJobIds = "invalid id ";
         boolean flag = false;
         List<JobfairQue> listOfJobFairQue = new ArrayList<>();
-        System.out.println("185");
+        System.err.println("184 :"+listOfjobFairQueDto.size());
 
         for(int counter = 0; counter<listOfjobFairQueDto.size();counter++){
             Optional<Job> job = jobRepository.findById(listOfjobFairQueDto.get(counter).getJobId());
             if(job.isEmpty()){
-                System.err.println("*");
                 exceptionJobIds = exceptionJobIds+": "+listOfjobFairQueDto.get(counter).getJobId();
             }
             else {
-                System.err.println(counter);
                 JobfairQue jobfairQue = new JobfairQue(listOfjobFairQueDto.get(counter));
                 listOfJobFairQue.add(jobfairQue);
 
             }
         }
-        System.out.println("194");
-        System.err.println(exceptionJobIds);
         jobFairQueRepo.saveAll(listOfJobFairQue);
-        System.out.println("197");
 
         if(flag){
             responseOfAllJobFairQue.setStatus("!!!!! Success but "+exceptionJobIds);

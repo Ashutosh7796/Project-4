@@ -6,7 +6,7 @@ public interface EmailVerificationService {
 
     void sendEmail(String otp, String email);
 
-    void saveEmail(String email, String otp, LocalDateTime localDateTime);
+    String saveEmail(String email, String otp, LocalDateTime localDateTime);
 
     String verifyOtp(String otp,String email);
 
