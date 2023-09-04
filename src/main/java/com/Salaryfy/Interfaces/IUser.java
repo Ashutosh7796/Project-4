@@ -1,6 +1,5 @@
 package com.Salaryfy.Interfaces;
 
-
 import com.Salaryfy.Dto.GetAllUserDTO;
 import com.Salaryfy.Dto.UserDTO;
 import com.Salaryfy.Dto.UserResponseDto;
@@ -8,7 +7,6 @@ import com.Salaryfy.Entity.User;
 import com.Salaryfy.utils.BaseResponseDTO;
 
 import java.util.List;
-
 
 public interface IUser {
 
