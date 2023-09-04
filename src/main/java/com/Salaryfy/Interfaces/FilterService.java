@@ -15,7 +15,9 @@ public interface FilterService {
     public Page<JobDto> suggestJob(jobSuggest filterDto, int pageNo, int pageSize);
 
     List<SearchSuggestionDTO> getSuggestions(String query);
-    public List<JobDto> searchBarFilter(String searchBarInput) ;
+
+    public List<JobDto> searchBarFilter(String searchBarInput);
+
     public List<JobDto> searchBarFilter(String searchBarInput, String sortDirection) ;
 
     public List<JobDto> searchByFilterAndSort(FilterDto filterDto, String sortField, String sortDirection);

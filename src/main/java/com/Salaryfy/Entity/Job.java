@@ -3,7 +3,6 @@ package com.Salaryfy.Entity;
 import com.Salaryfy.Dto.Job.JobDto;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.*;
 

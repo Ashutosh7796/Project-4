@@ -17,6 +17,8 @@ public class InterviewScheduleDto {
 
     private String location;
 
+    private String formattedTime;
+
     private LocalDate interviewDate;
 
     private LocalTime time;
@@ -38,6 +40,7 @@ public class InterviewScheduleDto {
         this.userId = interviewSchedule.getUserId();
         this.status = interviewSchedule.getStatus();
         this.InterviewScheduleId = interviewSchedule.getInterviewScheduleId();
+        this.formattedTime=interviewSchedule.getFormattedTime();
 
     }
 }
