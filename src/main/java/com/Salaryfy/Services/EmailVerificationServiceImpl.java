@@ -29,37 +29,40 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
     @Override
     public void sendEmail(String otp, String email) {
+        if (email != null) {
 
-        User byEmail = userRepository.findByEmail(email);
+            User byEmail = userRepository.findByEmail(email);
 
-        if (byEmail== null) {
+            if (byEmail == null) {
 
-            // Set the email message content
-            String message = "Hello this is Aniket";
+                // Set the email message content
+                String message = "Hello this is Aniket";
 
-            // Set the password reset link
-            String sendOtp = otp;
+                // Set the password reset link
+                String sendOtp = otp;
 
-            // Set the email subject
-            String subject = "Checking: confirmation";
+                // Set the email subject
+                String subject = "Checking: confirmation";
 
-            // Set the sender's email address
-            String from = "b.aniket1414@gmail.com";
+                // Set the sender's email address
+                String from = "b.aniket1414@gmail.com";
 
-            // Set the recipient's email address
-            String to = email;
+                // Set the recipient's email address
+                String to = email;
 
-            // Send the email using the sendEmail() method
-            sendEmail(message, subject, to, from, sendOtp);
+                // Send the email using the sendEmail() method
+                sendEmail(message, subject, to, from, sendOtp);
+            } else {
+                throw new UserAlreadyExistException("User Already present with this email");
+            }
         }else {
-            throw new UserAlreadyExistException("User Already present with this email");
+            throw new EmptyFiledException("Email filed is empty");
         }
-
     }
 
     @Override
-    public void saveEmail(String email, String otp,LocalDateTime localDateTime) {
-
+    public String saveEmail(String email, String otp,LocalDateTime localDateTime) {
+        if (email != null) {
         EmailVerification emailVerifications = emailVerificationRepo.findByEmail(email);
         if (emailVerifications != null){
             // EmailVerification emailVerification= new EmailVerification();
@@ -67,16 +70,17 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
             emailVerifications.setOtp(otp);
             emailVerifications.setCreationTime(localDateTime);
             emailVerificationRepo.save(emailVerifications);
+            return "Email saved";
         }else {
-            if (email != null) {
                 EmailVerification emailVerification = new EmailVerification();
                 emailVerification.setEmail(email);
                 emailVerification.setOtp(otp);
                 emailVerification.setCreationTime(localDateTime);
                 emailVerificationRepo.save(emailVerification);
-            } else {
-                throw new EmptyFiledException("Fill the field");
+                return "Email saved";
             }
+        }else {
+            throw new EmptyFiledException("Fill the field");
         }
     }
 
@@ -101,7 +105,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
     private void sendEmail(String message, String subject, String to, String from, String sendOtp) {
 
-        if (to !=null) {
+        if (to != null && !to.isEmpty()) {
             // SMTP server for Gmail
             String host = "smtp.gmail.com";
 

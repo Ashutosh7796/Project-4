@@ -85,7 +85,7 @@ public class AppConfig {
                 .requestMatchers("/Interview/**").permitAll()
                 .requestMatchers("/payment/**").permitAll()
                 .requestMatchers("/profileLevel/**").permitAll()
-                .requestMatchers("/sendEmail/**").permitAll()
+                .requestMatchers("/verification/**").permitAll()
                 .requestMatchers("/company/**").permitAll()
                 .requestMatchers("/experience/**").permitAll()
                 .requestMatchers("/question/**").permitAll()
@@ -94,7 +94,6 @@ public class AppConfig {
 
 
                 .requestMatchers("/jobFairOption/**").permitAll()
-                .requestMatchers("/verifyOpt/**").permitAll()
                 .requestMatchers("/job/**").permitAll()
                 .requestMatchers("/jobs/**").permitAll()
                 .requestMatchers("/plan/**").permitAll()
