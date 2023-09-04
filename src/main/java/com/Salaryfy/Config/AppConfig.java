@@ -82,6 +82,7 @@ public class AppConfig {
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers("/jobFairOption/**").permitAll()
                 .requestMatchers("/JobFair/**").permitAll()
+                .requestMatchers("/ESuggest/**").permitAll()
                 .requestMatchers("/Interview/**").permitAll()
                 .requestMatchers("/payment/**").permitAll()
                 .requestMatchers("/profileLevel/**").permitAll()
