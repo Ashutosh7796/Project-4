@@ -39,6 +39,7 @@ public class JobFairController {
     }
     @PostMapping("/saveAllJobFairques")
     public ResponseEntity<?> addAllJobFairques(@RequestBody List<JobFairQueDto> listOfjobFairQueDto){
+        System.err.println("42"+listOfjobFairQueDto.size());
         try{
             System.out.println("1");
             ResponseOfAllJobFairQue responseOfAllJobFairQue = new ResponseOfAllJobFairQue("success");
@@ -96,10 +97,10 @@ public class JobFairController {
         }
     }
     @GetMapping("/getJobFairDetailsBySetNoAndQueType")
-    public ResponseEntity<?> getJobFairDetailsBySetNoAndQueType(@RequestParam String setNo,@RequestParam Boolean questionType,@RequestParam Integer pageNo){
+    public ResponseEntity<?> getJobFairDetailsBySetNoAndQueType(@RequestParam String setNo,@RequestParam String questionType){
         try{
             ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("success");
-            responseJobFairQ1Dto.setResponse(iJobFairQue.getJobFairDetailsBySetNoAndQueType(setNo,questionType,pageNo));
+            responseJobFairQ1Dto.setResponse(iJobFairQue.getJobFairDetailsBySetNoAndQueType(setNo,questionType));
             return ResponseEntity.status(HttpStatus.OK).body(responseJobFairQ1Dto);
         }catch (JobFairQuenotFoundByQueTypeAndSetNo jobFairQuenotFoundByQueTypeAndSetNo){
             ResponseJobFairQueDto responseJobFairQ1Dto = new ResponseJobFairQueDto("unsuccess");
