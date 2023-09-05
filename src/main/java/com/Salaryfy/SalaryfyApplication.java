@@ -22,7 +22,7 @@ public class SalaryfyApplication {
 		System.err.println("||=====||  ||            ||             \\\\     ||     ||=====|| ||\\\\          ||     " );
 		System.err.println("||     ||  ||            ||             //     ||     ||     || ||  \\\\        ||     " );
 		System.err.println("!!     !!  !!        [========]  [=====''      !!     !!     !! ||    \\\\      !!     " );
-		System.err.println("                                                                                       ");
+		System.err.println(" -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ ");
 
 	}
 }
