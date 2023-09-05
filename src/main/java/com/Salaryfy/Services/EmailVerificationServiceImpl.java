@@ -87,12 +87,15 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
     @Override
     public String verifyOtp(String otp, String email) {
         EmailVerification emailVerification = emailVerificationRepo.findByEmail(email);
-
-        if (emailVerification.getOtp().equals(otp)) {
-            emailVerificationRepo.deleteById(emailVerification.getId());
-            return "Verified";
-        } else {
-            throw new InvalidOtpException("Invalid OTP");
+        if (emailVerification==null){
+            throw new InvalidOtpException("Invalid OTP ");
+        }else {
+            if (emailVerification.getOtp().equals(otp)) {
+                emailVerificationRepo.deleteById(emailVerification.getId());
+                return "Verified";
+            } else {
+                throw new InvalidOtpException("Invalid OTP");
+            }
         }
     }
 
