@@ -31,6 +31,8 @@ public class EduSuggetionController {
   return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseEducationDto);
     }
 
+
+
     }
 
 }
