@@ -93,7 +93,6 @@ public class AppConfig {
                 .requestMatchers("/jobFairQueAns/**").permitAll()
                 .requestMatchers("/uploadFile/**").permitAll()
 
-
                 .requestMatchers("/jobFairOption/**").permitAll()
                 .requestMatchers("/job/**").permitAll()
                 .requestMatchers("/jobs/**").permitAll()

@@ -22,7 +22,7 @@ public class EduSuggestServiceImpl implements EduSuggest {
 
         List<EduSuggestion> suggestions = eduSuggestRepo.findByBoardUniversityContainingOrEducationContaining(userInput, education);
 
-//        System.out.println("Number of suggestions retrieved: " + suggestions.size());
+        System.out.println("Number of suggestions retrieved: " + suggestions.size());
 
         if(suggestions.isEmpty()) {
             throw new UniversityDataNotFound("Opps!!! No Matching Record Found", HttpStatus.NOT_FOUND);

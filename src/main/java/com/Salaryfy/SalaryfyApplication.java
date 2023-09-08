@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class SalaryfyApplication {
+public class SalaryfyApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(SalaryfyApplication.class, args);
@@ -26,5 +26,6 @@ public class SalaryfyApplication {
 
 	}
 }
+
 
 

@@ -5,6 +5,7 @@ import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.Job.ResponseGetAllJobDto;
 import com.Salaryfy.Dto.SearchSuggestionDTO;
+import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.FilterService;
 import com.Salaryfy.Interfaces.JobService;
@@ -67,8 +68,8 @@ public class FilterController {
             @RequestParam(required = false) List<String> companyName,
             @RequestParam(required = false) List<String> jobType,
             @RequestParam(required = false) List<String> location,
-            @RequestParam(required = false, defaultValue = "asc") String sortDirection,
-            @RequestParam(required = false, defaultValue = "companyName") String sortField
+            @RequestParam(required = false) String sortDirection,
+            @RequestParam(required = false) String sortField
     ) {
         FilterDto filterDto = new FilterDto(companyName, jobType, location);
 
@@ -77,23 +78,30 @@ public class FilterController {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
             responseGetAllJobDto.setList(listOfJob);
             return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
-        } catch (PageNotFoundException pageNotFoundException) {
+        } catch (JobNotFoundException jobNotFoundException) {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
-            responseGetAllJobDto.setException("page not found");
+            responseGetAllJobDto.setException("No Matching Data Found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
     @GetMapping("/searchBarFilterSort")
     public ResponseEntity<?> searchBarFilter(
             @RequestParam String searchBarInput,
-            @RequestParam(required = false, defaultValue = "asc") String sortDirection
+            @RequestParam String sortDirection
     ) {
-        List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput, sortDirection);
 
-        ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
-        responseGetAllJobDto.setList(listOfJob);
+        try {
+            List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput, sortDirection);
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
+            responseGetAllJobDto.setList(listOfJob);
+            return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
+        }catch (JobNotFoundException e) {
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
+        responseGetAllJobDto.setException("No Matching Data Found");
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
+        }
+
     }
 
     @GetMapping("/jobSuggest")
