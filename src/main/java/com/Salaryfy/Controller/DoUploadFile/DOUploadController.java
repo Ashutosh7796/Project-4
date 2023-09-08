@@ -71,7 +71,7 @@ public class DOUploadController {
             Map<String, Object> payloadObject = new HashMap<>();
             payloadObject.put("imageBytes", imageBytes);
             payloadObject.put("contentType", file.getContentType());
-            payloadObject.put("contentLength", imageBytes.length);
+            payloadObject.put(" ", imageBytes.length);
             String uniqueName = this.DOService.generateRandomString(15) + fileName;
             payloadObject.put("imageName", uniqueName);
             if (uniqueName.isEmpty()){
@@ -87,6 +87,7 @@ public class DOUploadController {
                     requestEntity,
                     String.class
             );
+            Files.delete(filePath);
 //            System.err.println();
 
 //            String arr[] = documentDto.split(",");
@@ -108,7 +109,6 @@ public class DOUploadController {
                 documentDto.setDocumentLink(CDNNo+"/"+response.getBody());
                 serviceResponse=iDocument.addDocument(documentDto);
             }
-
 
 
 
