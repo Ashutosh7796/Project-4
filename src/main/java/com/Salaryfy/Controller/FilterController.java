@@ -99,6 +99,7 @@ public class FilterController {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
         responseGetAllJobDto.setException("No Matching Data Found");
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
+
         }
 
     }
