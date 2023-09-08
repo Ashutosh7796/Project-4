@@ -25,9 +25,7 @@ public class InterviewScheduleController {
     private final InterviewScheduleService interviewScheduleService;
 
     @PostMapping("/Schedule")
-
     public ResponseEntity<ResponceDto> interviewSchedule(@RequestBody InterviewScheduleDto interviewScheduleDto) {
-
         try {
             InterviewSchedule interviewSchedule = interviewScheduleService.scheduleInterview(interviewScheduleDto);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("Success", "Interview Scheduled Successfully"));
