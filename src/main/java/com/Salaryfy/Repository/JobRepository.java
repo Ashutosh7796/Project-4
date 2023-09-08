@@ -23,6 +23,4 @@ public interface JobRepository extends JpaRepository<Job, Integer>, JpaSpecifica
     public List<Job> searchJobsByKeyword(@Param("keyword") String keyword);
 
 
-
-
 }

@@ -175,7 +175,7 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    public List<JobDto> searchBarFilter(String searchBarInput, String sortDirection) {
+    public List<JobDto> searchBarFilter(String searchBarInput, String sortDirection, String sortField) {
         List<Job> jobs = jobRepository.searchJobsByKeyword(searchBarInput);
 
         if(jobs.isEmpty()) {
@@ -192,9 +192,21 @@ public class FilterServiceImpl implements FilterService {
         }
 
         if ("asc".equalsIgnoreCase(sortDirection)) {
-            listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate));
+            if ("postName".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getPostName));
+            } else if ("jobType".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getJobType));
+            } else if ("location".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getLocation));
+            }
         } else if ("desc".equalsIgnoreCase(sortDirection)) {
-            listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate).reversed());
+            if ("postName".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getPostName).reversed());
+            } else if ("jobType".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getJobType).reversed());
+            } else if ("location".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getLocation).reversed());
+            }
         }
 
         return listOfNewJob;
