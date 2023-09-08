@@ -87,11 +87,12 @@ public class FilterController {
     @GetMapping("/searchBarFilterSort")
     public ResponseEntity<?> searchBarFilter(
             @RequestParam String searchBarInput,
-            @RequestParam String sortDirection
+            @RequestParam String sortDirection,
+            @RequestParam String sortField
     ) {
 
         try {
-            List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput, sortDirection);
+            List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput, sortDirection,sortField);
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
             responseGetAllJobDto.setList(listOfJob);
             return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
