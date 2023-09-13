@@ -31,15 +31,24 @@ public class ProfileLevelImp implements IProfileLevel {
         for (int counterr = 0; counterr<listOfProfileLevelDto.size();counterr++){
             if(listOfProfileLevelDto.get(counterr).getUserUser().getUser_id() == profileLevelDto.UserId){
                 Optional<ProfileLevel> profilelevelDetail = profileLevelRepo.findById(listOfProfileLevelDto.get(counterr).getProfileId());
-                if(profileLevelDto.highestLevelOfEdu!= null){
-                    profilelevelDetail.get().setHighestLevelOfEdu(profileLevelDto.highestLevelOfEdu);
+                if(profileLevelDto.getHighestLevelOfEdu()== null){
+                    profilelevelDetail.get().setHighestLevelOfEdu(null);}
+                else {
+                    profilelevelDetail.get().setHighestLevelOfEdu(profileLevelDto.getHighestLevelOfEdu());
                 }
-                if(profileLevelDto.board!= null){
-                    profilelevelDetail.get().setBoard(profileLevelDto.board);}
-                if(profileLevelDto.stream!= null){
-                    profilelevelDetail.get().setStream(profileLevelDto.stream);}
-                if(profileLevelDto.percentage!= null){
-                    profilelevelDetail.get().setPercentage(profileLevelDto.percentage);
+                if(profileLevelDto.getBoard() == null){
+                    profilelevelDetail.get().setBoard(null);}
+                else {
+                    profilelevelDetail.get().setBoard(profileLevelDto.getBoard());}
+                if (profileLevelDto.getStream() == null) {
+                    profilelevelDetail.get().setStream(null);
+                } else {
+                    profilelevelDetail.get().setStream(profileLevelDto.getStream());
+                }
+                if(profileLevelDto.getPercentage()== null) {
+                    profilelevelDetail.get().setPercentage(null);
+                }else {
+                    profilelevelDetail.get().setPercentage(profileLevelDto.getPercentage());
                 }
                 profileLevelRepo.save(profilelevelDetail.get());
                 return "profile level detail updated";
