@@ -38,7 +38,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         User user;
         try {
             user = userRepository.findByEmail(username);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new BaseException(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "User's not found");
         }
 
@@ -54,13 +54,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         List<GrantedAuthority> result = new ArrayList<>();
         Set<String> permissions = new HashSet<>();
 
-        if(!ObjectUtils.isEmpty(roles)){
-            roles.forEach( r-> {
+        if (!ObjectUtils.isEmpty(roles)) {
+            roles.forEach(r -> {
                 permissions.add(r.getName());
             });
         }
 
-        permissions.forEach(p->{
+        permissions.forEach(p -> {
             result.add(new SimpleGrantedAuthority(p));
         });
         return result;
@@ -70,5 +70,4 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
-
 }
