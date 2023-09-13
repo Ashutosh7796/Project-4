@@ -2,10 +2,7 @@ package com.Salaryfy.Controller;
 
 import com.Salaryfy.Dto.*;
 import com.Salaryfy.Dto.User.RUserSingleDto;
-import com.Salaryfy.Exception.BaseException;
-import com.Salaryfy.Exception.PageNotFoundException;
-import com.Salaryfy.Exception.UserAlreadyExistException;
-import com.Salaryfy.Exception.UserNotFoundException;
+import com.Salaryfy.Exception.*;
 import com.Salaryfy.Interfaces.IUser;
 import com.Salaryfy.utils.BaseResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +28,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDTO("unsuccessful", "User Already Exists"));
         } catch (BaseException c) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDTO("unsuccessful", "Invalid Role"));
+        }catch (EmailNotVerifiedException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDTO("unsuccessful", "Email not verified"));
         }
     }
 

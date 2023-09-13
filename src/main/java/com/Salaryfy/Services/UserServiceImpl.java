@@ -2,13 +2,12 @@ package com.Salaryfy.Services;
 
 import com.Salaryfy.Dto.GetAllUserDTO;
 import com.Salaryfy.Dto.UserDTO;
+import com.Salaryfy.Entity.EmailVerification;
 import com.Salaryfy.Entity.Role;
 import com.Salaryfy.Entity.User;
-import com.Salaryfy.Exception.BaseException;
-import com.Salaryfy.Exception.PageNotFoundException;
-import com.Salaryfy.Exception.UserAlreadyExistException;
-import com.Salaryfy.Exception.UserNotFoundException;
+import com.Salaryfy.Exception.*;
 import com.Salaryfy.Interfaces.IUser;
+import com.Salaryfy.Repository.EmailVerificationRepo;
 import com.Salaryfy.Repository.RoleRepository;
 import com.Salaryfy.Repository.UserRepository;
 import com.Salaryfy.utils.BaseResponseDTO;
@@ -24,9 +23,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserServiceImpl implements IUser {
 
-
-
     private final UserRepository userRepository;
+
+    private final EmailVerificationRepo emailVerificationRepo;
 
     private final RoleRepository roleRepository;
 
@@ -35,11 +34,8 @@ public class UserServiceImpl implements IUser {
     @Override
     public BaseResponseDTO registerAccount(UserDTO userDTO) {
         BaseResponseDTO response = new BaseResponseDTO();
-
         validateAccount(userDTO);
-
         User user = insertUser(userDTO);
-
         try { userRepository.save(user);
             response.setCode(String.valueOf(HttpStatus.OK.value()));
             response.setMessage("Account created");
@@ -50,27 +46,36 @@ public class UserServiceImpl implements IUser {
         response.setCode(String.valueOf(HttpStatus.BAD_REQUEST));
         response.setMessage("invalid Role");
         }
-
+        catch (EmailNotVerifiedException e){
+            response.setCode(String.valueOf(HttpStatus.BAD_REQUEST));
+            response.setMessage("Email not verified");
+        }
         return response;
     }
 
     private User insertUser(UserDTO userDTO) {
+        EmailVerification emailVerification = emailVerificationRepo.findByEmail(userDTO.getEmail());
         User user = new User();
-        user.setFullName(userDTO.getFullName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setMobileNo(userDTO.getMobile_no());
-        user.setDate(userDTO.getDate());
-        user.setUserProfileType(userDTO.getUserProfileType());
-        user.setProfilePhoto(userDTO.getProfilePhoto());
-        user.setSubType(userDTO.getSubType());
+        if (emailVerification != null) {
+            user.setFullName(userDTO.getFullName());
+            user.setEmail(userDTO.getEmail());
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            user.setMobileNo(userDTO.getMobile_no());
+            user.setDate(userDTO.getDate());
+            user.setUserProfileType(userDTO.getUserProfileType());
+            user.setProfilePhoto(userDTO.getProfilePhoto());
+            user.setSubType(userDTO.getSubType());
 
-        Set<Role> roles = new HashSet<>();
-        Role role = roleRepository.findByName(userDTO.getRole());
-        roles.add(role);
-        user.setRoles(roles);
+            Set<Role> roles = new HashSet<>();
+            Role role = roleRepository.findByName(userDTO.getRole());
+            roles.add(role);
+            user.setRoles(roles);
+            return user;
+        }
+        else {
+            throw new EmailNotVerifiedException("Email not verified");
+        }
 
-        return user;
     }
 
     private void validateAccount(UserDTO userDTO) {

@@ -23,6 +23,9 @@ public class EmailVerification {
     @Column(name = "otp")
     private String otp;
 
+    @Column(name = "userOTP")
+    private String userOTP;
+
     @Column(name = "creationTime")
     private LocalDateTime creationTime;
 
