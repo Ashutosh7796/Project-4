@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @Configuration
 @EnableScheduling
-public class SalaryfyApplication {
+public class SalaryfyApplication{
 
 	public static void main(String[] args) {
 		SpringApplication.run(SalaryfyApplication.class, args);
@@ -24,9 +24,10 @@ public class SalaryfyApplication {
 		System.err.println("||=====||  ||            ||             \\\\     ||     ||=====|| ||\\\\          ||     " );
 		System.err.println("||     ||  ||            ||             //     ||     ||     || ||  \\\\        ||     " );
 		System.err.println("!!     !!  !!        [========]  [=====''      !!     !!     !! ||    \\\\      !!     " );
-		System.err.println("                                                                                       ");
+		System.err.println(" -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ ");
 
 	}
 }
+
 
 

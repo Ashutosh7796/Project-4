@@ -6,6 +6,7 @@ import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
 import com.Salaryfy.Dto.SearchSuggestionDTO;
 import com.Salaryfy.Entity.Job;
+import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Interfaces.FilterService;
 import com.Salaryfy.Repository.JobRepository;
@@ -174,8 +175,12 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    public List<JobDto> searchBarFilter(String searchBarInput, String sortDirection) {
+    public List<JobDto> searchBarFilter(String searchBarInput, String sortDirection, String sortField) {
         List<Job> jobs = jobRepository.searchJobsByKeyword(searchBarInput);
+
+        if(jobs.isEmpty()) {
+            throw new JobNotFoundException( "No Matching Data Found");
+        }
 
         List<JobDto> listOfNewJob = new ArrayList<>();
 
@@ -183,12 +188,25 @@ public class FilterServiceImpl implements FilterService {
             JobDto jobDto = new JobDto(job);
             jobDto.setUser_Id(job.getUserUser().getUser_id());
             listOfNewJob.add(jobDto);
+
         }
 
         if ("asc".equalsIgnoreCase(sortDirection)) {
-            listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate));
+            if ("postName".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getPostName));
+            } else if ("jobType".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getJobType));
+            } else if ("location".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getLocation));
+            }
         } else if ("desc".equalsIgnoreCase(sortDirection)) {
-            listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate).reversed());
+            if ("postName".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getPostName).reversed());
+            } else if ("jobType".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getJobType).reversed());
+            } else if ("location".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getLocation).reversed());
+            }
         }
 
         return listOfNewJob;
@@ -203,10 +221,10 @@ public class FilterServiceImpl implements FilterService {
                 predicates.add(root.get("location").in(filterDto.getLocation()));
             }
             if (filterDto.getJobType() != null && !filterDto.getJobType().isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("jobType"), filterDto.getJobType()));
+                predicates.add(root.get("jobType").in(filterDto.getJobType()));
             }
             if (filterDto.getCompanyName() != null && !filterDto.getCompanyName().isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("companyName"), filterDto.getCompanyName()));
+                predicates.add(root.get("companyName").in(filterDto.getCompanyName()));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
@@ -217,6 +235,10 @@ public class FilterServiceImpl implements FilterService {
         List<JobDto> listOfJobDtos = filteredJobs.stream()
                 .map(JobDto::new)
                 .collect(Collectors.toList());
+
+        if (listOfJobDtos.isEmpty()) {
+            throw new JobNotFoundException("No Matching Data Found");
+        }
 
         Comparator<JobDto> comparator = Comparator.comparing(JobDto::getCompanyName);
         if ("jobType".equals(sortField)) {
@@ -235,6 +257,7 @@ public class FilterServiceImpl implements FilterService {
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public Page<JobDto> suggestJob(jobSuggest filterDto, int pageNo, int pageSize) {

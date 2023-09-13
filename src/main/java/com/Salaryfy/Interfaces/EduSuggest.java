@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface EduSuggest {
 
-    List<EduSuggestDto> getSuggestions(String userInput);
+    List<EduSuggestDto> getSuggestions(String userInput, String education);
 
 }

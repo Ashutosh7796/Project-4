@@ -10,7 +10,10 @@ import java.util.List;
 
 @Repository
 public interface EduSuggestRepo extends JpaRepository<EduSuggestion, Integer > {
-    @Query("SELECT e FROM EduSuggestion e WHERE e.boardUniversity LIKE %:userInput%")
-    public List<EduSuggestion> findByBoardUniversityContaining(@Param("userInput") String userInput);
 
+    @Query("SELECT e FROM EduSuggestion e WHERE e.education = :userInput01 AND e.boardUniversity LIKE CONCAT('%', :userInput, '%')")
+    public List<EduSuggestion> findByBoardUniversityContainingOrEducationContaining(
+            @Param("userInput") String UserInput,
+            @Param("userInput01") String education
+    );
 }
