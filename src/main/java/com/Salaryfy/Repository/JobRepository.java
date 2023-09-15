@@ -21,7 +21,6 @@ public interface JobRepository extends JpaRepository<Job, Integer>, JpaSpecifica
             "OR LOWER(j.location) LIKE %:keyword% " +
             "OR LOWER(j.postName) LIKE %:keyword%")
     public List<Job> searchJobsByKeyword(@Param("keyword") String keyword);
-
-
+    
 
 }

@@ -198,6 +198,8 @@ public class FilterServiceImpl implements FilterService {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getJobType));
             } else if ("location".equalsIgnoreCase(sortField)) {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getLocation));
+            } else if ("InterviewStartDate".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate));
             }
         } else if ("desc".equalsIgnoreCase(sortDirection)) {
             if ("postName".equalsIgnoreCase(sortField)) {
@@ -207,12 +209,17 @@ public class FilterServiceImpl implements FilterService {
             } else if ("location".equalsIgnoreCase(sortField)) {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getLocation).reversed());
             }
+            else if ("InterviewStartDate".equalsIgnoreCase(sortField)) {
+                listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate));
+            }
         }
 
         return listOfNewJob;
     }
 
 
+
+    @Override
     public List<JobDto> searchByFilterAndSort(FilterDto filterDto, String sortField, String sortDirection) {
         Specification<Job> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
