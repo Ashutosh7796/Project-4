@@ -212,6 +212,7 @@ public class FilterServiceImpl implements FilterService {
             else if ("InterviewStartDate".equalsIgnoreCase(sortField)) {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate));
             }
+
         }
 
 
