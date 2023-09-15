@@ -89,6 +89,7 @@ public class FilterController {
             @RequestParam String searchBarInput,
             @RequestParam String sortDirection,
             @RequestParam String sortField
+
     ) {
 
         try {
