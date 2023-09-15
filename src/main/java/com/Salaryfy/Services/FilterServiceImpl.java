@@ -214,6 +214,7 @@ public class FilterServiceImpl implements FilterService {
             }
         }
 
+
         return listOfNewJob;
     }
 
