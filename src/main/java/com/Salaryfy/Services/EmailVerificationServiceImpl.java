@@ -68,6 +68,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
             // EmailVerification emailVerification= new EmailVerification();
             emailVerifications.setEmail(email);
             emailVerifications.setOtp(otp);
+            emailVerifications.setUserOTP(null);
             emailVerifications.setCreationTime(localDateTime);
             emailVerificationRepo.save(emailVerifications);
             return "Email saved";
@@ -75,6 +76,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
                 EmailVerification emailVerification = new EmailVerification();
                 emailVerification.setEmail(email);
                 emailVerification.setOtp(otp);
+                emailVerification.setUserOTP(null);
                 emailVerification.setCreationTime(localDateTime);
                 emailVerificationRepo.save(emailVerification);
                 return "Email saved";
@@ -91,7 +93,9 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
             throw new InvalidOtpException("Invalid OTP ");
         }else {
             if (emailVerification.getOtp().equals(otp)) {
-                emailVerificationRepo.deleteById(emailVerification.getId());
+                //emailVerificationRepo.deleteById(emailVerification.getId());
+                emailVerification.setUserOTP(otp);
+                emailVerificationRepo.save(emailVerification);
                 return "Verified";
             } else {
                 throw new InvalidOtpException("Invalid OTP");
@@ -103,7 +107,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
     public void deleteExpiredOTP() {
         LocalDateTime expirationTime = LocalDateTime.now().minusMinutes(3);
         List<EmailVerification> expiredOTPList = emailVerificationRepo.findByCreationTimeBefore(expirationTime);
-        emailVerificationRepo.deleteAll(expiredOTPList);
+        emailVerificationRepo.deleteUser();
     }
 
     private void sendEmail(String message, String subject, String to, String from, String sendOtp) {

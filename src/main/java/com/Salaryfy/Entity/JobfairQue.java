@@ -17,7 +17,7 @@ public class JobfairQue{
     @Column(name = "JobFairQ1Id", nullable = false)
     private Integer JobFairQ1Id;
 
-    @Column(name = "Question", length = 45)
+    @Column(name = "Question", length = 250)
     private String question;
 
     @Column(name = "QuestionType")
