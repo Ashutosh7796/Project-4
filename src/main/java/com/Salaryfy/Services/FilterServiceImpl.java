@@ -194,7 +194,9 @@ public class FilterServiceImpl implements FilterService {
         if ("asc".equalsIgnoreCase(sortDirection)) {
             if ("postName".equalsIgnoreCase(sortField)) {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getPostName));
-            } else if ("jobType".equalsIgnoreCase(sortField)) {
+            }else if ("companyName".equalsIgnoreCase(sortField)){
+                listOfNewJob.sort(Comparator.comparing(JobDto::getCompanyName));
+            }else if ("jobType".equalsIgnoreCase(sortField)) {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getJobType));
             } else if ("location".equalsIgnoreCase(sortField)) {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getLocation));
@@ -208,6 +210,9 @@ public class FilterServiceImpl implements FilterService {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getJobType).reversed());
             } else if ("location".equalsIgnoreCase(sortField)) {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getLocation).reversed());
+            }
+            else if ("companyName".equalsIgnoreCase(sortField)){
+                listOfNewJob.sort(Comparator.comparing(JobDto::getCompanyName).reversed());
             }
             else if ("InterviewStartDate".equalsIgnoreCase(sortField)) {
                 listOfNewJob.sort(Comparator.comparing(JobDto::getInterviewStartDate));
