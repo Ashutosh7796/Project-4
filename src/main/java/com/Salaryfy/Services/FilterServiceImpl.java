@@ -1,6 +1,7 @@
 package com.Salaryfy.Services;
 
 
+import com.Salaryfy.Dto.Filter.LocationJobTypeCompanyNameDto;
 import com.Salaryfy.Dto.Filter.jobSuggest;
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
@@ -270,6 +271,23 @@ public class FilterServiceImpl implements FilterService {
         return listOfJobDtos.stream()
                 .sorted(comparator)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public LocationJobTypeCompanyNameDto getlocationJobTypeCompanyName() {
+        Set<String> locations=jobRepository.findLocation();
+        Set<String> jobType=jobRepository.findjobType();
+        Set<String> companyName=jobRepository.findcompanyName();
+
+        LocationJobTypeCompanyNameDto locationJobTypeCompanyNameDto = new LocationJobTypeCompanyNameDto();
+        locationJobTypeCompanyNameDto.setCompanyNames(companyName);
+        locationJobTypeCompanyNameDto.setLocations(locations);
+        locationJobTypeCompanyNameDto.setJobTypes(jobType);
+
+        return locationJobTypeCompanyNameDto;
+
+
+
     }
 
 

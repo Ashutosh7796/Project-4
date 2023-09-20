@@ -10,6 +10,7 @@ import java.util.List;
 
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job, Integer>, JpaSpecificationExecutor<Job>{
@@ -21,6 +22,13 @@ public interface JobRepository extends JpaRepository<Job, Integer>, JpaSpecifica
             "OR LOWER(j.location) LIKE %:keyword% " +
             "OR LOWER(j.postName) LIKE %:keyword%")
     public List<Job> searchJobsByKeyword(@Param("keyword") String keyword);
-    
 
+
+    @Query(value = "SELECT location FROM salaryfy.jobs;",nativeQuery = true)
+    Set<String> findLocation();
+    @Query(value = "SELECT job_type FROM salaryfy.jobs;",nativeQuery = true)
+    Set<String> findjobType();
+
+    @Query(value = "SELECT company_name FROM salaryfy.jobs;",nativeQuery = true)
+    Set<String> findcompanyName();
 }

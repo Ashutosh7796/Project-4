@@ -39,6 +39,8 @@ public class UserSkillImpl implements UserSkillService {
                 return "Skill  updated";
 
             }
+
+
         }
         Optional<User> user = userRepository.findById(userSkillDto.getUserId());
         if (user.isEmpty()) {

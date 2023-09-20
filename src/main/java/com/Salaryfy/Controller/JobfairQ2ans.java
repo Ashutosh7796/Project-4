@@ -5,24 +5,30 @@ import com.Salaryfy.Dto.JobFairQue.ResponseOfAllJobFairQue;
 import com.Salaryfy.Dto.JobfairQ2ans.*;
 import com.Salaryfy.Dto.ProfileLevelDto.ResponseProfileLevelDto;
 import com.Salaryfy.Dto.ResponceDto;
+import com.Salaryfy.Entity.Role;
 import com.Salaryfy.Exception.JobNotFoundException;
 import com.Salaryfy.Exception.PageNotFoundException;
 import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.IJobfairQ2ans;
+import com.Salaryfy.Repository.RoleRepository;
+import com.Salaryfy.Repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/jobFairQueAns")
+@AllArgsConstructor
 public class JobfairQ2ans {
 
-    @Autowired
-    private IJobfairQ2ans iJobfairQ2ans;
-
+    private final IJobfairQ2ans iJobfairQ2ans;
+    private final UserRepository userRepository;
     @PostMapping("/addQ2ans")
     public ResponseEntity<?> addQ2ans(@RequestBody JobfairQ2ansDto jobfairQ2ansDto)
     {
@@ -149,6 +155,8 @@ public class JobfairQ2ans {
 
 
     }
+
+
 
 
 }

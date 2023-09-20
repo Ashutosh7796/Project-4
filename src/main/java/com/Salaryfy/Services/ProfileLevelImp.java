@@ -26,35 +26,24 @@ public class ProfileLevelImp implements IProfileLevel {
 
     @Override
     public String saveProfileLevelData(ProfileLevelDto profileLevelDto) {
-        List<ProfileLevel> listOfProfileLevelDto = profileLevelRepo.findAll();
-        boolean flag = false;
-        for (int counterr = 0; counterr<listOfProfileLevelDto.size();counterr++){
-            if(listOfProfileLevelDto.get(counterr).getUserUser().getUser_id() == profileLevelDto.UserId){
-                Optional<ProfileLevel> profilelevelDetail = profileLevelRepo.findById(listOfProfileLevelDto.get(counterr).getProfileId());
-                if(profileLevelDto.getHighestLevelOfEdu()== null){
-                    profilelevelDetail.get().setHighestLevelOfEdu(null);}
-                else {
-                    profilelevelDetail.get().setHighestLevelOfEdu(profileLevelDto.getHighestLevelOfEdu());
-                }
-                if(profileLevelDto.getBoard() == null){
-                    profilelevelDetail.get().setBoard(null);}
-                else {
-                    profilelevelDetail.get().setBoard(profileLevelDto.getBoard());}
-                if (profileLevelDto.getStream() == null) {
-                    profilelevelDetail.get().setStream(null);
-                } else {
-                    profilelevelDetail.get().setStream(profileLevelDto.getStream());
-                }
-                if(profileLevelDto.getPercentage()== null) {
-                    profilelevelDetail.get().setPercentage(null);
-                }else {
-                    profilelevelDetail.get().setPercentage(profileLevelDto.getPercentage());
-                }
+        Optional<ProfileLevel> profileLevelOptional = profileLevelRepo.findByUserId(profileLevelDto.getUserId());
+
+
+
+            if(profileLevelOptional.isPresent()){
+
+
+                Optional<ProfileLevel> profilelevelDetail = profileLevelRepo.findById(profileLevelOptional.get().getProfileId());
+                profilelevelDetail.get().setHighestLevelOfEdu(profileLevelDto.getHighestLevelOfEdu() == null ? null : profileLevelDto.getHighestLevelOfEdu());
+                profilelevelDetail.get().setBoard(profileLevelDto.getBoard() == null ? null : profileLevelDto.getBoard());
+                profilelevelDetail.get().setStream(profileLevelDto.getStream() == null ? null : profileLevelDto.getStream());
+                profilelevelDetail.get().setPercentage(profileLevelDto.getPercentage() == null ? null : profileLevelDto.getPercentage());
+
                 profileLevelRepo.save(profilelevelDetail.get());
                 return "profile level detail updated";
 
+
             }
-        }
 
 
 
@@ -66,6 +55,8 @@ public class ProfileLevelImp implements IProfileLevel {
         ProfileLevel profileLevel = new ProfileLevel(profileLevelDto);
         profileLevel.setUserUser(user.get());
         profileLevelRepo.save(profileLevel);
+//        userRepository.findById(profileLevelDto.getUserId()).orElseThrow(() -> new UserNotFoundException("user not found")).ifPresent(user -> profileLevelRepo.save(new ProfileLevel(profileLevelDto, user)));
+
         return "Profile level deatils posted successfully";
     }
 
@@ -98,23 +89,22 @@ public class ProfileLevelImp implements IProfileLevel {
 
     @Override
     public String updateProfileLevelDetails(ProfileLevelDto profileLevelDto, Integer profileLevelId) {
-        Optional<ProfileLevel> profileLevel = profileLevelRepo.findById(profileLevelId);
-        if(profileLevel.isEmpty()){throw new ProfileLevelIdNotFoundException("profile level details not found by id");}
+//        Optional<ProfileLevel> profileLevel = profileLevelRepo.findById(profileLevelId);
+//        if(profileLevel.isEmpty()){throw new ProfileLevelIdNotFoundException("profile level details not found by id");}
+//
+//        if(profileLevelDto.highestLevelOfEdu!= null){
+//            profileLevel.get().setHighestLevelOfEdu(profileLevelDto.highestLevelOfEdu);
+//        }
+//        if(profileLevelDto.board!= null){
+//            profileLevel.get().setBoard(profileLevelDto.board);}
+//        if(profileLevelDto.stream!= null){
+//            profileLevel.get().setStream(profileLevelDto.stream);}
+//        if(profileLevelDto.percentage!= null){
+//            profileLevel.get().setPercentage(profileLevelDto.percentage);}
+//        profileLevelRepo.save(profileLevel.get());
+//        return "profile level detail updated";
 
-        if(profileLevelDto.highestLevelOfEdu!= null){
-            profileLevel.get().setHighestLevelOfEdu(profileLevelDto.highestLevelOfEdu);
-        }
-        if(profileLevelDto.board!= null){
-            profileLevel.get().setBoard(profileLevelDto.board);}
-        if(profileLevelDto.stream!= null){
-            profileLevel.get().setStream(profileLevelDto.stream);}
-        if(profileLevelDto.percentage!= null){
-            profileLevel.get().setPercentage(profileLevelDto.percentage);}
-
-
-        profileLevelRepo.save(profileLevel.get());
-        return "profile level detail updated";
-
+        return null;
     }
     @Override
     public ProfileLevelDto getByUserId(Integer userId) {
