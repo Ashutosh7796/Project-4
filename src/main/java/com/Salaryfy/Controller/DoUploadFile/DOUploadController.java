@@ -71,7 +71,7 @@ public class DOUploadController {
             Map<String, Object> payloadObject = new HashMap<>();
             payloadObject.put("imageBytes", imageBytes);
             payloadObject.put("contentType", file.getContentType());
-            payloadObject.put(" ", imageBytes.length);
+            payloadObject.put("contentLength", imageBytes.length);
             String uniqueName = this.DOService.generateRandomString(15) + fileName;
             payloadObject.put("imageName", uniqueName);
             if (uniqueName.isEmpty()){
