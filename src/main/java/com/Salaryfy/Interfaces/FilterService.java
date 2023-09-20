@@ -1,5 +1,6 @@
 package com.Salaryfy.Interfaces;
 
+import com.Salaryfy.Dto.Filter.LocationJobTypeCompanyNameDto;
 import com.Salaryfy.Dto.Filter.jobSuggest;
 import com.Salaryfy.Dto.FilterDto;
 import com.Salaryfy.Dto.Job.JobDto;
@@ -22,4 +23,5 @@ public interface FilterService {
 
     public List<JobDto> searchByFilterAndSort(FilterDto filterDto, String sortField, String sortDirection);
 
+    public LocationJobTypeCompanyNameDto getlocationJobTypeCompanyName();
 }

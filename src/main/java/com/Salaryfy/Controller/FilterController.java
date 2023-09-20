@@ -22,10 +22,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/jobs")
 public class FilterController {
-     @Autowired
+    @Autowired
     private final FilterService filterService;
 
-     private final JobService jobService;
+    private final JobService jobService;
 
     @GetMapping("/mainFilter")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilter(
@@ -46,12 +46,14 @@ public class FilterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
+
     @GetMapping("/suggest")
     public List<SearchSuggestionDTO> getSuggestions(@RequestParam String query) {
         return filterService.getSuggestions(query);
     }
+
     @GetMapping("/searchBarFilter")
-    public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput){
+    public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput) {
         try {
             List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput);
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
@@ -63,6 +65,7 @@ public class FilterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
+
     @GetMapping("/ascendFilter")
     public ResponseEntity<ResponseGetAllJobDto> searchByFilterAndSort(
             @RequestParam(required = false) List<String> companyName,
@@ -84,6 +87,7 @@ public class FilterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
+
     @GetMapping("/searchBarFilterSort")
     public ResponseEntity<?> searchBarFilter(
             @RequestParam String searchBarInput,
@@ -93,14 +97,14 @@ public class FilterController {
     ) {
 
         try {
-            List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput, sortDirection,sortField);
+            List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput, sortDirection, sortField);
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
             responseGetAllJobDto.setList(listOfJob);
             return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
-        }catch (JobNotFoundException e) {
+        } catch (JobNotFoundException e) {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
-        responseGetAllJobDto.setException("No Matching Data Found");
-        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
+            responseGetAllJobDto.setException("No Matching Data Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
 
         }
 
@@ -124,6 +128,18 @@ public class FilterController {
         } catch (PageNotFoundException pageNotFoundException) {
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
             responseGetAllJobDto.setException("page not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
+        }
+    }
+
+    @GetMapping("/getLJTCN")
+    public ResponseEntity<?> searchByFilter() {
+        try {
+
+            return ResponseEntity.status(HttpStatus.OK).body(filterService.getlocationJobTypeCompanyName());
+        } catch (Exception e) {
+            ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("unsuccess");
+            responseGetAllJobDto.setException(String.valueOf(e));
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseGetAllJobDto);
         }
     }
