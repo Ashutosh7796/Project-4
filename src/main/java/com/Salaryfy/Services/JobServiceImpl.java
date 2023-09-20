@@ -156,6 +156,18 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public Optional<Job> findjobById(Integer JobId) {
+        Optional<Job> job = Optional.ofNullable(jobRepository.findByJobId(JobId));
+
+        if (job.isEmpty()) {
+            throw new JobNotFoundException("Job not found", HttpStatus.NOT_FOUND);
+        }
+
+        return job;
+    }
+
+
+    @Override
     public List<JobDto> getJobsByStatusWithPages(int PageNo, Boolean status) {
         List<Job> listOfJobsByStatus = jobRepository.getJobsByStatus(status);
         if ((PageNo * 10) > listOfJobsByStatus.size() - 1) {

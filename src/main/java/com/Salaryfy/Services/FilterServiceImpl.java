@@ -175,7 +175,7 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    public List<JobDto> searchBarFilter(String searchBarInput, String sortDirection, String sortField) {
+    public List<JobDto> searchBarFilterSort(String searchBarInput, String sortDirection, String sortField) {
         List<Job> jobs = jobRepository.searchJobsByKeyword(searchBarInput);
 
         if(jobs.isEmpty()) {

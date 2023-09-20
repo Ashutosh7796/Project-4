@@ -98,6 +98,7 @@ public class AppConfig {
                 .requestMatchers("/jobs/**").permitAll()
                 .requestMatchers("/plan/**").permitAll()
                 .requestMatchers("/pgProgram/**").permitAll()
+                .requestMatchers("/pdf/**").permitAll()
                 .requestMatchers("/userSkill/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

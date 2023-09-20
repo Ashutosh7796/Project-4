@@ -50,6 +50,8 @@ public class FilterController {
     public List<SearchSuggestionDTO> getSuggestions(@RequestParam String query) {
         return filterService.getSuggestions(query);
     }
+
+
     @GetMapping("/searchBarFilter")
     public ResponseEntity<?> searchBarFilter(@RequestParam String searchBarInput){
         try {
@@ -93,7 +95,7 @@ public class FilterController {
     ) {
 
         try {
-            List<JobDto> listOfJob = filterService.searchBarFilter(searchBarInput, sortDirection,sortField);
+            List<JobDto> listOfJob = filterService.searchBarFilterSort(searchBarInput, sortDirection,sortField);
             ResponseGetAllJobDto responseGetAllJobDto = new ResponseGetAllJobDto("success");
             responseGetAllJobDto.setList(listOfJob);
             return ResponseEntity.status(HttpStatus.OK).body(responseGetAllJobDto);
