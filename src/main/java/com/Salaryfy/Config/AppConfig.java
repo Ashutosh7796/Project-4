@@ -96,6 +96,7 @@ public class AppConfig {
                 .requestMatchers("/jobFairOption/**").permitAll()
                 .requestMatchers("/job/**").permitAll()
                 .requestMatchers("/jobs/**").permitAll()
+                .requestMatchers("/pdf/**").permitAll()
                 .requestMatchers("/plan/**").permitAll()
                 .requestMatchers("/pgProgram/**").permitAll()
                 .requestMatchers("/userSkill/**").permitAll()
