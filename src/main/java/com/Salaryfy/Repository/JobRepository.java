@@ -17,6 +17,8 @@ public interface JobRepository extends JpaRepository<Job, Integer>, JpaSpecifica
 
     public List<Job> getJobsByStatus(boolean status);
 
+    Job findByJobId(Integer jobId);
+
     @Query("SELECT j FROM Job j " +
             "WHERE LOWER(j.companyName) LIKE %:keyword% " +
             "OR LOWER(j.location) LIKE %:keyword% " +

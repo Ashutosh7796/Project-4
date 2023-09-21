@@ -38,6 +38,17 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public Optional<Job> findjobById(Integer JobId) {
+        Optional<Job> job = Optional.ofNullable(jobRepository.findByJobId(JobId));
+
+        if (job.isEmpty()) {
+            throw new JobNotFoundException("Job not found", HttpStatus.NOT_FOUND);
+        }
+
+        return job;
+    }
+
+    @Override
     public String EditJob(JobDto jobDto, Integer JobId) {
        Job job =jobRepository.findById(JobId).orElseThrow(()->new JobNotFoundException(("Job not found"),HttpStatus.NOT_FOUND));
 
