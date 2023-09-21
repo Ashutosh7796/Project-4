@@ -3,7 +3,7 @@ package com.Salaryfy.Services;
 import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Exception.JobNotFoundException;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -35,71 +35,62 @@ public class PdfGenerationService {
             blankRow.setSpacingAfter(10);
             document.add(blankRow);
 
+
             Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
 
 
-            Paragraph companyName = new Paragraph("Company Name: " + job.getCompanyName(), font);
-            companyName.setAlignment(Element.ALIGN_LEFT);
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(100);
+            table.getDefaultCell().setBorder(PdfPCell.BOX);
+            table.setSpacingAfter(10f);
 
-            Paragraph interviewStartDate = new Paragraph("Interview Start Date: " + job.getInterviewStartDate(), font);
-            interviewStartDate.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Company Name:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getCompanyName(), font, Element.ALIGN_LEFT));
 
-            Paragraph interviewEndDate = new Paragraph("Interview End Date: " + job.getInterviewEndDate(), font);
-            interviewEndDate.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Post Name:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getPostName(), font, Element.ALIGN_LEFT));
 
-            Paragraph jobDetails = new Paragraph("Job Details: " + job.getJobDetails(), font);
-            jobDetails.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Location:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getLocation(), font, Element.ALIGN_LEFT));
 
-            Paragraph location = new Paragraph("Location: " + job.getLocation(), font);
-            location.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("No of Posts:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getNoOfPosts().toString(), font, Element.ALIGN_LEFT));
 
-            Paragraph postName = new Paragraph("Post Name: " + job.getPostName(), font);
-            postName.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Starting Salary:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getStartingSalary(), font, Element.ALIGN_LEFT));
 
-            Paragraph startingSalary = new Paragraph("Starting Salary: " + job.getStartingSalary(), font);
-            startingSalary.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Incentive:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getIncentives(), font, Element.ALIGN_LEFT));
 
-            Paragraph jobType = new Paragraph("Job Type: " + job.getJobType(), font);
-            jobType.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Job Type:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getJobType(), font, Element.ALIGN_LEFT));
 
-            Paragraph Incentive = new Paragraph("Incentive : " + job.getIncentives(), font);
-            Incentive.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Essential Requirements:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getEssentialRequirements(), font, Element.ALIGN_LEFT));
 
-            Paragraph EssentialRequirements = new Paragraph("EssentialRequirements : " + job.getEssentialRequirements(), font);
-            EssentialRequirements.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Job Details:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getJobDetails(), font, Element.ALIGN_LEFT));
 
-            Paragraph noOfPosts = new Paragraph("No of Posts: " + job.getNoOfPosts(), font);
-            noOfPosts.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Interview Start Date:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getInterviewStartDate().toString(), font, Element.ALIGN_LEFT));
 
-            Paragraph InterviewLocation = new Paragraph("Interview Location : " + job.getInterviewLocation(), font);
-            InterviewLocation.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Interview End Date:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getInterviewEndDate().toString(), font, Element.ALIGN_LEFT));
 
-            Paragraph InterviewSlot1 = new Paragraph("InterviewSlot1 : " + job.getInterviewTimeSlot1(), font);
-            InterviewSlot1.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Interview Location:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getInterviewLocation(), font, Element.ALIGN_LEFT));
 
-            Paragraph InterviewSlot2 = new Paragraph("InterviewSlot2 : " + job.getInterviewTimeSlot1(), font);
-            InterviewSlot2.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Interview Slot 1:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getInterviewTimeSlot1(), font, Element.ALIGN_LEFT));
 
-            Paragraph InterviewDetails = new Paragraph("InterviewDetails : " + job.getInterviewDetails(), font);
-            InterviewDetails.setAlignment(Element.ALIGN_LEFT);
+            table.addCell(createCell("Interview Slot 2:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getInterviewTimeSlot2(), font, Element.ALIGN_LEFT));
+
+            table.addCell(createCell("Interview Details:", font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getInterviewDetails(), font, Element.ALIGN_LEFT));
 
 
-            document.add(companyName);
-            document.add(postName);
-            document.add(location);
-            document.add(noOfPosts);
-            document.add(startingSalary);
-            document.add(Incentive);
-            document.add(jobType);
-            document.add(EssentialRequirements);
-            document.add(jobDetails);
-            document.add(interviewStartDate);
-            document.add(interviewEndDate);
-            document.add(InterviewLocation);
-            document.add(InterviewSlot1);
-            document.add(InterviewSlot2);
-            document.add(InterviewDetails);
-
+            document.add(table);
 
             document.close();
             writer.close();
@@ -109,5 +100,12 @@ public class PdfGenerationService {
             throw new JobNotFoundException("Job not found");
         }
     }
-    }
 
+    private PdfPCell createCell(String text, Font font, int alignment) {
+        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+        cell.setHorizontalAlignment(alignment);
+        cell.setBorder(Rectangle.NO_BORDER);
+        cell.setPadding(7f);
+        return cell;
+    }
+}
