@@ -2,6 +2,7 @@ package com.Salaryfy.Dto.Job;
 
 import com.Salaryfy.Entity.Experiencedoc;
 import com.Salaryfy.Entity.Job;
+import jakarta.persistence.Column;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -49,6 +50,12 @@ public class JobDto {
 
     private Integer User_Id;
 
+    private String interviewLocation;
+
+    private  String interviewTimeSlot1;
+
+    private  String interviewTimeSlot2;
+
     public JobDto(Job job) {
         this.postName = job.getPostName();
         this.companyName = job.getCompanyName();
@@ -68,6 +75,9 @@ public class JobDto {
         this.status = job.getStatus();
         this.User_Id = job.getUserUser().getUser_id();
         this.JobId =job.getJobId();
+        this.interviewTimeSlot1=job.getInterviewTimeSlot1();
+        this.interviewTimeSlot2=job.getInterviewTimeSlot2();
+        this.interviewLocation=job.getInterviewLocation();
 
     }
 

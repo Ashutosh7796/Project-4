@@ -69,6 +69,16 @@ public class Job {
     @Column(name = "logo")
     private String logo;
 
+    @Lob
+    @Column(name = "interviewLocation",length = 500)
+    private String interviewLocation;
+
+    @Column(name = "interviewTimeSlot1")
+    private  String interviewTimeSlot1;
+
+    @Column(name = "interviewTimeSlot2")
+    private  String interviewTimeSlot2;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_userId", nullable = false)
@@ -100,6 +110,10 @@ public class Job {
         this.startingSalary = jobDto.getStartingSalary();
         this.jobFairSetNo = jobDto.getJobFairSetNo();
         this.status = jobDto.getStatus();
+        this.interviewTimeSlot1=jobDto.getInterviewTimeSlot1();
+        this.interviewTimeSlot2=jobDto.getInterviewTimeSlot2();
+        this.interviewLocation=jobDto.getInterviewLocation();
+
     }
 
 }
