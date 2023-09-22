@@ -65,6 +65,7 @@ public class DOUploadController {
             file.transferTo(filePath);
 
             byte[] imageBytes = file.getBytes();
+            Files.delete(filePath);
 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -73,6 +74,7 @@ public class DOUploadController {
             payloadObject.put("contentType", file.getContentType());
             payloadObject.put("contentLength", imageBytes.length);
             String uniqueName = this.DOService.generateRandomString(15) + fileName;
+            System.err.println(fileName.length());
             payloadObject.put("imageName", uniqueName);
             if (uniqueName.isEmpty()){
                 throw new DocumentNotFoundException("Document not found");
@@ -87,7 +89,7 @@ public class DOUploadController {
                     requestEntity,
                     String.class
             );
-            Files.delete(filePath);
+
 //            System.err.println();
 
 //            String arr[] = documentDto.split(",");
