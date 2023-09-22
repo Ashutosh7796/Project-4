@@ -34,8 +34,10 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
 
      @Override
     public InterviewSchedule scheduleInterview(InterviewScheduleDto interviewScheduleDto) {
+         if (interviewScheduleRepository.findByIdAndInterviewDate(interviewScheduleDto.getUserId(), interviewScheduleDto.getInterviewDate()).isPresent())
+             throw new RuntimeException("User is already scheduled for an interview on this date");
 
-        User user = userRepository.findById(interviewScheduleDto.getUserId())
+         User user = userRepository.findById(interviewScheduleDto.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("User Not found", HttpStatus.NOT_FOUND));
 
         Job job = jobRepository.findById(interviewScheduleDto.getJobId())

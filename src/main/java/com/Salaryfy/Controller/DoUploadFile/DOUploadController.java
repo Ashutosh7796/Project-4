@@ -48,9 +48,8 @@ public class DOUploadController {
     private final RestTemplate restTemplate = new RestTemplate();
 
 
-
     @PostMapping("/add")
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file, @RequestParam String documentType,@RequestParam Integer userId) throws InvalidKeyException, NoSuchAlgorithmException {
+    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file, @RequestParam String documentType, @RequestParam Integer userId) throws InvalidKeyException, NoSuchAlgorithmException {
         try {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             Path filePath = Paths.get(uploadDir, fileName);
@@ -76,13 +75,10 @@ public class DOUploadController {
             String uniqueName = this.DOService.generateRandomString(15) + fileName;
             System.err.println(fileName.length());
             payloadObject.put("imageName", uniqueName);
-            if (uniqueName.isEmpty()){
+            if (uniqueName.isEmpty()) {
                 throw new DocumentNotFoundException("Document not found");
             }
             HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(payloadObject, httpHeaders);
-
-            // ResponseEntity<String, Object> response = restTemplate.postForEntity(NODEJS_SERVER_URL + "/forward-image", imageBytes, String.class);
-
             ResponseEntity<String> response = restTemplate.exchange(
                     NODEJS_SERVER_URL + "/forward-image",
                     HttpMethod.POST,
@@ -98,65 +94,64 @@ public class DOUploadController {
 //            System.out.println(response.getStatusCode());
             String serviceResponse = null;
 
-            if(!response.getBody().isEmpty()){
+            if (!response.getBody().isEmpty()) {
 //                JSONArray jsonArray = new JSONArray(documentJSONArray);
 //                JSONObject jsonArray = new JSONObject(documentJSONArray);
 
 //                System.out.println(jsonArray.toString());
                 DocumentDto documentDto = new DocumentDto();
-                 documentDto.setUserId(userId);
+                documentDto.setUserId(userId);
 
-                 documentDto.setDocumentType(documentType);
+                documentDto.setDocumentType(documentType);
 
-                documentDto.setDocumentLink(CDNNo+"/"+response.getBody());
-                serviceResponse=iDocument.addDocument(documentDto);
+                documentDto.setDocumentLink(CDNNo + "/" + response.getBody());
+                serviceResponse = iDocument.addDocument(documentDto);
             }
 
 
-
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("success",serviceResponse));
-        }catch (DocumentNotFoundException documentNotFoundException){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponceDto("success", serviceResponse));
+        } catch (DocumentNotFoundException documentNotFoundException) {
 //            System.err.println(e);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess",String.valueOf(documentNotFoundException)));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", String.valueOf(documentNotFoundException)));
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
 
-             System.err.println(e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponceDto("unsuccess","Failed to upload image"));
-        }catch (Exception e){
+            System.err.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponceDto("unsuccess", "Failed to upload image"));
+        } catch (Exception e) {
 
             System.err.println(e);
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponceDto("unsuccess","Failed to upload image"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponceDto("unsuccess", "Failed to upload image"));
 
         }
 
     }
+
     @GetMapping("/getDocuments")
-    private ResponseEntity<?> getDocumentByUserIdAndDocId(@RequestParam Integer userId,@RequestParam String DocumentType){
-        try{
+    private ResponseEntity<?> getDocumentByUserIdAndDocId(@RequestParam Integer userId, @RequestParam String DocumentType) {
+        try {
             ResponseAllDocument responseAllDocument = new ResponseAllDocument("success");
-            responseAllDocument.setResponse(iDocument.getAllDocument(userId,DocumentType));
+            responseAllDocument.setResponse(iDocument.getAllDocument(userId, DocumentType));
             return ResponseEntity.status(HttpStatus.OK).body(responseAllDocument);
-        }catch (DocumentNotFoundException e){
+        } catch (DocumentNotFoundException e) {
             System.err.println(e);
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess",String.valueOf(e)));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", String.valueOf(e)));
 
         }
     }
 
     @GetMapping("getByUserId")
-    private ResponseEntity<?> getByUserId(@RequestParam Integer userId){
-        try{
+    private ResponseEntity<?> getByUserId(@RequestParam Integer userId) {
+        try {
             ResponseAllDocument responseDocument = new ResponseAllDocument("success");
             responseDocument.setResponse(iDocument.getByUserId(userId));
             return ResponseEntity.status(HttpStatus.OK).body(responseDocument);
-        }catch (DocumentNotFoundException e){
+        } catch (DocumentNotFoundException e) {
             System.err.println(e);
 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess",String.valueOf(e)));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", String.valueOf(e)));
 
         }
     }

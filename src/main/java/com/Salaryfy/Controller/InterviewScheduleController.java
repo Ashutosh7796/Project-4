@@ -37,6 +37,8 @@ public class InterviewScheduleController {
 
         } catch (JobNotFoundException j) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("Unsuccess", j.getMessage()));
+        } catch (RuntimeException j) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("Unsuccess", j.getMessage()));
         }
     }
 
