@@ -73,11 +73,18 @@ public class Job {
     @Column(name = "interviewLocation",length = 500)
     private String interviewLocation;
 
-    @Column(name = "interviewTimeSlot1")
-    private  String interviewTimeSlot1;
+    @Column(name = "interviewTimeSlot1Min")
+    private  String interviewTimeSlot1Min;
 
-    @Column(name = "interviewTimeSlot2")
-    private  String interviewTimeSlot2;
+    @Column(name = "interviewTimeSlot1Max")
+    private  String interviewTimeSlot1Max;
+
+    @Column(name = "interviewTimeSlot2Min")
+    private  String interviewTimeSlot2Min;
+
+    @Column(name = "interviewTimeSlot2Max")
+    private  String interviewTimeSlot2Max;
+
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -110,8 +117,11 @@ public class Job {
         this.startingSalary = jobDto.getStartingSalary();
         this.jobFairSetNo = jobDto.getJobFairSetNo();
         this.status = jobDto.getStatus();
-        this.interviewTimeSlot1=jobDto.getInterviewTimeSlot1();
-        this.interviewTimeSlot2=jobDto.getInterviewTimeSlot2();
+        this.interviewTimeSlot1Min= jobDto.getInterviewTimeSlot1Min();
+        this.interviewTimeSlot1Max = jobDto.getInterviewTimeSlot1Max();
+        this.interviewTimeSlot2Min = jobDto.getInterviewTimeSlot2Min();
+        this.interviewTimeSlot2Max = jobDto.getInterviewTimeSlot2Max();
+
         this.interviewLocation=jobDto.getInterviewLocation();
 
     }
