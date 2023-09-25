@@ -52,9 +52,13 @@ public class JobDto {
 
     private String interviewLocation;
 
-    private  String interviewTimeSlot1;
+    private  String interviewTimeSlot1Min;
 
-    private  String interviewTimeSlot2;
+    private  String interviewTimeSlot1Max;
+
+    private  String interviewTimeSlot2Min;
+
+    private  String interviewTimeSlot2Max;
 
     public JobDto(Job job) {
         this.postName = job.getPostName();
@@ -75,8 +79,10 @@ public class JobDto {
         this.status = job.getStatus();
         this.User_Id = job.getUserUser().getUser_id();
         this.JobId =job.getJobId();
-        this.interviewTimeSlot1=job.getInterviewTimeSlot1();
-        this.interviewTimeSlot2=job.getInterviewTimeSlot2();
+        this.interviewTimeSlot1Min=job.getInterviewTimeSlot1Min();
+        this.interviewTimeSlot1Max =job.getInterviewTimeSlot1Max();
+        this.interviewTimeSlot2Min=job.getInterviewTimeSlot2Min();
+        this.interviewTimeSlot2Max =job.getInterviewTimeSlot2Max();
         this.interviewLocation=job.getInterviewLocation();
 
     }
