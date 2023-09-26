@@ -124,6 +124,21 @@ public class JobServiceImpl implements JobService {
         if (jobDto.getStatus() != null) {
             job.setStatus(jobDto.getStatus());
         }
+        if (jobDto.getInterviewLocation() != null) {
+            job.setInterviewLocation(jobDto.getInterviewLocation());
+        }
+        if (jobDto.getInterviewTimeSlot1Min() != null) {
+            job.setInterviewTimeSlot1Min(jobDto.getInterviewTimeSlot1Min());
+        }
+        if (jobDto.getInterviewTimeSlot1Max() != null) {
+            job.setInterviewTimeSlot1Max(jobDto.getInterviewTimeSlot1Max());
+        }
+        if (jobDto.getInterviewTimeSlot2Min() != null) {
+            job.setInterviewTimeSlot2Min(jobDto.getInterviewTimeSlot2Min());
+        }
+        if (jobDto.getInterviewTimeSlot2Max() != null) {
+            job.setInterviewTimeSlot2Max(jobDto.getInterviewTimeSlot2Max());
+        }
 
         jobRepository.save(job);
 
