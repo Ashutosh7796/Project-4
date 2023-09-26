@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -50,7 +51,7 @@ public class JobDto {
 
     private Integer User_Id;
 
-    private String interviewLocation;
+    private List<String> interviewLocation;
 
     private  String interviewTimeSlot1Min;
 
@@ -83,7 +84,7 @@ public class JobDto {
         this.interviewTimeSlot1Max =job.getInterviewTimeSlot1Max();
         this.interviewTimeSlot2Min=job.getInterviewTimeSlot2Min();
         this.interviewTimeSlot2Max =job.getInterviewTimeSlot2Max();
-        this.interviewLocation=job.getInterviewLocation();
+        this.interviewLocation = job.getInterviewLocation();
 
     }
 
