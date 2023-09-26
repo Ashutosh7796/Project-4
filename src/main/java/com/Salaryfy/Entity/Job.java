@@ -69,9 +69,9 @@ public class Job {
     @Column(name = "logo")
     private String logo;
 
-    @Lob
-    @Column(name = "interviewLocation",length = 500)
-    private String interviewLocation;
+
+    @Column(name = "interviewLocation")
+    private List<String> interviewLocation;
 
     @Column(name = "interviewTimeSlot1Min")
     private  String interviewTimeSlot1Min;
@@ -122,7 +122,9 @@ public class Job {
         this.interviewTimeSlot2Min = jobDto.getInterviewTimeSlot2Min();
         this.interviewTimeSlot2Max = jobDto.getInterviewTimeSlot2Max();
 
-        this.interviewLocation=jobDto.getInterviewLocation();
+        this.interviewLocation= jobDto.getInterviewLocation();
+//        System.err.println(Arrays.toString(jobDto.getInterviewLocation()));
+
 
     }
 
