@@ -78,13 +78,13 @@ public class PdfGenerationService {
             table.addCell(createCell(job.getInterviewEndDate().toString(), font, Element.ALIGN_LEFT));
 
             table.addCell(createCell("Interview Location:", font, Element.ALIGN_LEFT));
-            table.addCell(createCell(job.getInterviewLocation(), font, Element.ALIGN_LEFT));
+            table.addCell(createCell(String.valueOf(job.getInterviewLocation()), font, Element.ALIGN_LEFT));
 
             table.addCell(createCell("Interview Slot 1:", font, Element.ALIGN_LEFT));
-            table.addCell(createCell(job.getInterviewTimeSlot1(), font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getInterviewTimeSlot1Min()+" To "+job.getInterviewTimeSlot1Max(), font, Element.ALIGN_LEFT));
 
             table.addCell(createCell("Interview Slot 2:", font, Element.ALIGN_LEFT));
-            table.addCell(createCell(job.getInterviewTimeSlot2(), font, Element.ALIGN_LEFT));
+            table.addCell(createCell(job.getInterviewTimeSlot2Min()+" To "+job.getInterviewTimeSlot2Max(), font, Element.ALIGN_LEFT));
 
             table.addCell(createCell("Interview Details:", font, Element.ALIGN_LEFT));
             table.addCell(createCell(job.getInterviewDetails(), font, Element.ALIGN_LEFT));

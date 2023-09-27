@@ -5,7 +5,10 @@ import com.Salaryfy.Dto.Job.ResponseAllScheduleInterviews;
 import com.Salaryfy.Dto.Job.ResponseGetSingleInterview;
 import com.Salaryfy.Dto.ResponceDto;
 import com.Salaryfy.Entity.InterviewSchedule;
-import com.Salaryfy.Exception.*;
+import com.Salaryfy.Exception.InterviewScheduleNotFoundException;
+import com.Salaryfy.Exception.JobNotFoundException;
+import com.Salaryfy.Exception.PageNotFoundException;
+import com.Salaryfy.Exception.UserNotFoundException;
 import com.Salaryfy.Interfaces.InterviewScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,8 +37,8 @@ public class InterviewScheduleController {
 
         } catch (JobNotFoundException j) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("Unsuccess", j.getMessage()));
-        }catch (CannotScheduleInterviewOnSameDateException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponceDto("Unsuccess", e.getMessage()));
+        } catch (RuntimeException j) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("Unsuccess", j.getMessage()));
         }
     }
 

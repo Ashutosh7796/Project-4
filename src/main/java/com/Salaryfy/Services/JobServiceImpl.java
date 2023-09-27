@@ -32,7 +32,10 @@ public class JobServiceImpl implements JobService {
 
         User user = userRepository.findById(jobDto.getUser_Id()).orElseThrow(() -> new UserNotFoundException("User Not found", HttpStatus.NOT_FOUND));
         Job job = new Job(jobDto,logo);
+//        System.err.println(jobDto.getInterviewLocation().toString());
+//        System.err.println(jobDto.getInterviewLocation());
         job.setUserUser(user);
+
         jobRepository.save(job);
         return "Job Added";
     }
@@ -120,6 +123,21 @@ public class JobServiceImpl implements JobService {
         }
         if (jobDto.getStatus() != null) {
             job.setStatus(jobDto.getStatus());
+        }
+        if (jobDto.getInterviewLocation() != null) {
+            job.setInterviewLocation(jobDto.getInterviewLocation());
+        }
+        if (jobDto.getInterviewTimeSlot1Min() != null) {
+            job.setInterviewTimeSlot1Min(jobDto.getInterviewTimeSlot1Min());
+        }
+        if (jobDto.getInterviewTimeSlot1Max() != null) {
+            job.setInterviewTimeSlot1Max(jobDto.getInterviewTimeSlot1Max());
+        }
+        if (jobDto.getInterviewTimeSlot2Min() != null) {
+            job.setInterviewTimeSlot2Min(jobDto.getInterviewTimeSlot2Min());
+        }
+        if (jobDto.getInterviewTimeSlot2Max() != null) {
+            job.setInterviewTimeSlot2Max(jobDto.getInterviewTimeSlot2Max());
         }
 
         jobRepository.save(job);
