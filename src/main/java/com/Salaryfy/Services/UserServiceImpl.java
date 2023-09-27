@@ -56,7 +56,7 @@ public class UserServiceImpl implements IUser {
     private User insertUser(UserDTO userDTO) {
         EmailVerification emailVerification = emailVerificationRepo.findByEmail(userDTO.getEmail());
         User user = new User();
-        if (emailVerification != null) {
+        if (emailVerification != null && !Objects.equals(emailVerification.getStatus(), "Not verified")) {
             user.setFullName(userDTO.getFullName());
             user.setEmail(userDTO.getEmail());
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));

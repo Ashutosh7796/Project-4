@@ -4,10 +4,7 @@ import com.Salaryfy.Dto.Job.InterviewScheduleDto;
 import com.Salaryfy.Entity.InterviewSchedule;
 import com.Salaryfy.Entity.Job;
 import com.Salaryfy.Entity.User;
-import com.Salaryfy.Exception.InterviewScheduleNotFoundException;
-import com.Salaryfy.Exception.JobNotFoundException;
-import com.Salaryfy.Exception.PageNotFoundException;
-import com.Salaryfy.Exception.UserNotFoundException;
+import com.Salaryfy.Exception.*;
 import com.Salaryfy.Interfaces.InterviewScheduleService;
 import com.Salaryfy.Repository.InterviewScheduleRepository;
 import com.Salaryfy.Repository.JobRepository;
@@ -15,10 +12,9 @@ import com.Salaryfy.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -33,20 +29,12 @@ public class InterviewScheduleServiceImpl implements InterviewScheduleService {
     private final JobRepository jobRepository;
 
      @Override
-    public InterviewSchedule scheduleInterview(InterviewScheduleDto interviewScheduleDto) {
+     public InterviewSchedule scheduleInterview(InterviewScheduleDto interviewScheduleDto) {
 
-        User user = userRepository.findById(interviewScheduleDto.getUserId())
-                .orElseThrow(() -> new UserNotFoundException("User Not found", HttpStatus.NOT_FOUND));
+         return null;
+     }
 
-        Job job = jobRepository.findById(interviewScheduleDto.getJobId())
-                .orElseThrow(() -> new JobNotFoundException("Job Not found", HttpStatus.NOT_FOUND));
 
-        InterviewSchedule interviewSchedule = new InterviewSchedule(interviewScheduleDto);
-
-        job.getInterviewSchedule().add(interviewSchedule);
-
-        return interviewScheduleRepository.save(interviewSchedule);
-    }
 
     @Override
     public void deleteInterviewScheduleById(Integer interviewScheduleId) {

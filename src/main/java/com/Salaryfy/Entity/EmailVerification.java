@@ -23,8 +23,8 @@ public class EmailVerification {
     @Column(name = "otp")
     private String otp;
 
-    @Column(name = "userOTP")
-    private String userOTP;
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "creationTime")
     private LocalDateTime creationTime;
