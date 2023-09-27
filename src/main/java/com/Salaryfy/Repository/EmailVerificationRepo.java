@@ -16,8 +16,10 @@ public interface EmailVerificationRepo extends JpaRepository<EmailVerification,I
 
     List<EmailVerification> findByCreationTimeBefore(LocalDateTime dateTime);
 
-    @Modifying
+   /* @Modifying
     @Transactional
     @Query("DELETE FROM EmailVerification WHERE (otp IS NOT NULL AND userOTP IS NOT NULL AND otp != userOTP) OR userOTP IS NULL OR userOTP = ''")
-    void deleteUser();
+    void deleteUser();*/
+
+    void deleteByStatusAndCreationTimeBefore(String notVerified, LocalDateTime expirationTime);
 }

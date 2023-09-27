@@ -7,17 +7,27 @@ import com.Salaryfy.Exception.InvalidOtpException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
 import com.Salaryfy.Interfaces.EmailVerificationService;
 import com.Salaryfy.Repository.EmailVerificationRepo;
+import com.Salaryfy.Repository.OtpExpiredException;
 import com.Salaryfy.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Service
 public class EmailVerificationServiceImpl implements EmailVerificationService {
@@ -27,6 +37,20 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
     @Autowired
     UserRepository userRepository;
 
+    @Value("${spring.mail.username}")
+    private String emailUsername;
+
+    @Value("${spring.mail.password}")
+    private String emailPassword;
+    @Value("${spring.mail.host}")
+    private String emailHost;
+    @Value("${spring.mail.port}")
+    private String emailPort;
+    @Value("${spring.mail.properties.mail.smtp.ssl.enable}")
+    private String emailSmtpSslEnable;
+    @Value("${spring.mail.properties.mail.smtp.auth}")
+    private String emailSmtpAuth;
+
     @Override
     public void sendEmail(String otp, String email) {
         if (email != null) {
@@ -35,23 +59,20 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
 
             if (byEmail == null) {
 
-                // Set the email message content
-                String message = "Hello this is Aniket";
-
-                // Set the password reset link
-                String sendOtp = otp;
+                String emailTemplate= loadEmailTemplate("otp_email_template.html");
+                emailTemplate=emailTemplate.replace("{{otp}}",otp);
 
                 // Set the email subject
-                String subject = "Checking: confirmation";
+                String subject = "OTP Verification";
 
                 // Set the sender's email address
-                String from = "b.aniket1414@gmail.com";
+                String from = emailUsername;
 
                 // Set the recipient's email address
                 String to = email;
 
                 // Send the email using the sendEmail() method
-                sendEmail(message, subject, to, from, sendOtp);
+                sendEmail(emailTemplate, subject, to, from);
             } else {
                 throw new UserAlreadyExistException("User Already present with this email");
             }
@@ -68,7 +89,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
             // EmailVerification emailVerification= new EmailVerification();
             emailVerifications.setEmail(email);
             emailVerifications.setOtp(otp);
-            emailVerifications.setUserOTP(null);
+            emailVerifications.setStatus("Not verified");
             emailVerifications.setCreationTime(localDateTime);
             emailVerificationRepo.save(emailVerifications);
             return "Email saved";
@@ -76,7 +97,7 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
                 EmailVerification emailVerification = new EmailVerification();
                 emailVerification.setEmail(email);
                 emailVerification.setOtp(otp);
-                emailVerification.setUserOTP(null);
+                emailVerification.setStatus("Not verified");
                 emailVerification.setCreationTime(localDateTime);
                 emailVerificationRepo.save(emailVerification);
                 return "Email saved";
@@ -89,14 +110,21 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
     @Override
     public String verifyOtp(String otp, String email) {
         EmailVerification emailVerification = emailVerificationRepo.findByEmail(email);
-        if (emailVerification==null){
-            throw new InvalidOtpException("Invalid OTP ");
-        }else {
+        if (emailVerification == null) {
+            throw new InvalidOtpException("Invalid OTP");
+        } else {
             if (emailVerification.getOtp().equals(otp)) {
-                //emailVerificationRepo.deleteById(emailVerification.getId());
-                emailVerification.setUserOTP(otp);
-                emailVerificationRepo.save(emailVerification);
-                return "Verified";
+                LocalDateTime creationTime = emailVerification.getCreationTime();
+                LocalDateTime currentTime = LocalDateTime.now();
+                Duration duration = Duration.between(creationTime, currentTime);
+
+                if (duration.toMinutes() <= 3) {
+                    emailVerification.setStatus("Verified");
+                    emailVerificationRepo.save(emailVerification);
+                    return "Verified";
+                } else {
+                    throw new OtpExpiredException("OTP has expired");
+                }
             } else {
                 throw new InvalidOtpException("Invalid OTP");
             }
@@ -104,17 +132,17 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
     }
 
     @Override
-    public void deleteExpiredOTP() {
+    @Transactional
+    public void cleanupExpiredOTP() {
         LocalDateTime expirationTime = LocalDateTime.now().minusMinutes(3);
-        List<EmailVerification> expiredOTPList = emailVerificationRepo.findByCreationTimeBefore(expirationTime);
-        emailVerificationRepo.deleteUser();
+        emailVerificationRepo.deleteByStatusAndCreationTimeBefore("Not Verified", expirationTime);
     }
 
-    private void sendEmail(String message, String subject, String to, String from, String sendOtp) {
+    private void sendEmail(String message, String subject, String to, String from) {
 
         if (to != null && !to.isEmpty()) {
             // SMTP server for Gmail
-            String host = "smtp.gmail.com";
+            String host = emailHost;
 
             // Getting the system properties
             Properties properties = System.getProperties();
@@ -122,23 +150,23 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
             System.out.println(properties);
 
             // Setting important information to the properties object
-            properties.put("mail.smtp.host", host);
-            properties.put("mail.smtp.port", "465");
-            properties.put("mail.smtp.ssl.enable", "true");
-            properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.host", emailHost);
+            properties.put("mail.smtp.port", emailPort);
+            properties.put("mail.smtp.ssl.enable", emailSmtpSslEnable);
+            properties.put("mail.smtp.auth", emailSmtpAuth);
 
             // Creating a session with the properties and an authenticator
             Session session = Session.getInstance(properties, new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     // Return the email address and password for authentication
-                    return new PasswordAuthentication("b.aniket1414@gmail.com", "egmqlowlfodymfzw");
+                    return new PasswordAuthentication(emailUsername, emailPassword);
                 }
 
             });
 
             // Composing the email content
-            String content = "OTP to verify Email   " + sendOtp;
+//            String content = "OTP to verify Email   " + sendOtp;
 
             // Creating a MimeMessage object for the session
             MimeMessage m = new MimeMessage(session);
@@ -153,8 +181,10 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
                 // Adding the subject to the message
                 m.setSubject(subject);
 
+                m.setContent(message,"text/html");
+
                 // Adding the content to the message
-                m.setText(content);
+//                m.setText(content);
 
                 // Sending the message
                 Transport.send(m);
@@ -165,7 +195,20 @@ public class EmailVerificationServiceImpl implements EmailVerificationService {
         }else {
             throw new EmptyFiledException("fill the field");
         }
-
-
+    }
+    private
+    String loadEmailTemplate(String templateFileName) {
+        try
+        { InputStream inputStream = getClass().getResourceAsStream("/templates/" + templateFileName);
+            if (inputStream != null) {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+                    return reader.lines().collect(Collectors.joining(System.lineSeparator())); } }
+            else
+            {
+                throw new IOException("Template file not found: " + templateFileName); }
+        } catch
+        (IOException e) {
+            e.printStackTrace();throw new RuntimeException("Error loading email template");
+        }
     }
 }

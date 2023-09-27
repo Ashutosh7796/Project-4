@@ -6,6 +6,7 @@ import com.Salaryfy.Exception.EmptyFiledException;
 import com.Salaryfy.Exception.InvalidOtpException;
 import com.Salaryfy.Exception.UserAlreadyExistException;
 import com.Salaryfy.Interfaces.EmailVerificationService;
+import com.Salaryfy.Repository.OtpExpiredException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +66,15 @@ public class EmailVerificationController {
             ResponseEmailVerification responseEmailVerification = new ResponseEmailVerification("Invalid OTP ");
             responseEmailVerification.setStatus("Unsuccessful");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseEmailVerification);
+        }catch (OtpExpiredException e) {
+            ResponseEmailVerification responseEmailVerification = new ResponseEmailVerification("OTP has expired");
+            responseEmailVerification.setStatus("Unsuccessful");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseEmailVerification);
         }
     }
 
-    @Scheduled(fixedRate = 180000)
+    @Scheduled(cron = "0 0 1 * * ?") // Runs at 1 AM daily
     public void cleanupExpiredOTP() {
-        emailVerificationService.deleteExpiredOTP();
+        emailVerificationService.cleanupExpiredOTP();
     }
 }

@@ -10,5 +10,5 @@ public interface EmailVerificationService {
 
     String verifyOtp(String otp,String email);
 
-    public void deleteExpiredOTP();
+   public void cleanupExpiredOTP();
 }

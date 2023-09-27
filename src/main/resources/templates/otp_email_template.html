@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&display=swap');
+
+        body {
+
+          font-family: Helvetica, Arial, sans-serif;
+
+          line-height: 1.6;
+
+          margin: 0;
+
+          padding: 0;
+
+          background-color: #f0f0f0;
+
+          display: flex;
+
+          justify-content: center;
+
+        }
+
+        .email-container {
+
+          width: 100%;
+
+          max-width: 600px;
+
+          margin: 20px;
+
+          padding: 20px;
+
+          background-color: #fff;
+
+          box-sizing: border-box;
+
+        }
+
+        .email-header, a {
+
+          color: #005F59;
+
+          font-family: 'Lexend', sans-serif;
+
+          text-decoration: none;
+
+          font-weight: 1000;
+
+          text-align: center;
+
+        }
+
+        .email-content {
+
+          margin-top: 20px;
+
+        }
+
+        .otpdiv {
+
+          display: flex;
+
+          justify-content: center;
+
+        }
+
+        .otp {
+
+          background: #00466a;
+
+          color: #fff;
+
+          padding: 10px;
+
+          border-radius: 4px;
+
+          text-align: center;
+
+          width: 35%;
+
+        }
+
+        .email-footer {
+
+          margin-top: 20px;
+
+          text-align: center;
+
+        }
+
+        .email-signature {
+
+          color: #aaa;
+
+          font-size: 0.8em;
+
+        }
+
+        /* Responsive Styles */
+
+        @media screen and (max-width: 600px) {
+
+          .email-container {
+
+            margin: 0;
+
+            padding: 10px;
+
+          }
+
+          .otp {
+
+            width: 80%;
+
+          }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="email-container">
+
+    <div class="email-header ">
+
+        <a href="#" style="font-size: 2.6em; text-align: center; color: #005F59"><b>Salary</b><span style = "color:#ffcd05">fy</span></a>
+
+    </div>
+
+    <h2 style="color:#00466a;">Your OTP for Email Verification</h2>
+
+    <div class="email-content">
+
+        <p>Dear User,</p>
+
+        <p>The One Time Password (OTP) for Email verification is:</p>
+
+        <div class="otpdiv"  style=" text-align: center;" ><h2 class="otp" style="">{{otp}}</h2></div>
+
+        <p>This OTP is valid for 3 minutes or 1 successful attempt, whichever is earlier.</p>
+
+        <p>Please do not share this OTP with anyone.</p>
+    </div>
+    <p>Need Help? Ask at <a href="#">contact@salaryfy.com</a></p>
+    <div class="email-footer">
+        <p style="text-align: left;">Regards,<br />SalaryFy</p>
+        <hr style="border: none; border-top: 1px solid #eee" />
+        <div class="email-signature">
+            <p>© 2023 Salaryfy, All rights reserved</p>
+            <p></p>
