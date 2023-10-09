@@ -21,6 +21,7 @@ public class Job {
 
     @Column(name = "PostName", length = 100)
     private String postName;
+
     @Column(name = "jobType")
     private String jobType;
 
@@ -94,10 +95,14 @@ public class Job {
     @OneToMany(mappedBy = "jobsJob")
     private List<PlacementDetails> bookings = new LinkedList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL, CascadeType.REMOVE })
-    @JoinTable(name = "user_interview", joinColumns = @JoinColumn(name = "JobId", referencedColumnName = "JobId"),
-            inverseJoinColumns = @JoinColumn(name = "InterviewScheduleId", referencedColumnName = "InterviewScheduleId"))
-    private List<InterviewSchedule> interviewSchedule = new ArrayList<>();
+//
+@ManyToMany
+@JoinTable(
+        name = "job_interview_schedule",
+        joinColumns = @JoinColumn(name = "job_id"),
+        inverseJoinColumns = @JoinColumn(name = "interview_schedule_id"))
+    private List<InterviewSchedule> interviewSchedule;
+//        = new ArrayList<>();
 
 
     public Job(JobDto jobDto,String logo) {
