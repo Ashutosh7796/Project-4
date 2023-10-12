@@ -122,7 +122,8 @@ public class AppConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+//                config.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+                config.setAllowedOrigins(Collections.singletonList("http://64.227.186.1:5173"));
                 config.setAllowedMethods(Collections.singletonList("*"));
                 config.setAllowCredentials(true);
                 config.setAllowedHeaders(Collections.singletonList("*"));
@@ -134,7 +135,6 @@ public class AppConfig {
     }
     public String[] genIp() {
         List<String> ips = new ArrayList<String>();
-        ips.add("https://ok-car.vercel.app");
         ips.add("http://localhost:5173");
         ips.add("http://64.227.186.1:5173");
 
