@@ -136,6 +136,7 @@ public class AppConfig {
         List<String> ips = new ArrayList<String>();
         ips.add("https://ok-car.vercel.app");
         ips.add("http://localhost:5173");
+        ips.add("http://64.227.186.1:5173");
 
         for(int i = 1; i <= 255; i++) {
             String ipaddr = "http://192.168.1." + i + ":5173";
