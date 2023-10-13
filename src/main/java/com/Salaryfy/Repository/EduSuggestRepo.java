@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EduSuggestRepo extends JpaRepository<EduSuggestion, Integer > {
+public interface  EduSuggestRepo extends JpaRepository<EduSuggestion, Integer > {
 
     @Query("SELECT e FROM EduSuggestion e WHERE e.education = :userInput01 AND e.boardUniversity LIKE CONCAT('%', :userInput, '%')")
     public List<EduSuggestion> findByBoardUniversityContainingOrEducationContaining(
