@@ -86,7 +86,7 @@ public class AppConfig {
                 .requestMatchers("/Interview/**").hasAuthority("USER")
                 .requestMatchers("/payment/**").hasAuthority("USER")
                 .requestMatchers("/profileLevel/**").hasAuthority("USER")
-                .requestMatchers("/verification/**").hasAuthority("USER")
+                .requestMatchers("/verification/**").permitAll()
                 .requestMatchers("/company/**").permitAll()
                 .requestMatchers("/experience/**").hasAuthority("USER")
                 .requestMatchers("/question/**").permitAll()
