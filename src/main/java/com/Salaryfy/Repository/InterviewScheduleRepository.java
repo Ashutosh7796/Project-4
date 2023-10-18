@@ -22,6 +22,6 @@ public interface InterviewScheduleRepository extends JpaRepository<InterviewSche
 
     List<InterviewSchedule> findByStatus(String status);
 
-    @Query(value = "SELECT * FROM salaryfy.interview_schedule where user_id=:userId AND interview_date=:interviewDate",nativeQuery = true)
+    @Query(value = "SELECT * FROM defaultdb.interview_schedule where user_id=:userId AND interview_date=:interviewDate",nativeQuery = true)
     Optional<Object> findByIdAndInterviewDate(@Param("userId")  Integer userId,@Param("interviewDate")  LocalDate interviewDate);
 }
