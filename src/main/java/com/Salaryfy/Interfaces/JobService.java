@@ -19,4 +19,6 @@ public interface JobService {
     public Optional<Job> findjobById(Integer JobId);
 
     public List<JobDto> getJobsByStatusWithPages(int PageNo, Boolean status);
+
+    public List<String> getJobLocation ();
 }

@@ -211,4 +211,8 @@ public class JobServiceImpl implements JobService {
         }
         return listOfJobStatus;
     }
+    @Override
+    public List<String> getJobLocation() {
+        return jobRepository.findDistinctLocations();
+    }
 }

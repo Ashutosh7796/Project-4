@@ -33,4 +33,7 @@ public interface JobRepository extends JpaRepository<Job, Integer>, JpaSpecifica
 
     @Query(value = "SELECT company_name FROM salaryfy.jobs;",nativeQuery = true)
     Set<String> findcompanyName();
+
+    @Query(value = "SELECT DISTINCT location FROM jobs", nativeQuery = true)
+    List<String> findDistinctLocations();
 }

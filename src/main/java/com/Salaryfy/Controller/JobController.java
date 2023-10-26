@@ -105,6 +105,14 @@ public class JobController {
         }
     }
 
-
+    @GetMapping ("/GetLocation")
+    public ResponseEntity<List<String>> getUniqueLocations() {
+        List<String> uniqueLocations = jobService.getJobLocation();
+        return ResponseEntity.
+                status
+                        (HttpStatus.
+                                OK
+                        ).body(uniqueLocations);
+    }
 
 }
