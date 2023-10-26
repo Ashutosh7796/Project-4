@@ -19,7 +19,7 @@ public interface ProfileLevelRepo extends JpaRepository<ProfileLevel,Integer> {
 //    Optional<ProfileLevel> findByUserId(@Param("user_userId")Integer user_userId);
 //    public Optional<ProfileLevel> findByUserId(Optional<User> byId);
 //    public Optional<ProfileLevel> findByUserId(Integer user_Id);
-    @Query(value = "SELECT * FROM salaryfy.profile_level\n" +
+    @Query(value = "SELECT * FROM defaultdb.profile_level\n" +
             " where user_user_id in (:user_user_id);" ,nativeQuery = true)
     public Optional<ProfileLevel> findByUserId(@Param("user_user_id") Integer userId);
 }
